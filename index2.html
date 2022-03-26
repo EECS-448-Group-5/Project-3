@@ -1,0 +1,46 @@
+<script type="module">
+
+    // import kaboom lib
+    import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
+    
+    // initialize kaboom context
+    kaboom({width: 1920, height: 1080});
+
+    loadSprite("background", "sprites/background.jpg");
+    loadSprite("BattlePlatform", "sprites/BattlePlatform.png");
+    loadSprite("EmptyHealthbar", "sprites/EmptyHealthbar.png");
+    loadSprite("HealthBackground", "sprites/HealthBackground.png");
+    loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
+    loadSprite("player1", "sprites/player1.png");
+    loadSprite("Textbox", "sprites/Textbox.png");
+
+    onKeyPress("f", (c) => {
+        fullscreen(!isFullscreen())
+}   )
+
+    const background = add([
+        sprite("background"),
+        pos(0,0),
+    ])
+
+    const player = add([
+        sprite("player1"),
+        pos(width()/2 - 50, height()/2 - 50),
+    ])
+
+    /* const enemy = add([
+        sprite("player1"),
+        pos(0,0),
+    ])
+
+    const player_platform = add([
+        sprite("BattlePlatform"),
+        pos(0,0),
+    ])
+
+    const enemy_platform = add([
+        sprite("BattlePlatform"),
+        pos(0,0),
+    ])*/
+    
+    </script>
