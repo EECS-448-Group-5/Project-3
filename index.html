@@ -71,22 +71,22 @@
             })*/
 
             const dirs = {
-		"left": LEFT,
-		"right": RIGHT,
-		"up": UP,
-		"down": DOWN,
-	}
+		        "left": LEFT,
+		        "right": RIGHT,
+		        "up": UP,
+		        "down": DOWN,
+	        }
 
-	for (const dir in dirs) {
-		onKeyDown(dir, () => {
-			player.move(dirs[dir].scale(speed))
-		})
-	}
+	        for (const dir in dirs) {
+		        onKeyDown(dir, () => {
+			        player.move(dirs[dir].scale(speed))
+		        })
+	        }
 
-})
+            })
             
-        go("main",0)
+            go("main",0)
 
-            </script>
+        </script>
     </head>
 </html>
