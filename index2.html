@@ -1,7 +1,10 @@
-<script type="module">
+<html>
+    <head>
+        <script type="module">
 
     // import kaboom lib
     import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
+    import * as util from "./util.js";
     
     // initialize kaboom context
     kaboom({width: 1920, height: 1080});
@@ -26,14 +29,22 @@
     const player = add([
         sprite("player1"),
         pos(width()/2 - 50, height()/2 - 50),
+        origin("center"),
+        scale(1)
     ])
 
-    /* const enemy = add([
+    window.player = player;
+
+    const enemy = add([
         sprite("player1"),
-        pos(0,0),
+        util.propPos(.8, .3),
+        origin("center"),
+        scale(1)
     ])
 
-    const player_platform = add([
+    util.scaleToProp(enemy, -1, .25)
+
+    /*const player_platform = add([
         sprite("BattlePlatform"),
         pos(0,0),
     ])
@@ -43,4 +54,6 @@
         pos(0,0),
     ])*/
     
-    </script>
+        </script>
+    </head>
+</html>
