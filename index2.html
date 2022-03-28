@@ -28,31 +28,111 @@
 
     const player = add([
         sprite("player1"),
-        pos(width()/2 - 50, height()/2 - 50),
+        util.propPos(.2, .45),//pos(width()/2 - 50, height()/2 - 50),
         origin("center"),
-        scale(1)
+        scale(.5),
+        z(10)
     ])
 
     window.player = player;
 
     const enemy = add([
         sprite("player1"),
-        util.propPos(.8, .3),
+        util.propPos(.8, .15),
         origin("center"),
-        scale(1)
+        scale(.5),
+        z(10)
     ])
 
-    util.scaleToProp(enemy, -1, .25)
+    //util.scaleToProp(enemy, -1, .25)
 
-    /*const player_platform = add([
+    const player_platform = add([
         sprite("BattlePlatform"),
-        pos(0,0),
-    ])
+        util.propPos(.2, .6),
+        origin("center"),
+        scale(.5)
+    ]);
 
     const enemy_platform = add([
         sprite("BattlePlatform"),
-        pos(0,0),
-    ])*/
+        util.propPos(.8, .3),
+        origin("center"),
+        scale(.5)
+    ])
+
+
+    const textBox = add([
+        sprite("Textbox"),
+        util.propPos(0, .7),
+        scale(1)
+    ])
+    util.scaleToProp(textBox, 1, .3);
+
+
+
+
+    const playerHPBG = add([
+        sprite("HealthBackground"),
+        util.propPos(.45, .45),
+        origin("center"),
+        scale(1)
+    ])
+    util.scaleToProp(playerHPBG, .3, .25);
+
+    const playerHealth = add([
+        sprite("HealthBarSection"),
+        util.propPos(.35, .375),
+        origin("topleft"),
+        scale(1)
+    ])
+    util.scaleToProp(playerHealth, .225, .05)
+
+    window.hp = playerHealth
+
+    const playerHPFacade = add([
+        sprite("EmptyHealthbar"),
+        util.propPos(.45, .4),
+        origin("center"),
+        scale(1)
+    ])
+    util.scaleToProp(playerHPFacade, .25, -1)
+
+    
+
+
+
+    const enemyHPBG = add([
+        sprite("HealthBackground"),
+        util.propPos(.55, .15),
+        origin("center"),
+        scale(1)
+    ])
+    util.scaleToProp(enemyHPBG, .3, .25);
+
+    const enemyHealth = add([
+        sprite("HealthBarSection"),
+        util.propPos(.45, .075),
+        origin("topleft"),
+        scale(1)
+    ])
+    util.scaleToProp(enemyHealth, .225, .05)
+
+    const enemyHPFacade = add([
+        sprite("EmptyHealthbar"),
+        util.propPos(.55, .1),
+        origin("center"),
+        scale(1)
+    ])
+    util.scaleToProp(enemyHPFacade, .25, -1)
+
+
+
+
+    
+
+
+
+    
     
         </script>
     </head>
