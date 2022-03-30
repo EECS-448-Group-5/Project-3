@@ -5,16 +5,20 @@ export function propPos(xPercent, yPercent){
 export function scaleToProp(obj, xPercent, yPercent){
     onLoad(()=>{
     let xScale, yScale;
-    if(xPercent != -1){
-        xScale = width()*1.0 / obj.width * xPercent;
-    }else{
+    if(xPercent == -1){
         xScale = height() / obj.height * yPercent;
+    }else if(xPercent == -2){
+        xScale = obj.scale.x;
+    }else{
+        xScale = width()*1.0 / obj.width * xPercent;
     }
 
-    if(yPercent != -1){
-        yScale = height()*1.0 / obj.height * yPercent;
-    }else{
+    if(yPercent == -1){
         yScale = xScale;
+    }else if(yPercent == -2){
+        yScale = obj.scale.y;
+    }else{
+        yScale = height()*1.0 / obj.height * yPercent;
     }
     obj.scaleTo(xScale, yScale);
     });

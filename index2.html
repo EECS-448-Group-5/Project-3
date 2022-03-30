@@ -7,7 +7,7 @@
     import * as util from "./util.js";
     
     // initialize kaboom context
-    kaboom({width: 1920, height: 1080});
+    kaboom();//kaboom({width: 1920, height: 1080});
 
     loadSprite("background", "sprites/background.jpg");
     loadSprite("BattlePlatform", "sprites/BattlePlatform.png");
@@ -21,10 +21,10 @@
         fullscreen(!isFullscreen())
 }   )
 
-    let inputQueue = new util.Queue();
+    let eventQueue = new util.Queue();
     onClick(()=>{
-        if(!inputQueue.isEmpty){
-            inputQueue.dequeue()();//why does this look so cursed?
+        if(!eventQueue.isEmpty){
+            eventQueue.dequeue()();//why does this look so cursed?
         }
 
     })
@@ -41,35 +41,55 @@
             {
                 name: "Punch",
                 desc: "punch him",
-                func: ()=>{console.log("punch"); return "ow"},
-                pretext: "You punch him"
+                pretext: "You punch him",
+                func: ()=>{
+                    console.log("punch"); 
+                    enemy.takeDamage(25);
+                    return "ow"}
             },
             {
                 name: "Punch",
                 desc: "punch him",
-                func: ()=>{console.log("punch"); return "ow"},
-                pretext: "You punch him"
+                pretext: "You punch him",
+                func: ()=>{
+                    console.log("punch"); 
+                    setEnemyHealth(.25);
+                    return "ow"}
             },
             {
                 name: "Punch",
                 desc: "punch him",
-                func: ()=>{console.log("punch"); return "ow"},
-                pretext: "You punch him"
+                pretext: "You punch him",
+                func: ()=>{
+                    console.log("punch"); 
+                    setEnemyHealth(.25);
+                    return "ow"}
             },
             {
                 name: "Punch",
                 desc: "punch him",
-                func: ()=>{console.log("punch"); return "ow"},
-                pretext: "You punch him"
+                pretext: "You punch him",
+                func: ()=>{
+                    console.log("punch"); 
+                    setEnemyHealth(.25);
+                    return "ow"}
             }
         ]
     };
 
     let enemy = {
+        maxHP: 100,
         hp: 100,
         statuses: [],
-        die: ()=>{
-
+        die: function(){
+            eventQueue.enqueue(()=>{printDescriptionText("Barbarian was defeated!")});
+            eventQueue.enqueue(()=>{go("main")});
+            eventQueue.dequeue()();
+        },
+        takeDamage: function(amt){
+            this.hp -= amt;
+            setEnemyHealth(this.hp / this.maxHP);
+            if(this.hp <= 0) this.die();
         },
 
         getFlavor: ()=>{
@@ -88,9 +108,10 @@
         sprite("player1"),
         util.propPos(.2, .45),//pos(width()/2 - 50, height()/2 - 50),
         origin("center"),
-        scale(.5),
+        scale(1),
         z(10)
     ])
+    util.scaleToProp(player.gameObj, -1, .4);
 
     window.player = player;
 
@@ -98,9 +119,10 @@
         sprite("player1"),
         util.propPos(.8, .15),
         origin("center"),
-        scale(.5),
+        scale(1),
         z(10)
     ])
+    util.scaleToProp(enemy.gameObj, -1, .4);
 
     //util.scaleToProp(enemy, -1, .25)
 
@@ -110,6 +132,7 @@
         origin("center"),
         scale(.5)
     ]);
+    util.scaleToProp(player_platform, .35, -1)
 
     const enemy_platform = add([
         sprite("BattlePlatform"),
@@ -117,6 +140,7 @@
         origin("center"),
         scale(.5)
     ])
+    util.scaleToProp(enemy_platform, .35, -1)
 
 
     const textBox = add([
@@ -139,11 +163,11 @@
 
     const playerHealth = add([
         sprite("HealthBarSection"),
-        util.propPos(.35, .375),
-        origin("topleft"),
+        util.propPos(.35, .4),
+        origin("left"),
         scale(1)
     ])
-    util.scaleToProp(playerHealth, .225, .05)
+    util.scaleToProp(playerHealth, .22, .225*width()/height()*.15)
 
     window.hp = playerHealth
 
@@ -169,11 +193,11 @@
 
     const enemyHealth = add([
         sprite("HealthBarSection"),
-        util.propPos(.45, .075),
-        origin("topleft"),
+        util.propPos(.45, .1),
+        origin("left"),
         scale(1)
     ])
-    util.scaleToProp(enemyHealth, .225, .05)
+    util.scaleToProp(enemyHealth, .22, .225*width()/height()*.15)
 
     const enemyHPFacade = add([
         sprite("EmptyHealthbar"),
@@ -202,9 +226,9 @@
             area({ cursor: "pointer", }),
             scale(1)
         ])
-        moveText.onClick(()=>{if(inputQueue.isEmpty) playerMove(move)});
+        moveText.onClick(()=>{if(eventQueue.isEmpty) playerMove(move)});
         moveText.onHover(()=>{
-            if(inputQueue.isEmpty)
+            if(eventQueue.isEmpty)
                 printDescriptionText(move.desc);
         });
         return moveText;
@@ -221,7 +245,7 @@
                 origin("center"),
                 scale(1)
             ]);
-            onMouseMove(()=>{if(inputQueue.isEmpty) window.currentDescText.text = enemy.getFlavor();});
+            onMouseMove(()=>{if(eventQueue.isEmpty) window.currentDescText.text = enemy.getFlavor();});
         }
 
         window.currentDescText.text = desc;
@@ -230,18 +254,26 @@
     }
 
     function playerMove(move){
-        inputQueue.enqueue(()=>{
+        eventQueue.enqueue(()=>{
             printDescriptionText(move.pretext);
         });
-        inputQueue.enqueue(()=>{
+        eventQueue.enqueue(()=>{
             printDescriptionText(move.func());
         });
-        inputQueue.enqueue(()=>{
+        eventQueue.enqueue(()=>{
             printDescriptionText(enemy.getFlavor());
         });
 
-        inputQueue.dequeue()();
+        eventQueue.dequeue()();
 
+    }
+
+    function setPlayerHealth(percent){
+        util.scaleToProp(playerHealth, .225 * percent, -2);
+    }
+
+    function setEnemyHealth(percent){
+        util.scaleToProp(enemyHealth, .225 * percent, -2);
     }
 
     drawMoveSelection();
