@@ -21,12 +21,70 @@
         fullscreen(!isFullscreen())
 }   )
 
+    let inputQueue = new util.Queue();
+    onClick(()=>{
+        if(!inputQueue.isEmpty){
+            inputQueue.dequeue()();//why does this look so cursed?
+        }
+
+    })
+
+    //add properties & change numbers as necessary
+    let player = {
+        hp: 100,
+        atk: 10,
+        def: 10,
+        spAtk: 10,
+        spDef: 10,
+        statuses: [],
+        moves: [
+            {
+                name: "Punch",
+                desc: "punch him",
+                func: ()=>{console.log("punch"); return "ow"},
+                pretext: "You punch him"
+            },
+            {
+                name: "Punch",
+                desc: "punch him",
+                func: ()=>{console.log("punch"); return "ow"},
+                pretext: "You punch him"
+            },
+            {
+                name: "Punch",
+                desc: "punch him",
+                func: ()=>{console.log("punch"); return "ow"},
+                pretext: "You punch him"
+            },
+            {
+                name: "Punch",
+                desc: "punch him",
+                func: ()=>{console.log("punch"); return "ow"},
+                pretext: "You punch him"
+            }
+        ]
+    };
+
+    let enemy = {
+        hp: 100,
+        statuses: [],
+        die: ()=>{
+
+        },
+
+        getFlavor: ()=>{
+            return "Mitchell hasn't implemented this yet.";
+        }
+
+
+    }
+
     const background = add([
         sprite("background"),
         pos(0,0),
     ])
 
-    const player = add([
+    player.gameObj = add([
         sprite("player1"),
         util.propPos(.2, .45),//pos(width()/2 - 50, height()/2 - 50),
         origin("center"),
@@ -36,7 +94,7 @@
 
     window.player = player;
 
-    const enemy = add([
+    enemy.gameObj = add([
         sprite("player1"),
         util.propPos(.8, .15),
         origin("center"),
@@ -124,6 +182,69 @@
         scale(1)
     ])
     util.scaleToProp(enemyHPFacade, .25, -1)
+
+
+
+
+
+    function drawMoveSelection(){
+        let move1 = drawMove(.15, .8, player.moves[0]); 
+        let move2 = drawMove(.3, .8, player.moves[1]);
+        let move3 = drawMove(.15, .9, player.moves[2]);
+        let move4 = drawMove(.3, .9, player.moves[3]);
+    }
+
+    function drawMove(x, y, move){
+        let moveText = add([
+            text(move.name),
+            origin("center"),
+            util.propPos(x, y),
+            area({ cursor: "pointer", }),
+            scale(1)
+        ])
+        moveText.onClick(()=>{if(inputQueue.isEmpty) playerMove(move)});
+        moveText.onHover(()=>{
+            if(inputQueue.isEmpty)
+                printDescriptionText(move.desc);
+        });
+        return moveText;
+    }
+
+    window.currentDescText = null
+    function printDescriptionText(desc){
+        if(!window.currentDescText){
+            window.currentDescText = add([
+                text(desc, {
+                    width: width()*.6
+                }),
+                util.propPos(.7, .85),
+                origin("center"),
+                scale(1)
+            ]);
+            onMouseMove(()=>{if(inputQueue.isEmpty) window.currentDescText.text = enemy.getFlavor();});
+        }
+
+        window.currentDescText.text = desc;
+
+        
+    }
+
+    function playerMove(move){
+        inputQueue.enqueue(()=>{
+            printDescriptionText(move.pretext);
+        });
+        inputQueue.enqueue(()=>{
+            printDescriptionText(move.func());
+        });
+        inputQueue.enqueue(()=>{
+            printDescriptionText(enemy.getFlavor());
+        });
+
+        inputQueue.dequeue()();
+
+    }
+
+    drawMoveSelection();
 
 
 
