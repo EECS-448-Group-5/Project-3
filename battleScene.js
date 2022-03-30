@@ -1,6 +1,3 @@
-<html>
-    <head>
-        <script type="module">
 
     // import kaboom lib
     import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
@@ -16,6 +13,10 @@
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
     loadSprite("player1", "sprites/player1.png");
     loadSprite("Textbox", "sprites/Textbox.png");
+
+scene("battle", ()=>{
+
+    
 
     onKeyPress("f", (c) => {
         fullscreen(!isFullscreen())
@@ -43,7 +44,7 @@
                 desc: "punch him",
                 pretext: "You punch him",
                 func: ()=>{
-                    console.log("punch"); 
+                    console.log("punch1"); 
                     enemy.takeDamage(25);
                     return "ow"}
             },
@@ -52,7 +53,7 @@
                 desc: "punch him",
                 pretext: "You punch him",
                 func: ()=>{
-                    console.log("punch"); 
+                    console.log("punch2"); 
                     setEnemyHealth(.25);
                     return "ow"}
             },
@@ -61,7 +62,7 @@
                 desc: "punch him",
                 pretext: "You punch him",
                 func: ()=>{
-                    console.log("punch"); 
+                    console.log("punch3"); 
                     setEnemyHealth(.25);
                     return "ow"}
             },
@@ -70,7 +71,7 @@
                 desc: "punch him",
                 pretext: "You punch him",
                 func: ()=>{
-                    console.log("punch"); 
+                    console.log("punch4"); 
                     setEnemyHealth(.25);
                     return "ow"}
             }
@@ -220,10 +221,13 @@
 
     function drawMove(x, y, move){
         let moveText = add([
-            text(move.name),
+            text(move.name, {
+                size: height()*.06,
+                //width: width()*.4
+            }),
             origin("center"),
             util.propPos(x, y),
-            area({ cursor: "pointer", }),
+            area({ cursor: "pointer"}),
             scale(1)
         ])
         moveText.onClick(()=>{if(eventQueue.isEmpty) playerMove(move)});
@@ -234,23 +238,19 @@
         return moveText;
     }
 
-    window.currentDescText = null
+    let currentDescText = add([
+        text(enemy.getFlavor(), {
+            size: height()*.06,
+            width: width()*.525
+        }),
+        util.propPos(.725, .85),
+        origin("center"),
+        scale(1)
+    ]);
+    onMouseMove(()=>{if(eventQueue.isEmpty) currentDescText.text = enemy.getFlavor();});
+
     function printDescriptionText(desc){
-        if(!window.currentDescText){
-            window.currentDescText = add([
-                text(desc, {
-                    width: width()*.6
-                }),
-                util.propPos(.725, .85),
-                origin("center"),
-                scale(1)
-            ]);
-            onMouseMove(()=>{if(eventQueue.isEmpty) window.currentDescText.text = enemy.getFlavor();});
-        }
-
-        window.currentDescText.text = desc;
-
-        
+        currentDescText.text = desc;
     }
 
     function playerMove(move){
@@ -277,16 +277,4 @@
     }
 
     drawMoveSelection();
-
-
-
-
-    
-
-
-
-    
-    
-        </script>
-    </head>
-</html>
+});
