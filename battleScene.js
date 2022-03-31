@@ -2,7 +2,7 @@
     // import kaboom lib //test push
     import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
     import * as util from "./util.js";
-    import * as enemies from "./EnemyAI";
+    import * as enemies from "./EnemyAI.js";
     
     // initialize kaboom context
     kaboom();//kaboom({width: 1920, height: 1080});
@@ -80,7 +80,7 @@ scene("battle", ()=>{
         ]
     };
 
-    let enemy = enemies.barbarian;
+    let enemy = enemies.enemyProto;
 
     const background = add([
         sprite("background"),
