@@ -13,7 +13,7 @@ export let enemyProto = {
     },
     takeDamage: function(amt){
         this.hp -= amt;
-        setEnemyHealth(this.hp / this.maxHP);
+        window.setEnemyHealth(this.hp / this.maxHP);
         if(this.hp <= 0) this.die();
     },
     getFlavor: ()=>{
