@@ -13,6 +13,7 @@
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
     loadSprite("player1", "sprites/player1.png");
     loadSprite("Textbox", "sprites/Textbox.png");
+    loadSprite("wizard", "sprites/Wizard.png");
 
 scene("battle", ()=>{
 
@@ -117,8 +118,8 @@ scene("battle", ()=>{
     window.player = player;
 
     enemy.gameObj = add([
-        sprite("player1"),
-        util.propPos(.8, .15),
+        sprite("wizard"),
+        util.propPos(.8, .225),
         origin("center"),
         scale(1),
         z(10)
@@ -137,7 +138,7 @@ scene("battle", ()=>{
 
     const enemy_platform = add([
         sprite("BattlePlatform"),
-        util.propPos(.8, .3),
+        util.propPos(.8, .425),
         origin("center"),
         scale(.5)
     ])
