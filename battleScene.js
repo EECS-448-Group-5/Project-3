@@ -2,6 +2,7 @@
     // import kaboom lib //test push
     import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
     import * as util from "./util.js";
+    import * as enemies from "./EnemyAI";
     
     // initialize kaboom context
     kaboom();//kaboom({width: 1920, height: 1080});
@@ -79,27 +80,7 @@ scene("battle", ()=>{
         ]
     };
 
-    let enemy = {
-        maxHP: 100,
-        hp: 100,
-        statuses: [],
-        die: function(){
-            eventQueue.enqueue(()=>{printDescriptionText("Barbarian was defeated!")});
-            eventQueue.enqueue(()=>{go("main")});
-            eventQueue.dequeue()();
-        },
-        takeDamage: function(amt){
-            this.hp -= amt;
-            setEnemyHealth(this.hp / this.maxHP);
-            if(this.hp <= 0) this.die();
-        },
-
-        getFlavor: ()=>{
-            return "Mitchell hasn't implemented this yet.";
-        }
-
-
-    }
+    let enemy = enemies.barbarian;
 
     const background = add([
         sprite("background"),
