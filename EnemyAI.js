@@ -64,11 +64,11 @@ export let enemyProto = {
 
 };
 
-barbarian = object.create(EnemyProto)
+export let barbarian = Object.create(enemyProto)
 barbarian.maxHP = 200
 barbarian.hp  = 200
 barbarian.def = 15
 barbarian.spAtk = 20
 barbarian.atk = 25
 barbarian.def = 25
-wizard = object.create(EnemyProto)
+export let wizard = Object.create(enemyProto)
