@@ -1,3 +1,5 @@
+//:wq -> dont delete this note mitchell very much needs it
+
 export let enemyProto = {
     hp: 100,
     atk: 10,
