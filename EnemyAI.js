@@ -17,17 +17,6 @@ export let enemyProto = {
         window.setEnemyHealth(this.hp / this.maxHP);
         if(this.hp <= 0) this.die();
     },
-    getFlavor: function(){
-        if(this.flavorTracker = 0){
-            return "Barbarian lets out a battle cry!"
-        }
-        if(this.flavorTracker = 1){
-            return "Barbarian flinches!";
-        }
-        if(this.flavorTracker){
-            return "Barbarian uses his sword to keep himself standing!";
-        }
-    },
     enemyMove: function(player){
         this.flavorTracker++
     },
@@ -42,4 +31,15 @@ barbarian.atk = 25
 barbarian.def = 25
 barbarian.moves = []
 barbarian.flavorTracker = 0
+barbarian.getFlavor = function(){
+        if(this.flavorTracker == 0){
+            return "Barbarian lets out a battle cry!"
+        }
+        if(this.flavorTracker == 1){
+            return "Barbarian flinches!";
+        }
+        if(this.flavorTracker == 2){
+            return "Barbarian uses his sword to keep himself standing!";
+        }
+}
 export let wizard = Object.create(enemyProto)
