@@ -1,4 +1,4 @@
-let enemyProto = {
+export let enemyProto = {
     hp: 150,
     atk: 10,
     def: 10,
@@ -56,8 +56,13 @@ let enemyProto = {
     },
     getFlavor: ()=>{
         return "Mitchell Just Started to Implement This!";
+    },
+    enemyMove: function(player){
+
     }
+
+
 };
 
-Barbarian = object.create(EnemyProto)
-Wizard = object.create(EnemyProto)
+barbarian = object.create(EnemyProto)
+wizard = object.create(EnemyProto)
