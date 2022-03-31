@@ -24,7 +24,7 @@ scene("battle", ()=>{
         fullscreen(!isFullscreen())
 }   )
 
-    let eventQueue = new util.Queue();
+    let eventQueue = window.eventQueue = new util.Queue();
     onClick(()=>{
         if(!eventQueue.isEmpty){
             eventQueue.dequeue()();//why does this look so cursed?
