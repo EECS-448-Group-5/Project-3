@@ -80,7 +80,7 @@ scene("battle", ()=>{
         ]
     };
 
-    let enemy = enemies.enemyProto;
+    let enemy = enemies.barbarian;
 
     const background = add([
         sprite("background"),
@@ -144,6 +144,15 @@ scene("battle", ()=>{
     ])
     util.scaleToProp(playerHPBG, .3, .25);
 
+    const playerName = add([
+        text("Mareo", {
+            size: height()*.06,
+        }),
+        util.propPos(.325, .5),
+        origin("left"),
+        scale(1)
+    ])
+
     const playerHealth = add([
         sprite("HealthBarSection"),
         util.propPos(.35, .4),
@@ -173,6 +182,16 @@ scene("battle", ()=>{
         scale(1)
     ])
     util.scaleToProp(enemyHPBG, .3, .25);
+
+    const enemyName = add([
+        text(enemy.name, {
+            size: height()*.06,
+            width: width()*.25
+        }),
+        util.propPos(.425, .2),
+        origin("left"),
+        scale(1)
+    ])
 
     const enemyHealth = add([
         sprite("HealthBarSection"),
