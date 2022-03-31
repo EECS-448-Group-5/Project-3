@@ -4,7 +4,7 @@ export let enemyProto = {
     def: 10,
     spAtk: 10,
     spDef: 10,
-    name: defaultEnemy,
+    name: "defaultEnemy",
     statuses: [],
     moves: [
         {
@@ -65,4 +65,10 @@ export let enemyProto = {
 };
 
 barbarian = object.create(EnemyProto)
+barbarian.maxHP = 200
+barbarian.hp  = 200
+barbarian.def = 15
+barbarian.spAtk = 20
+barbarian.atk = 25
+barbarian.def = 25
 wizard = object.create(EnemyProto)
