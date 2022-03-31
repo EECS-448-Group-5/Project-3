@@ -231,7 +231,7 @@ scene("battle", ()=>{
     ]);
     onMouseMove(()=>{if(eventQueue.isEmpty) currentDescText.text = enemy.getFlavor();});
 
-    function printDescriptionText(desc){
+    let printDescriptionText = window.printDescriptionText = function(desc){
         currentDescText.text = desc;
     }
 
@@ -250,11 +250,11 @@ scene("battle", ()=>{
 
     }
 
-    function setPlayerHealth(percent){
+    window.setPlayerHealth = function(percent){
         util.scaleToProp(playerHealth, .225 * percent, -2);
     }
 
-    function setEnemyHealth(percent){
+    window.setEnemyHealth = function(percent){
         util.scaleToProp(enemyHealth, .225 * percent, -2);
     }
 
