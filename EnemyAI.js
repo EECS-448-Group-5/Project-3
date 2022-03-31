@@ -6,24 +6,31 @@ export let enemyProto = {
     spDef: 10,
     name: "defaultEnemy",
     statuses: [],
+    flavorTracker: 0,
     die: function(){
-        window.eventQueue.enqueue(()=>{printDescriptionText(enemyProto.name, "was defeated!")});
+        window.eventQueue.enqueue(()=>{printDescriptionText(enemyProto.name + " was defeated!")});
         window.eventQueue.enqueue(()=>{go("main")});
         window.eventQueue.dequeue()();
     },
     takeDamage: function(amt){
         this.hp -= amt;
-        setEnemyHealth(this.hp / this.maxHP);
+        window.setEnemyHealth(this.hp / this.maxHP);
         if(this.hp <= 0) this.die();
     },
-    getFlavor: ()=>{
-        return "Mitchell Just Started to Implement This!";
+    getFlavor: function(){
+        if(this.flavorTracker = 0){
+            return "Barbarian lets out a battle cry!"
+        }
+        if(this.flavorTracker = 1){
+            return "Barbarian flinches!";
+        }
+        if(this.flavorTracker){
+            return "Barbarian uses his sword to keep himself standing!";
+        }
     },
     enemyMove: function(player){
-        
-    }
-
-
+        this.flavorTracker++
+    },
 };
 
 export let barbarian = Object.create(enemyProto)
@@ -33,7 +40,6 @@ barbarian.def = 15
 barbarian.spAtk = 20
 barbarian.atk = 25
 barbarian.def = 25
-barbarian.moves = [
-
-]
+barbarian.moves = []
+barbarian.flavorTracker = 0
 export let wizard = Object.create(enemyProto)
