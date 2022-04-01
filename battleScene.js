@@ -72,7 +72,11 @@ scene("battle", ()=>{
                     setEnemyHealth(.25);
                     return "ow"}
             }
-        ]
+        ],
+        takeDamage: function(amt){
+            this.hp -= amt
+            window.setPlayerHealth(this.hp / this.maxHP);
+        }
     };
 
     let enemy = enemies.barbarian;
