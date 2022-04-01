@@ -32,7 +32,8 @@ barbarian.names = [
     "Greg the Barbarian", "Mitchell the Barbarian", "Hulk the Barbarian"
 ]
 barbarian.setName = function(){
-    return(this.moves[Math.floor(Math.random*this.names.length)])
+    let temp = (this.names[Math.floor(Math.random*barbarian.names.length)])
+    return(temp)
 }
 barbarian.name = barbarian.setName
 barbarian.moves = [
