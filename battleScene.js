@@ -30,6 +30,7 @@ scene("battle", ()=>{
     //add properties & change numbers as necessary
     let player = {
         hp: 100,
+        maxHP: 100,
         atk: 10,
         def: 10,
         spAtk: 10,
