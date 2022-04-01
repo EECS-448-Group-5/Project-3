@@ -61,7 +61,6 @@ barbarian.getFlavor = function(){
 }
 barbarian.enemyMove = function(player){
     this.flavorTracker++
-
-    
+    this.moves[Math.floor(Math.random*this.moves.length)]
 }
 export let wizard = Object.create(enemyProto)
