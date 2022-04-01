@@ -28,6 +28,13 @@ barbarian.def = 15
 barbarian.spAtk = 20
 barbarian.atk = 25
 barbarian.def = 25
+barbarian.names = [
+    "Greg the Barbarian", "Mitchell the Barbarian", "Hulk the Barbarian"
+]
+barbarian.setName = function(){
+    return(this.moves[Math.floor(Math.random*this.names.length)])
+}
+barbarian.name = barbarian.setName
 barbarian.moves = [
     {
         name: "Headbutt",
