@@ -32,8 +32,7 @@ barbarian.names = [
     "Greg the Barbarian", "Mitchell the Barbarian", "Hulk the Barbarian"
 ]
 barbarian.setName = function(){
-    let temp = (barbarian.names[Math.floor(Math.random*barbarian.names.length)])
-    return(temp)
+    return((barbarian.names[Math.floor(Math.random()*barbarian.names.length)]))
 }
 barbarian.name = barbarian.setName()
 barbarian.moves = [
@@ -69,6 +68,6 @@ barbarian.getFlavor = function(){
 }
 barbarian.enemyMove = function(player){
     this.flavorTracker++
-    this.moves[Math.floor(Math.random*this.moves.length)]
+    this.moves[Math.floor(Math.random()*this.moves.length)]
 }
 export let wizard = Object.create(enemyProto)
