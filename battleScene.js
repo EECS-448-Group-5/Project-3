@@ -14,7 +14,7 @@
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
     loadSprite("player1", "sprites/player1.png");
     loadSprite("Textbox", "sprites/Textbox.png");
-    loadSprite("wizard", "sprites/Wizard.png");
+    loadSprite("barbarian", "sprites/enemy1.png");
 
 scene("battle", ()=>{
 
@@ -99,7 +99,7 @@ scene("battle", ()=>{
     window.player = player;
 
     enemy.gameObj = add([
-        sprite("wizard"),
+        sprite("barbarian"),
         util.propPos(.8, .225),
         origin("center"),
         scale(1),
