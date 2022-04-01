@@ -28,6 +28,11 @@ barbarian.def = 15
 barbarian.spAtk = 20
 barbarian.atk = 25
 barbarian.def = 25
+barbarian.die = function(){
+    window.eventQueue.enqueue(()=>{printDescriptionText(barbarian.name + " was defeated!")});
+    window.eventQueue.enqueue(()=>{go("main")});
+    window.eventQueue.dequeue()();
+},
 barbarian.names = [
     "Grognak the Barbarian", "Thog the Barbarian", "Hulk the Barbarian"
 ]
