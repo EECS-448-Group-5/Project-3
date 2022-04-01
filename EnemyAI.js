@@ -72,5 +72,6 @@ barbarian.enemyMove = function(player){
     if(barbarian.flavorTracker >= 3){
         barbarian.flavorTracker = 0; 
     }
+    window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
 }
 export let wizard = Object.create(enemyProto)
