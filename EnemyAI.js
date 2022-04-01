@@ -55,9 +55,6 @@ barbarian.moves = [
     },
 ]
 barbarian.flavorTracker = 0
-if(barbarian.flavorTracker >= 3){
-    barbarian.flavorTracker = 0; 
-}
 barbarian.getFlavor = function(){
         if(this.flavorTracker == 0){
             return "Barbarian lets out a battle cry!"
@@ -72,5 +69,8 @@ barbarian.getFlavor = function(){
 barbarian.enemyMove = function(player){
     this.flavorTracker++
     this.moves[Math.floor(Math.random()*this.moves.length)]
+    if(barbarian.flavorTracker >= 3){
+        barbarian.flavorTracker = 0; 
+    }
 }
 export let wizard = Object.create(enemyProto)
