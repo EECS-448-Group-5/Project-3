@@ -14,7 +14,7 @@
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
     loadSprite("player1", "sprites/player1.png");
     loadSprite("Textbox", "sprites/Textbox.png");
-    loadSprite("barbarian", "sprites/enemy1.png");
+    loadSprite("barbarian", "sprites/barbarianpixel.png");
 
 scene("battle", ()=>{
 

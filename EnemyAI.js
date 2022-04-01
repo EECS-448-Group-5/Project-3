@@ -85,7 +85,7 @@ barbarian.getFlavor = function(){
             return "Barbarian lets out a battle cry!"
         }
         if(this.flavorTracker == 1){
-            return "Barbarian flinches!";
+            return "Barbarian awaits your next move!";
         }
         if(this.flavorTracker == 2){
             return "Barbarian uses his sword to keep himself standing!";
