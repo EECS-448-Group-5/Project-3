@@ -35,7 +35,7 @@ barbarian.moves = [
         func: ()=>{
             console.log("headbutt"); 
             player.takeDamage(20);
-            barbarian.takeDamage(30);
+            barbarian.takeDamage(15);
         }
     },
     {
@@ -61,7 +61,7 @@ barbarian.getFlavor = function(){
 }
 barbarian.enemyMove = function(player){
     this.flavorTracker++
-    
+
     
 }
 export let wizard = Object.create(enemyProto)
