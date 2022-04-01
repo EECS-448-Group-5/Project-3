@@ -136,43 +136,27 @@ wizard.setName = function(){
 wizard.name = wizard.setName()
 wizard.moves = [
     {
-        name: "Headbutt",
-        pretext: "Barbarian Charges forward with his helmet",
+        name: "Zap",
+        pretext: "The Wizard strikes you with lightning",
         func: ()=>{
-            console.log("headbutt"); 
+            console.log("zap"); 
             player.takeDamage(20);
             barbarian.takeDamage(15);
-            return("Barbarian returns to his battle stance.")
+            return("The Wizard mocks you")
         }
     },
     {
-        name: "Slash",
-        pretext: "Barbarian swings his longsword",
+        name: "Drain Spell",
+        pretext: "The Wizard stole some of your hp!",
         func: ()=>{
             console.log("slash"); 
             player.takeDamage(15);
-            return("Barbarian returns to his battle stance.")
+            //add a "addHealth function"
+            return("The Wizard appears stronger")
         }
     },
 ]
-wizard.specialMoves = [
-    {
-        name: "Final Charge",
-        pretext: "Barbarian charges with all his might!",
-        func: ()=>{
-            console.log("final charge"); 
-            let temp = Math.random()
-            if(temp > 0.5)
-            {
-                return("You dodged his attack!")
-            }
-            else{
-                player.takeDamage(30);
-                return("The Barbarian landed a huge hit!")
-            }
-        }
-    }
-]
+wizard.specialMoves = []
 wizard.flavorTracker = 0
 wizard.getFlavor = function(){
         if(this.flavorTracker == 0){
@@ -187,15 +171,6 @@ wizard.getFlavor = function(){
 }
 wizard.enemyMove = function(player, move){
     this.flavorTracker++
-    if(barbarian.hp<=30){
-        eventQueue.enqueue(()=>{
-            printDescriptionText(barbarian.specialMoves[0].pretext);
-        });
-        eventQueue.enqueue(()=>{
-            printDescriptionText(barbarian.specialMoves[0].func());
-        });
-    }
-    else{
         if(wizard.flavorTracker >= 3){
             wizard.flavorTracker = 0; 
         }
@@ -207,5 +182,4 @@ wizard.enemyMove = function(player, move){
             printDescriptionText(temp.func());
         });
         window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
-    }
 }
