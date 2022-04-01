@@ -66,12 +66,18 @@ barbarian.getFlavor = function(){
             return "Barbarian uses his sword to keep himself standing!";
         }
 }
-barbarian.enemyMove = function(player){
+barbarian.enemyMove = function(player, move){
     this.flavorTracker++
-    this.moves[Math.floor(Math.random()*this.moves.length)]
+    let temp = this.moves[Math.floor(Math.random()*this.moves.length)]
     if(barbarian.flavorTracker >= 3){
         barbarian.flavorTracker = 0; 
     }
     window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
+    eventQueue.enqueue(()=>{
+        printDescriptionText(temp.pretext);
+    });
+    eventQueue.enqueue(()=>{
+        printDescriptionText(temp.func());
+    });
 }
 export let wizard = Object.create(enemyProto)
