@@ -25,12 +25,7 @@ scene("battle", ()=>{
 }   )
 
     let eventQueue = window.eventQueue = new util.Queue();
-    onClick(()=>{
-        if(!eventQueue.isEmpty){
-            eventQueue.dequeue()();//why does this look so cursed?
-        }
-
-    })
+    
 
     //add properties & change numbers as necessary
     let player = {
@@ -261,9 +256,13 @@ scene("battle", ()=>{
         eventQueue.enqueue(()=>{
             printDescriptionText(move.func());
         });
+
         eventQueue.enqueue(()=>{
+            enemy.enemyMove(player);
+        })
+        /*eventQueue.enqueue(()=>{
             printDescriptionText(enemy.getFlavor());
-        });
+        });*/
 
         eventQueue.dequeue()();
 
@@ -276,6 +275,13 @@ scene("battle", ()=>{
     window.setEnemyHealth = function(percent){
         util.scaleToProp(enemyHealth, .225 * percent, -2);
     }
+
+    onClick(()=>{
+        if(!eventQueue.isEmpty){
+            eventQueue.dequeue()();//why does this look so cursed?
+        }
+
+    })
 
     drawMoveSelection();
 });
