@@ -8,7 +8,7 @@
     kaboom();//kaboom({width: 1920, height: 1080});
 
     loadSprite("background", "sprites/background.jpg");
-    loadSprite("BattlePlatform", "sprites/BattlePlatform.png");
+    loadSprite("BattlePlatform", "sprites/pixelplatform1.png");
     loadSprite("EmptyHealthbar", "sprites/EmptyHealthbar.png");
     loadSprite("HealthBackground", "sprites/HealthBackground.png");
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
@@ -84,7 +84,7 @@ scene("battle", ()=>{
 
     const background = add([
         sprite("background"),
-        pos(0,0),
+        pos(0,0), 
     ])
 
     player.gameObj = add([
@@ -100,7 +100,7 @@ scene("battle", ()=>{
 
     enemy.gameObj = add([
         sprite("barbarian"),
-        util.propPos(.8, .225),
+        util.propPos(.82, .28),
         origin("center"),
         scale(1),
         z(10)
