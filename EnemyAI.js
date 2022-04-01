@@ -72,12 +72,12 @@ barbarian.enemyMove = function(player, move){
     if(barbarian.flavorTracker >= 3){
         barbarian.flavorTracker = 0; 
     }
-    window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
     eventQueue.enqueue(()=>{
         printDescriptionText(temp.pretext);
     });
     eventQueue.enqueue(()=>{
         printDescriptionText(temp.func());
     });
+    window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
 }
 export let wizard = Object.create(enemyProto)
