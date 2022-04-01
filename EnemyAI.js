@@ -116,3 +116,96 @@ barbarian.enemyMove = function(player, move){
     }
 }
 export let wizard = Object.create(enemyProto)
+wizard.maxHP = 100
+wizard.hp  = 100
+wizard.def = 15
+wizard.spAtk = 20
+wizard.atk = 25
+wizard.def = 25
+wizard.die = function(){
+    window.eventQueue.enqueue(()=>{printDescriptionText(wizard.name + " was defeated!")});
+    window.eventQueue.enqueue(()=>{go("main")});
+    window.eventQueue.dequeue()();
+},
+wizard.names = [
+    "Erikson the Wise", "Gandolf the Old", "Paul the Ancient One"
+]
+wizard.setName = function(){
+    return((wizard.names[Math.floor(Math.random()*wizard.names.length)]))
+}
+wizard.name = wizard.setName()
+wizard.moves = [
+    {
+        name: "Headbutt",
+        pretext: "Barbarian Charges forward with his helmet",
+        func: ()=>{
+            console.log("headbutt"); 
+            player.takeDamage(20);
+            barbarian.takeDamage(15);
+            return("Barbarian returns to his battle stance.")
+        }
+    },
+    {
+        name: "Slash",
+        pretext: "Barbarian swings his longsword",
+        func: ()=>{
+            console.log("slash"); 
+            player.takeDamage(15);
+            return("Barbarian returns to his battle stance.")
+        }
+    },
+]
+wizard.specialMoves = [
+    {
+        name: "Final Charge",
+        pretext: "Barbarian charges with all his might!",
+        func: ()=>{
+            console.log("final charge"); 
+            let temp = Math.random()
+            if(temp > 0.5)
+            {
+                return("You dodged his attack!")
+            }
+            else{
+                player.takeDamage(30);
+                return("The Barbarian landed a huge hit!")
+            }
+        }
+    }
+]
+wizard.flavorTracker = 0
+wizard.getFlavor = function(){
+        if(this.flavorTracker == 0){
+            return "The Wizard chuckles!"
+        }
+        if(this.flavorTracker == 1){
+            return "The Wizard smirks at you!";
+        }
+        if(this.flavorTracker == 2){
+            return "The wizard begins to float off the ground!";
+        }
+}
+wizard.enemyMove = function(player, move){
+    this.flavorTracker++
+    if(barbarian.hp<=30){
+        eventQueue.enqueue(()=>{
+            printDescriptionText(barbarian.specialMoves[0].pretext);
+        });
+        eventQueue.enqueue(()=>{
+            printDescriptionText(barbarian.specialMoves[0].func());
+        });
+    }
+    else{
+        if(wizard.flavorTracker >= 3){
+            wizard.flavorTracker = 0; 
+        }
+        let temp = this.moves[Math.floor(Math.random()*this.moves.length)]
+        eventQueue.enqueue(()=>{
+            printDescriptionText(temp.pretext);
+        });
+        eventQueue.enqueue(()=>{
+            printDescriptionText(temp.func());
+        });
+        window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
+    }
+}
