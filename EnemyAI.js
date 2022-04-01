@@ -43,6 +43,7 @@ barbarian.moves = [
             console.log("headbutt"); 
             player.takeDamage(20);
             barbarian.takeDamage(15);
+            return("Barbarian returns to his battle stance")
         }
     },
     {
@@ -51,6 +52,7 @@ barbarian.moves = [
         func: ()=>{
             console.log("slash"); 
             player.takeDamage(15);
+            return("Barbarian returns to his battle stance")
         }
     },
 ]
