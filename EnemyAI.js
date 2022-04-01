@@ -18,10 +18,7 @@ export let enemyProto = {
         this.hp -= amt;
         window.setEnemyHealth(this.hp / this.maxHP);
         if(this.hp <= 0) this.die();
-    },
-    enemyMove: function(player){
-        this.flavorTracker++
-    },
+    }
 };
 
 export let barbarian = Object.create(enemyProto)
@@ -31,7 +28,25 @@ barbarian.def = 15
 barbarian.spAtk = 20
 barbarian.atk = 25
 barbarian.def = 25
-barbarian.moves = []
+barbarian.moves = [
+    {
+        name: "Headbutt",
+        pretext: "Barbarian Charges forward with his helmet",
+        func: ()=>{
+            console.log("headbutt"); 
+            player.takeDamage(20);
+            barbarian.takeDamage(30);
+        }
+    },
+    {
+        name: "Slash",
+        pretext: "Barbarian swings his longsword",
+        func: ()=>{
+            console.log("slash"); 
+            player.takeDamage(15);
+        }
+    },
+]
 barbarian.flavorTracker = 0
 barbarian.getFlavor = function(){
         if(this.flavorTracker == 0){
@@ -43,5 +58,10 @@ barbarian.getFlavor = function(){
         if(this.flavorTracker == 2){
             return "Barbarian uses his sword to keep himself standing!";
         }
+}
+barbarian.enemyMove = function(player){
+    this.flavorTracker++
+    
+    
 }
 export let wizard = Object.create(enemyProto)
