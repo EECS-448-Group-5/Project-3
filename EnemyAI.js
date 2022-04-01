@@ -29,7 +29,7 @@ barbarian.spAtk = 20
 barbarian.atk = 25
 barbarian.def = 25
 barbarian.names = [
-    "Greg the Barbarian", "Mitchell the Barbarian", "Hulk the Barbarian"
+    "Grognak the Barbarian", "Thog the Barbarian", "Hulk the Barbarian"
 ]
 barbarian.setName = function(){
     return((barbarian.names[Math.floor(Math.random()*barbarian.names.length)]))
@@ -55,6 +55,9 @@ barbarian.moves = [
     },
 ]
 barbarian.flavorTracker = 0
+if(barbarian.flavorTracker >= 3){
+    barbarian.flavorTracker = 0; 
+}
 barbarian.getFlavor = function(){
         if(this.flavorTracker == 0){
             return "Barbarian lets out a battle cry!"
