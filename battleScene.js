@@ -262,9 +262,8 @@ scene("battle", ()=>{
             printDescriptionText(move.func());
         });
 
-        eventQueue.enqueue(()=>{
-            enemy.enemyMove(player);
-        })
+        enemy.enemyMove(player);
+
         /*eventQueue.enqueue(()=>{
             printDescriptionText(enemy.getFlavor());
         });*/
