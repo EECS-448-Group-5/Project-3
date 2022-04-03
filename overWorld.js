@@ -1,7 +1,7 @@
           // import kaboom lib
           import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
         
-          import * as util from "./util.js";
+          //import * as util from "./util.js";
           //import "./battleScene.js";
 
 
@@ -12,6 +12,7 @@ kaboom({background:[60,60,60]});
 
 loadSprite("wall", "sprites/wall.jpg");
 loadSprite("player1", "sprites/player1.png");
+loadSprite("player1left", "sprites/player1left.png");
 loadSprite("enemy1", "sprites/enemy1.png");
 loadSprite("door", "sprites/door.png");
 loadSprite("WizardPixel", "sprites/WizardPixel.png");
@@ -157,8 +158,14 @@ const dirs = {
 
 for (const dir in dirs) {
 onKeyDown(dir, () => {
-player.move(dirs[dir].scale(SPEED))
-})
+    player.move(dirs[dir].scale(SPEED))
+        /*if(dir == "left"){
+            player.sprite("player1left")
+        }
+        if(dir == "right"){
+        player.sprite('player1')
+        }*/
+    })
 }
 
 })
