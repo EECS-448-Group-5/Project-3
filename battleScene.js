@@ -61,6 +61,7 @@ scene("battle", ()=>{
                 pretext: "You charge at the enemy",
                 func: function(){
                     enemy.takeDamage(player.def + 5);
+                    return "you slam into him with all your might!"
                 }
             },
             {
@@ -84,6 +85,10 @@ scene("battle", ()=>{
             }
             window.setPlayerHealth(this.hp / this.maxHP);
             if(this.hp <= 0) this.die();
+        },
+        die: function(){
+            eventQueue.enqueue(()=>printDescriptionText("You Died!!!"));
+            eventQueue.enqueue(()=>{go("overWorld", 0)});
         }
     };
 

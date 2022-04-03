@@ -11,7 +11,7 @@ export let enemyProto = {
     flavorTracker: 0,
     die: function(){
         window.eventQueue.enqueue(()=>{printDescriptionText(enemyProto.name + " was defeated!")});
-        window.eventQueue.enqueue(()=>{go("main")});
+        window.eventQueue.enqueue(()=>{go("overWorld", 0)});
         window.eventQueue.dequeue()();
     },
     takeDamage: function(amt){
