@@ -46,7 +46,7 @@ barbarian.moves = [
         pretext: "Barbarian Charges forward with his helmet",
         func: ()=>{
             console.log("headbutt"); 
-            player.takeDamage(20);
+            player.takeDamage(30);
             barbarian.takeDamage(15);
             return("Barbarian returns to his battle stance.")
         }
@@ -56,7 +56,7 @@ barbarian.moves = [
         pretext: "Barbarian swings his longsword",
         func: ()=>{
             console.log("slash"); 
-            player.takeDamage(15);
+            player.takeDamage(25);
             return("Barbarian returns to his battle stance.")
         }
     },
@@ -73,7 +73,7 @@ barbarian.specialMoves = [
                 return("You dodged his attack!")
             }
             else{
-                player.takeDamage(30);
+                player.takeDamage(40);
                 return("The Barbarian landed a huge hit!")
             }
         }

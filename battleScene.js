@@ -43,40 +43,47 @@ scene("battle", ()=>{
                 pretext: "You punch him",
                 func: ()=>{
                     console.log("punch1"); 
-                    enemy.takeDamage(25);
+                    enemy.takeDamage(35);
                     return "ow"}
             },
             {
-                name: "Punch",
-                desc: "punch him",
-                pretext: "You punch him",
-                func: ()=>{
-                    console.log("punch2"); 
-                    setEnemyHealth(.25);
-                    return "ow"}
+                name: "Block",
+                desc: "Increase defense stat",
+                pretext: "You raise your guard",
+                func: function(){
+                    player.def += 5;
+                    return "defense stat increased!"
+                }
             },
             {
-                name: "Punch",
-                desc: "punch him",
-                pretext: "You punch him",
-                func: ()=>{
-                    console.log("punch3"); 
-                    setEnemyHealth(.25);
-                    return "ow"}
+                name: "Body Slam",
+                desc: "deal damage equal to your defense",
+                pretext: "You charge at the enemy",
+                func: function(){
+                    enemy.takeDamage(player.def + 5);
+                }
             },
             {
-                name: "Punch",
-                desc: "punch him",
-                pretext: "You punch him",
-                func: ()=>{
-                    console.log("punch4"); 
-                    setEnemyHealth(.25);
-                    return "ow"}
+                name: "Heal",
+                desc: "restore your HP",
+                pretext: "you take a moment to recharge",
+                func: function(){
+                    player.hp += 30;
+                    if(player.hp > player.maxHP) player.hp = player.maxHP;
+
+                    setPlayerHealth(player.hp / player.maxHP);
+                    return "you healed some of your HP!";
+                }
             }
         ],
         takeDamage: function(amt){
-            this.hp -= amt
+            if(amt > this.def){
+                this.hp -= (amt - this.def)
+            }else{
+                this.hp--;
+            }
             window.setPlayerHealth(this.hp / this.maxHP);
+            if(this.hp <= 0) this.die();
         }
     };
 
