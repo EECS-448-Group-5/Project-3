@@ -5,7 +5,7 @@
     import * as enemies from "./EnemyAI.js";
     
     // initialize kaboom context
-    kaboom();//kaboom({width: 1920, height: 1080});
+    //kaboom();//kaboom({width: 1920, height: 1080});
 
     loadSprite("background", "sprites/background.jpg");
     loadSprite("BattlePlatform", "sprites/pixelplatform1.png");
