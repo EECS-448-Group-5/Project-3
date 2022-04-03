@@ -23,7 +23,7 @@ scene("battle", ()=>{
     
 
     //add properties & change numbers as necessary
-    let player = {
+    let player = window.player = {
         hp: 100,
         maxHP: 100,
         atk: 10,//unused

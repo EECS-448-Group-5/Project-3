@@ -10,7 +10,7 @@ export let enemyProto = {
     statuses: [],
     flavorTracker: 0,
     die: function(){
-        window.eventQueue.enqueue(()=>{printDescriptionText(enemyProto.name + " was defeated!")});
+        window.eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
         window.eventQueue.enqueue(()=>{go("overWorld", 0)});
         window.eventQueue.dequeue()();
     },
@@ -28,11 +28,6 @@ barbarian.def = 15
 barbarian.spAtk = 20
 barbarian.atk = 25
 barbarian.def = 25
-barbarian.die = function(){
-    window.eventQueue.enqueue(()=>{printDescriptionText(barbarian.name + " was defeated!")});
-    window.eventQueue.enqueue(()=>{go("main")});
-    window.eventQueue.dequeue()();
-},
 barbarian.names = [
     "Grognak the Barbarian", "Thog the Barbarian", "Hulk the Barbarian"
 ]
@@ -122,11 +117,6 @@ wizard.def = 10
 wizard.spAtk = 30
 wizard.atk = 30
 wizard.def = 10
-wizard.die = function(){
-    window.eventQueue.enqueue(()=>{printDescriptionText(wizard.name + " was defeated!")});
-    window.eventQueue.enqueue(()=>{go("main")});
-    window.eventQueue.dequeue()();
-},
 wizard.names = [
     "Erikson the Wise", "Gandolf the Old", "Paul the Ancient One"
 ]
