@@ -1,7 +1,8 @@
           // import kaboom lib
           import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
         
-          import * as util from "./util.js";
+          //import * as util from "./util.js";
+          //import "./battleScene.js";
 
 
 
@@ -11,9 +12,11 @@ kaboom({background:[60,60,60]});
 
 loadSprite("wall", "sprites/wall.jpg");
 loadSprite("player1", "sprites/player1.png");
+loadSprite("player1left", "sprites/player1left.png");
 loadSprite("enemy1", "sprites/enemy1.png");
 loadSprite("door", "sprites/door.png");
 loadSprite("WizardPixel", "sprites/WizardPixel.png");
+loadSprite("BarbarianPixel", "sprites/BarbarianPixel.png");
 
 
 
@@ -33,15 +36,23 @@ const levels = [
 [
 "=======|========",
 "=====     ======",
+"=      !       =",
 "=              =",
-"=           @  =",
 "=              =",
 "=              =",
 "= $            =",
 "================",
 ],
-//level two, MARIO vs DR. Jonhson
+//level two, MARIO vs Wizard
 [
+    "================",
+    "=              =",
+    "=      @       =",
+    "=              =",
+    "=              =",
+    "=              =",
+    "=====  $  ======",
+    "=======|========",
 
 ],
 ]
@@ -71,9 +82,19 @@ sprite("WizardPixel"),
 area(),
 solid(),
 "WizardPixel",
-scale(0.4),     
+scale(0.4),    
+ 
 
 ],
+
+"!": () => [
+    sprite("BarbarianPixel"),
+    area(),
+    solid(),
+    "BarbarianPixel",
+    scale(0.4),   
+],
+ 
 "$": () => [
 sprite("player1"),
 area(),
@@ -88,16 +109,27 @@ const player = get("player1")[0]
 let enemyDead = false;
 
 
-player.onCollide("WizardPixel", (WizardPixel,door) => {
-destroy(WizardPixel)
+player.onCollide("BarbarianPixel", (BarbarianPixel) => {
+destroy(BarbarianPixel)
 enemyDead = true;
 debug.log("go to battle scene");
+go("battle", 0);
 })
+
+player.onCollide("WizardPixel", (WizardPixel) => {
+    destroy(WizardPixel)
+    enemyDead = true;
+    debug.log("go to battle scene with stinky wizard");
+    //go("battle", 0);
+    })
 
 
 player.onCollide("door", (door) => {
 destroy(door)
 debug.log("Next level...");
+if (levelIndex + 1 < levels.length) {
+    go("overWorld", levelIndex + 1)
+  } 
 })
 
 /*
@@ -126,10 +158,16 @@ const dirs = {
 
 for (const dir in dirs) {
 onKeyDown(dir, () => {
-player.move(dirs[dir].scale(SPEED))
-})
+    player.move(dirs[dir].scale(SPEED))
+        /*if(dir == "left"){
+            player.sprite("player1left")
+        }
+        if(dir == "right"){
+        player.sprite('player1')
+        }*/
+    })
 }
 
 })
 
-go("overWorld",0)
+go("overWorld",0)            
