@@ -1,7 +1,11 @@
+//returns a position given the desired x,y location on screen (0 < x,y < 1)
 export function propPos(xPercent, yPercent){
     return pos(width() * xPercent, height() * yPercent);
 }
 
+//scales the object to take up a given percentage of the width/height of the screen. 0 < x,y < 1 or x,y = -1 or -2.
+//x,y = -1  =>  scale the other axis as needed, maintain aspect ratio
+//x,y = -2  =>  keep the scale the same as it was before
 export function scaleToProp(obj, xPercent, yPercent){
     onLoad(()=>{
     let xScale, yScale;

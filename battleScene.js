@@ -18,12 +18,7 @@
 
 scene("battle", ()=>{
 
-    
-
-    onKeyPress("f", (c) => {
-        fullscreen(!isFullscreen())
-}   )
-
+    //queue to add events that happen whenever the player clicks (e.g. making an advancing textbox)
     let eventQueue = window.eventQueue = new util.Queue();
     
 
@@ -31,14 +26,15 @@ scene("battle", ()=>{
     let player = {
         hp: 100,
         maxHP: 100,
-        atk: 10,
-        def: 10,
-        spAtk: 10,
-        spDef: 10,
-        statuses: [],
+        atk: 10,//unused
+        def: 10,//incoming damage reduced by def
+        spAtk: 10,//unused
+        spDef: 10,//unused
+        statuses: [],//unused
+        //each move object has a few 
         moves: [
             {
-                name: "Punch",
+                name: "Punch",//standard damaging move
                 desc: "punch him",
                 pretext: "You punch him",
                 func: ()=>{
@@ -47,7 +43,7 @@ scene("battle", ()=>{
                     return "ow"}
             },
             {
-                name: "Block",
+                name: "Block",//permanently increase defense stat
                 desc: "Increase defense stat",
                 pretext: "You raise your guard",
                 func: function(){
@@ -56,7 +52,7 @@ scene("battle", ()=>{
                 }
             },
             {
-                name: "Body Slam",
+                name: "Body Slam",//deal damage equal to your defense stat
                 desc: "deal damage equal to your defense",
                 pretext: "You charge at the enemy",
                 func: function(){
@@ -65,7 +61,7 @@ scene("battle", ()=>{
                 }
             },
             {
-                name: "Heal",
+                name: "Heal",//recover hp
                 desc: "restore your HP",
                 pretext: "you take a moment to recharge",
                 func: function(){
@@ -77,14 +73,14 @@ scene("battle", ()=>{
                 }
             }
         ],
-        takeDamage: function(amt){
+        takeDamage: function(amt){//calculate and lose hp according to incoming damage amount
             if(amt > this.def){
                 this.hp -= (amt - this.def)
             }else{
-                this.hp--;
+                this.hp--;//always take at least 1 damage
             }
-            window.setPlayerHealth(this.hp / this.maxHP);
-            if(this.hp <= 0) this.die();
+            window.setPlayerHealth(this.hp / this.maxHP);//update healthbar
+            if(this.hp <= 0) this.die(); //die if necessary
         },
         die: function(){
             eventQueue.enqueue(()=>printDescriptionText("You Died!!!"));
@@ -92,8 +88,11 @@ scene("battle", ()=>{
         }
     };
 
+    //use the barbarian enemy for this scene
     let enemy = enemies.barbarian;
 
+
+    //creating game objects
     const background = add([
         sprite("background"),
         pos(0,0), 
@@ -101,14 +100,12 @@ scene("battle", ()=>{
 
     player.gameObj = add([
         sprite("player1"),
-        util.propPos(.2, .45),//pos(width()/2 - 50, height()/2 - 50),
+        util.propPos(.2, .45),
         origin("center"),
         scale(1),
         z(10)
     ])
     util.scaleToProp(player.gameObj, -1, .4);
-
-    window.player = player;
 
     enemy.gameObj = add([
         sprite("barbarian"),
@@ -118,8 +115,6 @@ scene("battle", ()=>{
         z(10)
     ])
     util.scaleToProp(enemy.gameObj, -1, .4);
-
-    //util.scaleToProp(enemy, -1, .25)
 
     const player_platform = add([
         sprite("BattlePlatform"),
@@ -224,7 +219,7 @@ scene("battle", ()=>{
 
 
 
-
+    //draw move selection on the screen
     function drawMoveSelection(){
         let move1 = drawMove(.15, .8, player.moves[0]); 
         let move2 = drawMove(.3, .8, player.moves[1]);
@@ -232,17 +227,18 @@ scene("battle", ()=>{
         let move4 = drawMove(.3, .9, player.moves[3]);
     }
 
+    //draws a move at a specified location on screen (x and y between 0 and 1)
     function drawMove(x, y, move){
         let moveText = add([
             text(move.name, {
                 size: height()*.06,
-                //width: width()*.4
             }),
             origin("center"),
             util.propPos(x, y),
             area({ cursor: "pointer"}),
             scale(1)
         ])
+        //add the necessary events for interacting with the move
         moveText.onClick(()=>{if(eventQueue.isEmpty) playerMove(move)});
         moveText.onHover(()=>{
             if(eventQueue.isEmpty)
@@ -251,6 +247,7 @@ scene("battle", ()=>{
         return moveText;
     }
 
+    //text on the right side of the textbox.
     let currentDescText = add([
         text(enemy.getFlavor(), {
             size: height()*.06,
@@ -260,12 +257,15 @@ scene("battle", ()=>{
         origin("center"),
         scale(1)
     ]);
+    //event to reset description text when the player is not hovering over a move.
     onMouseMove(()=>{if(eventQueue.isEmpty) currentDescText.text = enemy.getFlavor();});
 
+    //change the description text
     let printDescriptionText = window.printDescriptionText = function(desc){
         currentDescText.text = desc;
     }
 
+    //function to perform a move by the player and move to the enemy turn.
     function playerMove(move){
         eventQueue.enqueue(()=>{
             printDescriptionText(move.pretext);
@@ -284,14 +284,17 @@ scene("battle", ()=>{
 
     }
 
+    //function to set the player's healthbar as a percent of full hp.
     window.setPlayerHealth = function(percent){
         util.scaleToProp(playerHealth, .225 * percent, -2);
     }
 
+    //function to set the enemy's healthbar as a percent of full hp.
     window.setEnemyHealth = function(percent){
         util.scaleToProp(enemyHealth, .225 * percent, -2);
     }
 
+    //event to progress the event queue when the player clicks.
     onClick(()=>{
         if(!eventQueue.isEmpty){
             eventQueue.dequeue()();//why does this look so cursed?
