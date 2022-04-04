@@ -1,6 +1,6 @@
 //:wq -> dont delete this note mitchell very much needs it
 
-export let enemyProto = {
+export let enemyProto = { //prototype for enemy objects
     hp: 100,
     atk: 10,
     def: 10,
@@ -9,6 +9,7 @@ export let enemyProto = {
     name: "defaultEnemy",
     statuses: [],
     flavorTracker: 0,
+    //prototype function for enemy death. Returns to overworld
     die: function(){
         window.eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
         window.eventQueue.enqueue(()=>{go("overWorld", 0)});
@@ -20,7 +21,7 @@ export let enemyProto = {
         if(this.hp <= 0) this.die();
     }
 };
-
+//Defining Barbarian Type
 export let barbarian = Object.create(enemyProto)
 barbarian.maxHP = 200
 barbarian.hp  = 200
@@ -86,6 +87,7 @@ barbarian.getFlavor = function(){
             return "Barbarian uses his sword to keep himself standing!";
         }
 }
+//Barbarian move selection. Barbarian will select a random move unless at low health.
 barbarian.enemyMove = function(player, move){
     this.flavorTracker++
     if(barbarian.hp<=30){
@@ -110,6 +112,7 @@ barbarian.enemyMove = function(player, move){
         window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
     }
 }
+//Defining Wizard Type
 export let wizard = Object.create(enemyProto)
 wizard.maxHP = 100
 wizard.hp  = 100
