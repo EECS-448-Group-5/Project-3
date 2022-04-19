@@ -158,17 +158,17 @@ scene("battle", ()=>{
 
     //draw move selection on the screen
     let moveTxts = []
-    function drawMoveSelection(moves){
+    function drawMoveSelection(moves, func=playerMove){
         moveTxts.forEach( txt=>{destroy(txt)} )
 
-        moveTxts.push(drawMove(.15, .8, moves[0])) 
-        moveTxts.push(drawMove(.3, .8, moves[1]));
-        moveTxts.push(drawMove(.15, .9, moves[2]));
-        moveTxts.push(drawMove(.3, .9, moves[3]));
+        moveTxts.push(drawMove(.15, .8, moves[0], func)) 
+        moveTxts.push(drawMove(.3, .8, moves[1], func));
+        moveTxts.push(drawMove(.15, .9, moves[2], func));
+        moveTxts.push(drawMove(.3, .9, moves[3], func));
     }
 
     //draws a move at a specified location on screen (x and y between 0 and 1)
-    function drawMove(x, y, move, func=playerMove){
+    function drawMove(x, y, move, func){
         let moveText = add([
             text(move.name, {
                 size: height()*.06,
@@ -179,7 +179,7 @@ scene("battle", ()=>{
             scale(1)
         ])
         //add the necessary events for interacting with the move
-        moveText.onClick(()=>{if(isMoveSelection()) func(move)});
+        moveText.onClick(()=>{func(move)});
         moveText.onHover(()=>{
             if(eventQueue.isEmpty)
                 printDescriptionText(move.desc);
@@ -198,15 +198,25 @@ scene("battle", ()=>{
         scale(1)
     ]);
     //event to reset description text when the player is not hovering over a move.
-    onMouseMove(()=>{if(isMoveSelection()) currentDescText.text = enemy.getFlavor();});
+    onMouseMove(()=>{if(isMoveSelection() || levelling) currentDescText.text = getDefaultText();});
 
     //change the description text
     let printDescriptionText = window.printDescriptionText = function(desc){
         currentDescText.text = desc;
     }
 
+    let defaultText="If you see this, it's a bug"
+    function getDefaultText(){
+        if(!levelling){
+            return enemy.getFlavor()
+        }else{
+            return defaultText
+        }
+    }
     //function to perform a move by the player and move to the enemy turn.
     function playerMove(move){
+        if(!isMoveSelection()) return
+
         eventQueue.enqueue(()=>{
             printDescriptionText(move.pretext);
         });
@@ -235,25 +245,30 @@ scene("battle", ()=>{
     }
 
 
+    //this is the worst possible way of implementing this sort of sequence, but it works
     let levelling = false
     window.levelUp = function(){
         player.lvl++
         let moves = [...player.moves].reverse()//movePool.getRandomOptions(player)
 
         levelling = true
+        defaultText = "Choose a new move to learn!"
 
+        
         drawMoveSelection(moves, selectMove)
 
     }
 
     function selectMove(newMove){
-        
+        console.log("Selected", newMove.name)
+        defaultText = "Which move would you like to replace with '"+newMove.name+"'?"
         drawMoveSelection(player.moves, (move)=>{replaceMove(move, newMove)})
     }
 
     function replaceMove(move, newMove){
+        console.log("Replacing", move.name, "with", newMove.name)
         player.moves[player.moves.indexOf(move)] = newMove
-        //increaseStats()
+        //increaseStats() TODO implement (automatic? Preferably choose a stat to increase)
     }
 
 

@@ -12,7 +12,7 @@ export let enemyProto = { //prototype for enemy objects
     //prototype function for enemy death. Returns to overworld
     die: function(){
         window.eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
-        window.eventQueue.enqueue(()=>{go("overWorld", 0)});
+        window.eventQueue.enqueue(()=>{levelUp()});
         window.eventQueue.dequeue()();
     },
     takeDamage: function(amt){
