@@ -3,6 +3,7 @@
     import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
     import * as util from "./util.js";
     import * as enemies from "./EnemyAI.js";
+    import * as Player from "./player.js";
     
     // initialize kaboom context
     //kaboom();//kaboom({width: 1920, height: 1080});
@@ -22,74 +23,10 @@ scene("battle", ()=>{
     let eventQueue = window.eventQueue = new util.Queue();
     
 
-    //add properties & change numbers as necessary
-    let player = window.player = {
-        hp: 100,
-        maxHP: 100,
-        atk: 10,//unused
-        def: 10,//incoming damage reduced by def
-        spAtk: 10,//unused
-        spDef: 10,//unused
-        statuses: [],//unused
-        //each move object has a few 
-        moves: [
-            {
-                name: "Punch",//standard damaging move
-                desc: "punch him",
-                pretext: "You punch him",
-                func: ()=>{
-                    console.log("punch1"); 
-                    enemy.takeDamage(35);
-                    return "ow"}
-            },
-            {
-                name: "Block",//permanently increase defense stat
-                desc: "Increase defense stat",
-                pretext: "You raise your guard",
-                func: function(){
-                    player.def += 5;
-                    return "defense stat increased!"
-                }
-            },
-            {
-                name: "Body Slam",//deal damage equal to your defense stat
-                desc: "deal damage equal to your defense",
-                pretext: "You charge at the enemy",
-                func: function(){
-                    enemy.takeDamage(player.def + 5);
-                    return "you slam into him with all your might!"
-                }
-            },
-            {
-                name: "Heal",//recover hp
-                desc: "restore your HP",
-                pretext: "you take a moment to recharge",
-                func: function(){
-                    player.hp += 30;
-                    if(player.hp > player.maxHP) player.hp = player.maxHP;
-
-                    setPlayerHealth(player.hp / player.maxHP);
-                    return "you healed some of your HP!";
-                }
-            }
-        ],
-        takeDamage: function(amt){//calculate and lose hp according to incoming damage amount
-            if(amt > this.def){
-                this.hp -= (amt - this.def)
-            }else{
-                this.hp--;//always take at least 1 damage
-            }
-            window.setPlayerHealth(this.hp / this.maxHP);//update healthbar
-            if(this.hp <= 0) this.die(); //die if necessary
-        },
-        die: function(){
-            eventQueue.enqueue(()=>printDescriptionText("You Died!!!"));
-            eventQueue.enqueue(()=>{go("overWorld", 0)});
-        }
-    };
+    let player = Player.player
 
     //use the barbarian enemy for this scene
-    let enemy = enemies.barbarian;
+    let enemy = window.enemy = enemies.barbarian;
 
 
     //creating game objects
@@ -220,15 +157,18 @@ scene("battle", ()=>{
 
 
     //draw move selection on the screen
-    function drawMoveSelection(){
-        let move1 = drawMove(.15, .8, player.moves[0]); 
-        let move2 = drawMove(.3, .8, player.moves[1]);
-        let move3 = drawMove(.15, .9, player.moves[2]);
-        let move4 = drawMove(.3, .9, player.moves[3]);
+    let moveTxts = []
+    function drawMoveSelection(moves){
+        moveTxts.forEach( txt=>{destroy(txt)} )
+
+        moveTxts.push(drawMove(.15, .8, moves[0])) 
+        moveTxts.push(drawMove(.3, .8, moves[1]));
+        moveTxts.push(drawMove(.15, .9, moves[2]));
+        moveTxts.push(drawMove(.3, .9, moves[3]));
     }
 
     //draws a move at a specified location on screen (x and y between 0 and 1)
-    function drawMove(x, y, move){
+    function drawMove(x, y, move, func=playerMove){
         let moveText = add([
             text(move.name, {
                 size: height()*.06,
@@ -239,7 +179,7 @@ scene("battle", ()=>{
             scale(1)
         ])
         //add the necessary events for interacting with the move
-        moveText.onClick(()=>{if(eventQueue.isEmpty) playerMove(move)});
+        moveText.onClick(()=>{if(isMoveSelection()) func(move)});
         moveText.onHover(()=>{
             if(eventQueue.isEmpty)
                 printDescriptionText(move.desc);
@@ -258,7 +198,7 @@ scene("battle", ()=>{
         scale(1)
     ]);
     //event to reset description text when the player is not hovering over a move.
-    onMouseMove(()=>{if(eventQueue.isEmpty) currentDescText.text = enemy.getFlavor();});
+    onMouseMove(()=>{if(isMoveSelection()) currentDescText.text = enemy.getFlavor();});
 
     //change the description text
     let printDescriptionText = window.printDescriptionText = function(desc){
@@ -294,6 +234,33 @@ scene("battle", ()=>{
         util.scaleToProp(enemyHealth, .225 * percent, -2);
     }
 
+
+    let levelling = false
+    window.levelUp = function(){
+        player.lvl++
+        let moves = [...player.moves].reverse()//movePool.getRandomOptions(player)
+
+        levelling = true
+
+        drawMoveSelection(moves, selectMove)
+
+    }
+
+    function selectMove(newMove){
+        
+        drawMoveSelection(player.moves, (move)=>{replaceMove(move, newMove)})
+    }
+
+    function replaceMove(move, newMove){
+        player.moves[player.moves.indexOf(move)] = newMove
+        //increaseStats()
+    }
+
+
+    function isMoveSelection(){
+        return eventQueue.isEmpty && !levelling
+    }
+
     //event to progress the event queue when the player clicks.
     onClick(()=>{
         if(!eventQueue.isEmpty){
@@ -302,5 +269,5 @@ scene("battle", ()=>{
 
     })
 
-    drawMoveSelection();
+    drawMoveSelection(player.moves);
 });
