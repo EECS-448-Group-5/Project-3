@@ -1,7 +1,7 @@
 //:wq -> dont delete this note mitchell very much needs it
 
 //at the top of each enemy file, need the following:
-//import { enemyProto } from "./EnemyAI";
+//import { enemyProto } from "./EnemyAI.js";
 
 //when creating an enemy, you can use the following functionality
 
