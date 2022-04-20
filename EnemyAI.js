@@ -1,28 +1,115 @@
 //:wq -> dont delete this note mitchell very much needs it
 
+//at the top of each enemy file, need the following:
+//import { enemyProto } from "./EnemyAI";
+
+//when creating an enemy, you can use the following functionality
+
+//objectName.setStats(maxHP, hp, atk, def, spAtk, spDef);
+//objectName.setRandomName(name1, name2, name3);
+//objectName.setFlavors(flavor1, flavor2, flavor3);
+//objectName.getFlavor();
+//objectName.changeFlavor();
+
+
+//in addition, you can damage the enemy
+//objectName.takeDamage();
+
+//movepools should be created in separate .js file
+//but you can tie those moves to the enemy using the following
+
+//objectName.setMoves(moves);
+//objectName.setSpecialMoves(moves);
+
+//in general, moves should have the following properties:
+//name
+//pretext
+//func() -- function that operationally performs the move
+
+//each enemy file will also need a enemyMove function that
+//tells the enemy what to do on each move, general ideas:
+//change flavor tracker
+//logic that dictates what types of moves are chosen
+
 export let enemyProto = { //prototype for enemy objects
+    //statuses
+    statuses: [],
+
+    //enemy statistics
+    maxHP: 100,
     hp: 100,
     atk: 10,
     def: 10,
     spAtk: 10,
     spDef: 10,
-    name: "defaultEnemy",
-    statuses: [],
+    setStats: function(m_maxHP, m_hp, m_atk, m_def, m_spAtk, m_spDef){ 
+        maxHP = m_maxHP;
+        hp = m_hp;
+        atk = m_atk;
+        def = m_def;
+        spAtk = m_spAtk;
+        spDef = m_spDef;
+    },
+
+    //enemy name
+    name: "",
+    setRandomName: function(name1, name2, name3){
+        let names = [name1, name2, name3];
+        this.name = this.names[Math.floor(Math.random()*this.names.length)];
+    },
+
+    //enemy flavors
     flavorTracker: 0,
-    //prototype function for enemy death. Returns to overworld
+    flavors: [],
+    setFlavors: function(flavor1, flavor2, flavor3){
+        this.flavors = [flavor1, flavor2, flavor3];
+    },
+    getFlavor: function(){
+        if(this.flavorTracker == 0){
+            return this.flavors(0);
+        }
+        else if(this.flavorTracker == 1){
+            return this.flavors(1);
+        }
+        else if(this.flavorTracker == 2){
+            return this.flavors(2);
+        }
+    },
+    changeFlavor: function(){
+        if(flavorTracker > 2){
+            this.flavorTracker = 0;
+        }
+        else {
+            this.flavorTracker++;
+        }
+    },
+
+    //enemy moves
+    moves: [],
+    specialMoves: [],
+    setMoves: function(m_moves){
+        moves = m_moves;
+    },
+    setSpecialMoves: function(m_specialMoves){
+        specialMoves = m_specialMoves;
+    },
+
+    //damage functions
+    takeDamage: function(amt){
+        this.hp -= amt;
+        window.setEnemyHealth(this.hp/this.maxHP);
+        if(this.hp <= 0) {
+            this.die();
+        }
+    },
     die: function(){
         window.eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
         window.eventQueue.enqueue(()=>{levelUp()});
         window.eventQueue.dequeue()();
-    },
-    takeDamage: function(amt){
-        this.hp -= amt;
-        window.setEnemyHealth(this.hp / this.maxHP);
-        if(this.hp <= 0) this.die();
     }
 };
 //Defining Barbarian Type
-export let barbarian = Object.create(enemyProto)
+/*export let barbarian = Object.create(enemyProto)
 barbarian.maxHP = 200
 barbarian.hp  = 200
 barbarian.def = 15
@@ -111,7 +198,7 @@ barbarian.enemyMove = function(player, move){
         });
         window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
     }
-}
+}*/
 //Defining Wizard Type
 export let wizard = Object.create(enemyProto)
 wizard.maxHP = 100
