@@ -43,19 +43,19 @@ export let enemyProto = { //prototype for enemy objects
     spAtk: 10,
     spDef: 10,
     setStats: function(m_maxHP, m_hp, m_atk, m_def, m_spAtk, m_spDef){ 
-        maxHP = m_maxHP;
-        hp = m_hp;
-        atk = m_atk;
-        def = m_def;
-        spAtk = m_spAtk;
-        spDef = m_spDef;
+        this.maxHP = m_maxHP;
+        this.hp = m_hp;
+        this.atk = m_atk;
+        this.def = m_def;
+        this.spAtk = m_spAtk;
+        this.spDef = m_spDef;
     },
 
     //enemy name
     name: "",
     setRandomName: function(name1, name2, name3){
         let names = [name1, name2, name3];
-        this.name = this.names[Math.floor(Math.random()*this.names.length)];
+        this.name = names[Math.floor(Math.random()*names.length)];
     },
 
     //enemy flavors
@@ -66,17 +66,17 @@ export let enemyProto = { //prototype for enemy objects
     },
     getFlavor: function(){
         if(this.flavorTracker == 0){
-            return this.flavors(0);
+            return this.flavors[0];
         }
         else if(this.flavorTracker == 1){
-            return this.flavors(1);
+            return this.flavors[1];
         }
         else if(this.flavorTracker == 2){
-            return this.flavors(2);
+            return this.flavors[2];
         }
     },
     changeFlavor: function(){
-        if(flavorTracker > 2){
+        if(this.flavorTracker > 2){
             this.flavorTracker = 0;
         }
         else {
@@ -88,10 +88,10 @@ export let enemyProto = { //prototype for enemy objects
     moves: [],
     specialMoves: [],
     setMoves: function(m_moves){
-        moves = m_moves;
+        this.moves = m_moves;
     },
     setSpecialMoves: function(m_specialMoves){
-        specialMoves = m_specialMoves;
+        this.specialMoves = m_specialMoves;
     },
 
     //damage functions
@@ -200,7 +200,7 @@ barbarian.enemyMove = function(player, move){
     }
 }*/
 //Defining Wizard Type
-export let wizard = Object.create(enemyProto)
+/*export let wizard = Object.create(enemyProto)
 wizard.maxHP = 100
 wizard.hp  = 100
 wizard.def = 10
@@ -262,4 +262,4 @@ wizard.enemyMove = function(player, move){
             printDescriptionText(temp.func());
         });
         window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
-}
+}*/
