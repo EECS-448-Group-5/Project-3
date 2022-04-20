@@ -5,6 +5,7 @@
     //import * as enemies from "./EnemyAI.js";
     import * as barbarian from "./barbarian.js";
     import * as Player from "./player.js";
+    import { getEnemy } from "./enemies.js";
     
     // initialize kaboom context
     //kaboom();//kaboom({width: 1920, height: 1080});
@@ -18,7 +19,7 @@
     loadSprite("Textbox", "sprites/Textbox.png");
     loadSprite("barbarian", "sprites/barbarianpixel.png");
 
-scene("battle", ()=>{
+scene("battle", (name)=>{
 
     //queue to add events that happen whenever the player clicks (e.g. making an advancing textbox)
     let eventQueue = window.eventQueue = new util.Queue();
@@ -27,7 +28,7 @@ scene("battle", ()=>{
     let player = Player.player
 
     //use the barbarian enemy for this scene
-    let enemy = window.enemy = barbarian.barbarian;
+    let enemy = window.enemy = getEnemy(name);
 
 
     //creating game objects
