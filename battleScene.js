@@ -2,7 +2,8 @@
     // import kaboom lib //test push
     import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
     import * as util from "./util.js";
-    import * as enemies from "./EnemyAI.js";
+    //import * as enemies from "./EnemyAI.js";
+    import * as barbarian from "./barbarian.js";
     import * as Player from "./player.js";
     
     // initialize kaboom context
@@ -26,7 +27,7 @@ scene("battle", ()=>{
     let player = Player.player
 
     //use the barbarian enemy for this scene
-    let enemy = window.enemy = enemies.barbarian;
+    let enemy = window.enemy = barbarian.barbarian;
 
 
     //creating game objects

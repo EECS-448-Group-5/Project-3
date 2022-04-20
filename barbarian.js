@@ -1,4 +1,4 @@
-import { enemyProto } from "./EnemyAI";
+import { enemyProto } from "./EnemyAI.js";
 
 export let barbarian = Object.create(enemyProto);
 barbarian.setStats(200, 200, 15, 20, 25, 25);
@@ -60,7 +60,7 @@ barbarian.enemyMove = function(player, move){
         });
     }
     else{
-        let temp = this.moves[Math.floor(Math.random()*this.moves.length)]
+        let temp = barbarian.moves[Math.floor(Math.random()*barbarian.moves.length)]
         eventQueue.enqueue(()=>{
             printDescriptionText(temp.pretext);
         });
