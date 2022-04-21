@@ -76,11 +76,9 @@ export let enemyProto = { //prototype for enemy objects
         }
     },
     changeFlavor: function(){
+        this.flavorTracker++;
         if(this.flavorTracker > 2){
             this.flavorTracker = 0;
-        }
-        else {
-            this.flavorTracker++;
         }
     },
 

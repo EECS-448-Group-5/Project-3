@@ -114,7 +114,7 @@ player.onCollide("BarbarianPixel", (BarbarianPixel) => {
     destroy(BarbarianPixel)
     enemyDead = true;
     debug.log("go to battle scene");
-    go("battle", 0);
+    go("battle", "barbarian");
 })
 
 //if player runs into wizard go to battle scene 
