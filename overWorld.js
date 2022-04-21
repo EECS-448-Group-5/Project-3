@@ -17,6 +17,8 @@ loadSprite("enemy1", "sprites/enemy1.png");
 loadSprite("door", "sprites/door.png");
 loadSprite("WizardPixel", "sprites/WizardPixel.png");
 loadSprite("BarbarianPixel", "sprites/BarbarianPixel.png");
+loadSprite("bussinessMan","sprite/businessMan.png");
+
 
 
 
