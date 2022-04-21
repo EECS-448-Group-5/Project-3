@@ -190,10 +190,10 @@ scene("battle", (name)=>{
     }
 
     //text on the right side of the textbox.
-    let currentDescText = add([
+    let currentDescText = window.test = add([
         text(enemy.getFlavor(), {
             size: height()*.06,
-            width: width()*.525
+            width: width()*.525,
         }),
         util.propPos(.725, .85),
         origin("center"),
@@ -270,7 +270,174 @@ scene("battle", (name)=>{
     function replaceMove(move, newMove){
         console.log("Replacing", move.name, "with", newMove.name)
         player.moves[player.moves.indexOf(move)] = newMove
-        //increaseStats() TODO implement (automatic? Preferably choose a stat to increase)
+        showStatsScreen()
+    }
+
+    let statTracker = window.tracker = {
+        chosenStats: {},
+
+        toggleStat: function(name, amt, preview){
+            if(this.chosenStats[name]){
+                delete this.chosenStats[name]
+                preview[name].text = name+": "+player[name]
+                preview[name].color = {r: 255, g: 255, b: 255}
+            }
+            else if(Object.keys(this.chosenStats).length < 2){
+                this.chosenStats[name] = amt
+                preview[name].text = name+": "+player[name]+" + "+amt
+                preview[name].color = {r: 0, g: 255, b: 0}
+            }
+        }
+    }
+    function showStatsScreen(){
+        //delete the old UI
+        destroy(textBox)
+        moveTxts.forEach( destroy )
+
+        //move player and enemy behind the stat box
+        player.gameObj.z = enemy.gameObj.z = 0
+
+        //create new UI background
+        let statsBox = add([
+            sprite("Textbox"),
+            util.propPos(.5, .55),
+            origin("center"),
+            scale(1)
+        ])
+        util.scaleToProp(statsBox, .9, .8)
+
+        add([
+            text("Choose two stats to upgrade"),
+            util.propPos(.5, .05),
+            origin("center"),
+            scale(1)
+        ])
+
+        //draw stat buttons and number previews
+        let statPreview = drawStatPreview();
+        drawStatButtons(statPreview);
+
+        //confirm button
+        drawConfirmButton()
+
+    }
+
+    function drawStatPreview(){
+        return {
+            maxHP: add([
+                text("maxHP: "+player.maxHP, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .25),
+                origin("center"),
+                scale(1)
+            ]),
+
+            atk: add([
+                text("atk: "+player.atk, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .39),
+                origin("center"),
+                scale(1)
+            ]),
+
+            def: add([
+                text("def: "+player.def, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .53),
+                origin("center"),
+                scale(1)
+            ]),
+
+            spAtk: add([
+                text("spAtk: "+player.spAtk, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .67),
+                origin("center"),
+                scale(1)
+            ]),
+
+            spDef: add([
+                text("spDef: "+player.spDef, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .81),
+                origin("center"),
+                scale(1)
+            ])
+        }
+    }
+
+    function drawStatButtons(previews){
+        add([
+                text("MaxHP", {}),
+                color(255, 255, 255),
+                util.propPos(.3, .25),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+        ]).onClick(()=>{
+            statTracker.toggleStat("maxHP", 10, previews)
+        })
+
+        add([
+                text("Atk", {}),
+                color(255, 255, 255),
+                util.propPos(.3, .39),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+        ]).onClick(()=>{
+            statTracker.toggleStat("atk", 5, previews)
+        })
+
+        add([
+                text("Def", {}),
+                color(255, 255, 255),
+                util.propPos(.3, .53),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+        ]).onClick(()=>{
+            statTracker.toggleStat("def", 5, previews)
+        })
+
+        add([
+                text("SpAtk", {}),
+                color(255, 255, 255),
+                util.propPos(.3, .67),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+        ]).onClick(()=>{
+            statTracker.toggleStat("spAtk", 5, previews)
+        })
+
+        add([
+                text("SpDef", {}),
+                color(255, 255, 255),
+                util.propPos(.3, .81),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+        ]).onClick(()=>{
+            statTracker.toggleStat("spDef", 5, previews)
+        })
+    }
+
+    function drawConfirmButton(){
+        add([
+            text("Confirm", {}),
+            util.propPos(.8, .9),
+            origin("center"),
+            scale(1),
+            area({cursor: "pointer"})
+        ]).onClick(()=>{
+            if(Object.keys(statTracker.chosenStats).length < 2) return
+            for(let statName in statTracker.chosenStats){
+                player[statName] += statTracker.chosenStats[statName]
+            }
+
+            go("overWorld", 0)
+        })
     }
 
 
