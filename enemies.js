@@ -1,10 +1,10 @@
 import { barbarian } from "./barbarian.js";
-import { bussinessMan } from "./businessMan.js";
+import { businessMan } from "./businessMan.js";
 
 
 let enemies = {
     barbarian: barbarian,
-    businessMan: bussinessMan,
+    businessMan: businessMan,
 
 }
 export function getEnemy(name){

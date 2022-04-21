@@ -16,8 +16,8 @@ loadSprite("player1left", "sprites/player1left.png");
 loadSprite("enemy1", "sprites/enemy1.png");
 loadSprite("door", "sprites/door.png");
 loadSprite("WizardPixel", "sprites/WizardPixel.png");
+loadSprite("businessMan", "sprites/businessMan.png");
 loadSprite("BarbarianPixel", "sprites/BarbarianPixel.png");
-loadSprite("bussinessMan","sprite/businessMan.png");
 
 
 
@@ -50,12 +50,22 @@ const levels = [
     "================",
     "=              =",
     "=      @       =",
-    "=              =",
+    "=              |",
     "=              =",
     "=              =",
     "=====  $  ======",
     "=======|========",
 
+],
+[
+    "================",
+    "=              =",
+    "=              =",
+    "|$            #=",
+    "=              =",
+    "=              =",
+    "=              =",
+    "================",
 ],
 ]
 
@@ -104,6 +114,13 @@ addLevel(levels[levelIndex],{
     "player1",
     scale(0.0800),
 ],
+"#": () => [
+    sprite("businessMan"),
+    area(),
+    solid(),
+    "businessMan",
+    scale(0.4),  
+],
 })
 
 
@@ -115,7 +132,7 @@ let enemyDead = false;
 player.onCollide("BarbarianPixel", (BarbarianPixel) => {
     destroy(BarbarianPixel)
     enemyDead = true;
-    debug.log("go to battle scene");
+    console.log("go to battle scene");
     go("battle", "barbarian");
 })
 
@@ -127,6 +144,13 @@ player.onCollide("WizardPixel", (WizardPixel) => {
     debug.log("go to battle scene with stinky wizard");
     //go("battle", 0);
     })
+
+player.onCollide("businessMan", (businessMan) => {
+    destroy(businessMan)
+    enemyDead = true;
+    console.log("go to battle scene");
+    go("battle", "businessMan");
+})
 
 //player runs into door go to next level
 player.onCollide("door", (door) => {
