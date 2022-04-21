@@ -18,7 +18,7 @@
     loadSprite("player1", "sprites/player1.png");
     loadSprite("Textbox", "sprites/Textbox.png");
     loadSprite("barbarian", "sprites/barbarianpixel.png");
-    loadSprite("bussinessMan","sprite/businessMan.png");
+    loadSprite("businessMan","sprites/businessMan.png");
 
 scene("battle", (name)=>{
 
@@ -258,32 +258,41 @@ scene("battle", (name)=>{
         defaultText = "Choose a new move to learn!"
 
         
-        drawMoveSelection(moves, selectMove)
+        drawMoveSelection(moves, selectMove)//selectMove is run when the player chooses which move to learn
 
     }
 
+    //sets up the UI for the player to select which move to replace
     function selectMove(newMove){
         console.log("Selected", newMove.name)
         defaultText = "Which move would you like to replace with '"+newMove.name+"'?"
-        drawMoveSelection(player.moves, (move)=>{replaceMove(move, newMove)})
+        drawMoveSelection(player.moves, (move)=>{replaceMove(move, newMove)})//replaceMove will be called when the player chooses a move to replace
     }
 
+    //modifies the player moveset and sets up the UI for improving player stats
     function replaceMove(move, newMove){
         console.log("Replacing", move.name, "with", newMove.name)
         player.moves[player.moves.indexOf(move)] = newMove
         showStatsScreen()
     }
 
-    let statTracker = window.tracker = {
+    //object to track which stats the player wants to upgrade, capping it at two stats.
+    let statTracker = {
         chosenStats: {},
 
+        //name is the name of a property of player/preview, e.g. maxHP or spAtk
+        //amt is the amount the stat should be increased by
         toggleStat: function(name, amt, preview){
+            //if the stat is already selected, deselect it
             if(this.chosenStats[name]){
+                //delete the property, update the preview text, and change the text color to white
                 delete this.chosenStats[name]
                 preview[name].text = name+": "+player[name]
                 preview[name].color = {r: 255, g: 255, b: 255}
             }
+            //otherwise, only select the stat if there are not already two stats selected
             else if(Object.keys(this.chosenStats).length < 2){
+                //set the property of chosenStats, update the text, and make the text green
                 this.chosenStats[name] = amt
                 preview[name].text = name+": "+player[name]+" + "+amt
                 preview[name].color = {r: 0, g: 255, b: 0}
@@ -323,6 +332,7 @@ scene("battle", (name)=>{
 
     }
 
+    //treat the returned object like a dictionary, e.g. preview["maxHP"] rather than preview.maxHP
     function drawStatPreview(){
         return {
             maxHP: add([
@@ -367,6 +377,7 @@ scene("battle", (name)=>{
         }
     }
 
+    //draw buttons to select and deselect stats to upgrade
     function drawStatButtons(previews){
         add([
                 text("MaxHP", {}),
@@ -424,6 +435,7 @@ scene("battle", (name)=>{
         })
     }
 
+    //the button will only upgrade player stats if they have selected two stats to improve.
     function drawConfirmButton(){
         add([
             text("Confirm", {}),
