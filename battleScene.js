@@ -278,6 +278,8 @@ scene("battle", (name)=>{
 
     //object to track which stats the player wants to upgrade, capping it at two stats.
     let statTracker = {
+        //properties of chosenStats are of the form [[statToImprove]]: improveAmount, e.g. maxHP: 10
+        //chosenStats should only have properties of stats that are selected to be improved (ie properties should be deleted if the player deselects them)
         chosenStats: {},
 
         //name is the name of a property of player/preview, e.g. maxHP or spAtk
