@@ -111,6 +111,7 @@ addLevel(levels[levelIndex],{
     sprite("player1"),
     area(),
     solid(),
+    pos(0,0),
     "player1",
     scale(0.0800),
 ],
@@ -127,6 +128,11 @@ addLevel(levels[levelIndex],{
 //get the player object
 const player = get("player1")[0]
 let enemyDead = false;
+
+player.onUpdate(() => {
+    // center camera to player
+    camPos(player.pos)
+})
 
 // if player runs into barbarian go to battle scene
 player.onCollide("BarbarianPixel", (BarbarianPixel) => {
