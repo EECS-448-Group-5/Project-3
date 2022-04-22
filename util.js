@@ -35,6 +35,10 @@ export class Queue {
       this.head = 0;
       this.tail = 0;
     }
+    push(element){
+      this.head--
+      this.elements[this.head] = element
+    }
     enqueue(element) {
       this.elements[this.tail] = element;
       this.tail++;
@@ -55,3 +59,5 @@ export class Queue {
       return this.length === 0;
     }
 }
+
+window.q = new Queue()

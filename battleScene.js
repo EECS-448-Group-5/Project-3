@@ -19,6 +19,7 @@
     loadSprite("Textbox", "sprites/Textbox.png");
     loadSprite("barbarian", "sprites/barbarianpixel.png");
     loadSprite("businessMan","sprites/businessMan.png");
+    loadSprite("johnson", "sprites/david_johnson.jpg");
 
 scene("battle", (name)=>{
 
@@ -48,7 +49,7 @@ scene("battle", (name)=>{
     util.scaleToProp(player.gameObj, -1, .4);
 
     enemy.gameObj = add([
-        sprite("barbarian"),
+        sprite(name),
         util.propPos(.82, .28),
         origin("center"),
         scale(1),
@@ -161,7 +162,7 @@ scene("battle", (name)=>{
 
     //draw move selection on the screen
     let moveTxts = []
-    function drawMoveSelection(moves, func=playerMove){
+    window.drawMoveSelection = function(moves, func=playerMove){
         moveTxts.forEach( txt=>{destroy(txt)} )
 
         moveTxts.push(drawMove(.15, .8, moves[0], func)) 
