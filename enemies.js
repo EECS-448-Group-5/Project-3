@@ -1,6 +1,6 @@
 import { barbarian } from "./barbarian.js";
 import { businessMan } from "./businessMan.js";
-import { johnson } from "./Johnson.js";
+import { johnson } from "./Johnson.mjs";
 
 
 let enemies = {

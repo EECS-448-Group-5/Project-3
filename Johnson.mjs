@@ -59,6 +59,26 @@ let moves = [
                 return("Dr Johnson is disappointed in you.")
             }
         }
+    },
+
+    {
+        name: "three bullet points",
+        pretext: "Dr Johnson used Three Bullet Points!",
+
+        func: function(){
+            let dmg = 0
+            for(let i=0; i<3; i++){
+                let dmgRoll = Math.floor(Math.random() * 5)+18
+                dmg += dmgRoll
+
+                setTimeout(()=>{
+                    player.takeDamage(dmgRoll)
+                }, 200*i)
+            }
+
+            
+            return "They deal "+dmg+" damage"
+        }
     }
 ]
 let clock = null

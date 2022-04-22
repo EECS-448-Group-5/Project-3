@@ -50,6 +50,7 @@ export let player = window.player = {
         }
     ],
     takeDamage: function(amt){//calculate and lose hp according to incoming damage amount
+        shake(1)
         if(amt > this.def){
             this.hp -= (amt - this.def)
         }else{
