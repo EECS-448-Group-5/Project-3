@@ -32,6 +32,10 @@ scene("battle", (name)=>{
     //use the barbarian enemy for this scene
     let enemy = window.enemy = getEnemy(name);
 
+    if(enemy.init){
+        enemy.init()
+    }
+
 
     //creating game objects
     const background = add([
@@ -133,10 +137,10 @@ scene("battle", (name)=>{
 
     const enemyName = add([
         text(enemy.name, {
-            size: height()*.06,
+            size: height()*.05,
             width: width()*.25
         }),
-        util.propPos(.425, .2),
+        util.propPos(.425, .19),
         origin("left"),
         scale(1)
     ])

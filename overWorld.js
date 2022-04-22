@@ -18,6 +18,7 @@ loadSprite("door", "sprites/door.png");
 loadSprite("WizardPixel", "sprites/WizardPixel.png");
 loadSprite("businessMan", "sprites/businessMan.png");
 loadSprite("BarbarianPixel", "sprites/BarbarianPixel.png");
+loadSprite("johnson", "sprites/david_johnson.jpg");
 
 
 
@@ -91,10 +92,10 @@ addLevel(levels[levelIndex],{
 
 ],
 "@": () => [
-    sprite("WizardPixel"),
+    sprite("johnson"),
     area(),
     solid(),
-    "WizardPixel",
+    "johnson",
     scale(0.4),    
  
 ],
@@ -144,11 +145,11 @@ player.onCollide("BarbarianPixel", (BarbarianPixel) => {
 
 //if player runs into wizard go to battle scene 
 //STILL NEEDS IMPLEMENTATION
-player.onCollide("WizardPixel", (WizardPixel) => {
-    destroy(WizardPixel)
+player.onCollide("johnson", (johnson) => {
+    destroy(johnson)
     enemyDead = true;
     debug.log("go to battle scene with stinky wizard");
-    //go("battle", 0);
+    go("battle", "johnson");
     })
 
 player.onCollide("businessMan", (businessMan) => {

@@ -1,11 +1,13 @@
+import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 import { enemyProto } from "./EnemyAI.js";
 import { player } from "./player.js";
+import { propPos } from "./util.js";
 
 
 export let johnson = Object.create(enemyProto)
 
 johnson.setStats(1000, 1000, 50, 50, 50, 50)
-johnson.name = "David O Johnson, Destroyer of Hello Worlds"
+johnson.name = "David O Johnson"
 johnson.setFlavors("Dr Johnson is lecturing about ", "", "")
 
 let moves = [
@@ -59,7 +61,8 @@ let moves = [
         }
     }
 ]
-
+let clock = null
+let time = 0
 johnson.enemyMove = function(){
     let temp = moves[Math.floor(Math.random()*moves.length)]
         eventQueue.enqueue(()=>{
@@ -69,4 +72,25 @@ johnson.enemyMove = function(){
             printDescriptionText(temp.func());
         });
         window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
+}
+
+johnson.init = function(){
+    clock = add([
+        text("8:00 AM"),
+        pos(0, 0),
+        z(10)
+    ])
+
+    add([
+        text("Destroyer of Hello Worlds", {
+            size: height()*.03,
+            width: width()*.25
+        }),
+        propPos(.425, .24),
+        origin("left"),
+        scale(1),
+        z(10)
+    ])
+
+
 }
