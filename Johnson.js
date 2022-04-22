@@ -64,6 +64,15 @@ let moves = [
 let clock = null
 let time = 0
 johnson.enemyMove = function(){
+    if(time >= 50){
+        eventQueue.enqueue(()=>{
+            printDescriptionText("class is over.");
+        });
+        eventQueue.enqueue(()=>{
+            player.hp = 0
+            player.takeDamage(0)
+        });
+    }
     let temp = moves[Math.floor(Math.random()*moves.length)]
         eventQueue.enqueue(()=>{
             printDescriptionText(temp.pretext);
@@ -71,7 +80,15 @@ johnson.enemyMove = function(){
         eventQueue.enqueue(()=>{
             printDescriptionText(temp.func());
         });
-        window.eventQueue.enqueue(()=>{printDescriptionText(this.getFlavor())});
+        window.eventQueue.enqueue(()=>{
+            time += 5
+            if(time < 10){
+                clock.text = "8:0"+time+" AM"
+            }else{
+                clock.text = "8:"+time+" AM"
+            }
+            printDescriptionText(this.getFlavor())
+        });
 }
 
 johnson.init = function(){

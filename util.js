@@ -35,6 +35,9 @@ export class Queue {
       this.head = 0;
       this.tail = 0;
     }
+    clear(){
+      this.elements = {}
+    }
     push(element){
       this.head--
       this.elements[this.head] = element
