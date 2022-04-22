@@ -18,7 +18,7 @@
     loadSprite("player1", "sprites/player1.png");
     loadSprite("Textbox", "sprites/Textbox.png");
     loadSprite("barbarian", "sprites/barbarianpixel.png");
-    loadSprite("bussinessMan","sprite/businessMan.png");
+    loadSprite("businessMan","sprites/businessMan.png");
 
 scene("battle", (name)=>{
 
