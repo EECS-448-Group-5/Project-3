@@ -20,6 +20,7 @@
     loadSprite("barbarian", "sprites/barbarianpixel.png");
     loadSprite("businessMan","sprites/businessMan.png");
     loadSprite("johnson", "sprites/david_johnson.jpg");
+    loadSprite("wizard", "sprites/WizardPixel.png");
 
 scene("battle", (name)=>{
 
@@ -32,9 +33,7 @@ scene("battle", (name)=>{
     //use the barbarian enemy for this scene
     let enemy = window.enemy = getEnemy(name);
 
-    if(enemy.init){
-        enemy.init()
-    }
+    
 
 
     //creating game objects
@@ -60,6 +59,10 @@ scene("battle", (name)=>{
         z(10)
     ])
     util.scaleToProp(enemy.gameObj, -1, .4);
+
+    if(enemy.init){
+        enemy.init()
+    }
 
     const player_platform = add([
         sprite("BattlePlatform"),
@@ -282,7 +285,7 @@ scene("battle", (name)=>{
     }
 
     //object to track which stats the player wants to upgrade, capping it at two stats.
-    let statTracker = {
+    let statTracker = window.tracker = {
         //properties of chosenStats are of the form [[statToImprove]]: improveAmount, e.g. maxHP: 10
         //chosenStats should only have properties of stats that are selected to be improved (ie properties should be deleted if the player deselects them)
         chosenStats: {},

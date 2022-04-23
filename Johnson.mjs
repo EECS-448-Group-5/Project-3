@@ -87,6 +87,7 @@ johnson.enemyMove = function(){
     if(time >= 50){
         eventQueue.enqueue(()=>{
             printDescriptionText("class is over.");
+            this.cancel()
         });
         eventQueue.enqueue(()=>{
             player.hp = 0
@@ -111,6 +112,10 @@ johnson.enemyMove = function(){
         });
 }
 
+let baseY = 0
+let baseX = 0
+let cycleTimer = 0
+
 johnson.init = function(){
     clock = add([
         text("8:00 AM"),
@@ -129,5 +134,12 @@ johnson.init = function(){
         z(10)
     ])
 
-
+    baseY = this.gameObj.pos.y
+    baseX = this.gameObj.pos.x
+    this.cancel = this.gameObj.onUpdate( ()=>{
+        cycleTimer += .02
+        johnson.gameObj.pos.y = baseY + height() * .1 * Math.sin(cycleTimer)
+        johnson.gameObj.pos.x = baseX + width() * .04 * Math.sin(cycleTimer * Math.sqrt(2))
+    })
 }
+
