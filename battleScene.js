@@ -257,15 +257,20 @@ scene("battle", (name)=>{
     let levelling = false
     window.levelUp = function(){
         player.lvl++
-        let moves = [...player.moves].reverse()//movePool.getRandomOptions(player)
+        showLevelUpScreen();
+        //let moves = [...player.moves].reverse()//movePool.getRandomOptions(player)
 
-        levelling = true
-        defaultText = "Choose a new move to learn!"
+        //levelling = true
+        //defaultText = "Choose a new move to learn!"
 
         
-        drawMoveSelection(moves, selectMove)//selectMove is run when the player chooses which move to learn
+        //drawMoveSelection(moves, selectMove)//selectMove is run when the player chooses which move to learn
 
     }
+
+    //showMovesScreen() draws the box, stat output stuff to the right
+    //draws controls to select and de-select stats
+    //confirm button
 
     //sets up the UI for the player to select which move to replace
     function selectMove(newMove){
@@ -278,7 +283,7 @@ scene("battle", (name)=>{
     function replaceMove(move, newMove){
         console.log("Replacing", move.name, "with", newMove.name)
         player.moves[player.moves.indexOf(move)] = newMove
-        showStatsScreen()
+        showLevelUpScreen()
     }
 
     //object to track which stats the player wants to upgrade, capping it at two stats.
@@ -306,7 +311,41 @@ scene("battle", (name)=>{
             }
         }
     }
-    function showStatsScreen(){
+
+    let moveTracker = window.tracker = {
+        
+        chosenMoveIndices: {
+            replace: null,
+            select: null,
+        },
+
+        toggleMove: function(index, ID){
+            if(ID == 0) {
+                this.chosenMoveIndices.replace = index;
+                for(let i = 0; i < 5; i++) {
+                    if(i == index) {
+                        this.movesToReplace[i].color = {r: 0, g: 255, b: 0};
+                    }
+                    else {
+                        this.movesToReplace[i].color = {r: 255, g: 255, b: 255};
+                    }
+                }
+            }
+            else if(ID == 1) {
+                this.chosenMoveIndices.select = index;
+                for(let i = 0; i < 4; i++) {
+                    if(i == index) {
+                        this.movesToSelect[i].color = {r: 0, g: 255, b: 0};
+                    }
+                    else {
+                        this.movesToSelect[i].color = {r: 255, g: 255, b: 255};
+                    }
+                }
+            }
+        }
+    }
+
+    function showLevelUpScreen(){
         //delete the old UI
         destroy(textBox)
         moveTxts.forEach( destroy )
@@ -315,28 +354,135 @@ scene("battle", (name)=>{
         player.gameObj.z = enemy.gameObj.z = 0
 
         //create new UI background
-        let statsBox = add([
+        let levelUpBox = add([
             sprite("Textbox"),
             util.propPos(.5, .55),
             origin("center"),
             scale(1)
         ])
-        util.scaleToProp(statsBox, .9, .8)
+        util.scaleToProp(levelUpBox, .95, .85)
 
-        add([
-            text("Choose two stats to upgrade"),
+        let titleText = add([
+            text("Choose a move to learn and a move to replace"),
             util.propPos(.5, .05),
             origin("center"),
             scale(1)
         ])
 
-        //draw stat buttons and number previews
-        let statPreview = drawStatPreview();
-        drawStatButtons(statPreview);
+        moveTracker.movesToReplace = drawMovesToReplace();
+        let moves = [...player.moves].reverse()//movePool.getRandomOptions(player) 
+        moveTracker.movesToSelect = drawMovesToSelect(moves);
+        drawMoveConfirmButton(moves);
 
-        //confirm button
-        drawConfirmButton()
+    }
 
+    function drawMovesToReplace(){
+        let moves = [
+            add([
+                text(player.moves[0].name, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .25),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+            add([
+                text(player.moves[1].name, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .39),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+            add([
+                text(player.moves[2].name, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .53),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+            add([
+                text(player.moves[3].name, {}),
+                color(255, 255, 255),
+                util.propPos(.7, .67),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+            add([
+                text("I don't want to \nreplace a move!", {}),
+                color(255, 255, 255),
+                util.propPos(.7, .81),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ])
+        ]
+
+        for(let i = 0; i < 5; i++) {
+            console.log(moves[i])
+            moves[i].onClick(()=>{
+                moveTracker.toggleMove(i, 0) //0 is the ID for movesToReplace
+            })
+        }
+
+        return moves;
+
+    }
+
+    function drawMovesToSelect(moves){
+        let array = [
+            add([
+                text(moves[0].name, {}),
+                color(255, 255, 255),
+                util.propPos(.3, .25),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+            add([
+                text(moves[1].name, {}),
+                color(255, 255, 255),
+                util.propPos(.3, .39),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+            add([
+                text(moves[2].name, {}),
+                color(255, 255, 255),
+                util.propPos(.3, .53),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+            add([
+                text(moves[3].name, {}),
+                color(255, 255, 255),
+                util.propPos(.3, .67),
+                origin("center"),
+                scale(1),
+                area({cursor: "pointer"})
+            ]),
+
+        ]
+
+            for(let i = 0; i < 4; i++) {
+                console.log(array[i])
+                array[i].onClick(()=>{
+                    moveTracker.toggleMove(i, 1) //0 is the ID for movesToReplace
+                })
+            }
+    
+            return array;
     }
 
     //treat the returned object like a dictionary, e.g. preview["maxHP"] rather than preview.maxHP
@@ -440,6 +586,39 @@ scene("battle", (name)=>{
         ]).onClick(()=>{
             statTracker.toggleStat("spDef", 5, previews)
         })
+    }
+
+    //the button will only upgrade player stats if they have selected two stats to improve.
+    function drawMoveConfirmButton(moves){
+        add([
+            text("Confirm", {}),
+            util.propPos(.8, .9),
+            origin("center"),
+            scale(1),
+            area({cursor: "pointer"})
+        ]).onClick(()=>{
+            if(moveTracker.chosenMoveIndices.replace == 4) {
+                levelUpStats();
+            }
+            if(moveTracker.chosenMoveIndices.replace == null || moveTracker.chosenMoveIndices.select == null) {
+                return;
+            }
+            let moveIndex = moveTracker.chosenMoveIndices.select;
+            player.moves[moveTracker.chosenMoveIndices.replace] = moves[moveIndex];
+            levelUpStats();
+        })
+        }
+
+    function levelUpStats() {
+        moveTracker.movesToReplace.forEach(destroy);
+        moveTracker.movesToSelect.forEach(destroy);
+
+        //draw stat buttons and number previews
+        let statPreview = drawStatPreview();
+        drawStatButtons(statPreview);
+        
+        //confirm button
+        drawConfirmButton();
     }
 
     //the button will only upgrade player stats if they have selected two stats to improve.
