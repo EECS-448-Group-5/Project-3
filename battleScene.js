@@ -603,6 +603,7 @@ scene("battle", (name)=>{
         ]).onClick(()=>{
             if(moveTracker.chosenMoveIndices.replace == 4) {
                 levelUpStats();
+                return;
             }
             if(moveTracker.chosenMoveIndices.replace == null || moveTracker.chosenMoveIndices.select == null) {
                 return;
