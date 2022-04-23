@@ -19,6 +19,8 @@ loadSprite("WizardPixel", "sprites/WizardPixel.png");
 loadSprite("businessMan", "sprites/businessMan.png");
 loadSprite("BarbarianPixel", "sprites/BarbarianPixel.png");
 loadSprite("johnson", "sprites/david_johnson.jpg");
+loadSound("overWorldMusic", "sounds/overWorldMusic.mp3")
+
 
 
 
@@ -31,11 +33,56 @@ scene("overWorld",(levelIndex) =>{
     fullscreen(!isFullscreen())
 })
 
+
+/*
+//load music
+let overWorldMusic = play("overWorldMusic", {
+	loop: true,
+})
+
+overWorldMusic.play();
+volume(0.5);
+*/
+
+
 //player movement speed
 const SPEED = 300;
 
 const levels = [
+    [
+        "=============================",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=       @                   =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                #          =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=      !                    =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=                           =",
+        "=          $                =",
+        "=============================",
+    ],
 //level one, MARIO vs Barbarian 
+/*
 [
     "=======|========",
     "=====     ======",
@@ -68,6 +115,7 @@ const levels = [
     "=              =",
     "================",
 ],
+*/
 ]
 
 
@@ -140,15 +188,15 @@ player.onCollide("BarbarianPixel", (BarbarianPixel) => {
     destroy(BarbarianPixel)
     enemyDead = true;
     console.log("go to battle scene");
+    wait
     go("battle", "barbarian");
 })
 
-//if player runs into wizard go to battle scene 
-//STILL NEEDS IMPLEMENTATION
+//if player runs into johnson go to battle scene 
 player.onCollide("johnson", (johnson) => {
     destroy(johnson)
     enemyDead = true;
-    debug.log("go to battle scene with stinky wizard");
+    console.log("go to battle scene with stinky wizard");
     go("battle", "johnson");
     })
 
@@ -162,7 +210,7 @@ player.onCollide("businessMan", (businessMan) => {
 //player runs into door go to next level
 player.onCollide("door", (door) => {
     destroy(door)
-    debug.log("Next level...");
+    //debug.log("Next level...");
     if (levelIndex + 1 < levels.length) {
         go("overWorld", levelIndex + 1)
     } 

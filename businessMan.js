@@ -35,7 +35,7 @@ let specialMoves = [
             let temp = Math.random()
             if(temp > 0.5)
             {
-                return("You dodged his attack!")
+                return("You dodged his attack because you were listening to music instead of working!")
             }
             else{
                 player.takeDamage(50);
