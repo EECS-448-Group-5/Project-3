@@ -1,5 +1,6 @@
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 import { enemyProto } from "./EnemyAI.js";
+import { getRandomMove } from "./movePool.js";
 import { player } from "./player.js";
 import { propPos } from "./util.js";
 
@@ -18,7 +19,7 @@ let moves = [
         func: function(){
             let idx = Math.floor(Math.random() * 4)
             
-            let replacement = player.moves[0]//getRandomMove()
+            let replacement = getRandomMove()
 
             player.moves[idx] = replacement
 

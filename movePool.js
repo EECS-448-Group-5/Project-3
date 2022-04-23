@@ -1,0 +1,153 @@
+import { player } from "./player.js"
+
+export function getRandomOptions(player){
+    let options = []
+    while(options.length < 4){
+        //get a random move the player does not have
+        let op = getRandomMove()
+        //if the move is not already being offered, and the player meets the conditions (if any) to be offered it,
+        if(!options.includes(op) && (!op.playerCondition || op.playerCondition(player))){
+            options.push(op)
+        }
+    }
+}
+
+export function getRandomMove(){
+    let mv = player.moves[0]
+
+    while(player.moves.includes(mv)){
+        mv = moves[Math.floor(Math.random() * moves.length)]
+    }
+
+    return mv
+}
+
+export function getStartingMoves(){
+    return [
+        moves[0],
+        moves[1],
+        moves[4],
+        moves[2]
+    ]
+}
+
+/*
+general rules for a move:
+-name: short and sweet
+-desc: vague description of what the move does
+-pretext: introduction to using the move. When in doubt, you can just put "Mareo used [move name]!"
+-func: do the thing, and return a DESCRIPTIVE response, including damage numbers if possible.
+-playerCondition (optional): if the move should only be offered under certain circumstances (such as a min or max level), use this function.
+-if you need to track internal state at all (such as if a move has finite uses), you can add any necessary properties to use in func.
+
+general guidelines for the move pool:
+-try to order it from weakest (low level) to strongest (high level).
+*/
+let moves = window.movePool = [
+    {
+        name: "Punch",
+        desc: "A light, physical attack",
+
+        pretext: "You punch him",
+        func: function(enemy){
+            let dmg = 25 + player.atk
+
+            enemy.takeDamage(dmg)
+            return "You deal "+dmg+" damage to his face!"
+        },
+
+        playerCondition: function(player){ return player.lvl <= 3}
+    },
+
+    {
+        name: "Magic Beam",
+        desc: "Shoot a magical beam at the enemy",
+
+        pretext: "You shoot him with a beam of magical energy",
+        func: function(enemy){
+            let dmg = 30 + player.spAtk
+
+            enemy.takeDamage(dmg)
+            return "The beam deals "+dmg+" damage!"
+        }
+    },
+
+    {
+        name: "Block",
+        desc: "Increase defense for the rest of combat",
+
+        pretext: "You raise your guard",
+        func: function(enemy){
+            player.def += 5
+
+            return "Defense increased by 5!"
+        }
+    },
+
+    {
+        name: "Body Slam",
+        desc: "Deal damage based on your defense",
+
+        pretext: "You charge at the enemy",
+        func: function(enemy){
+            let dmg = Math.floor(player.def + player.atk/2)
+
+            enemy.takeDamage(dmg)
+            return "You slam into him, dealing "+dmg+" damage!"
+        }
+    },
+
+    {
+        name: "Heal",
+        desc: "Recover some HP",
+
+        pretext: "You cast a heal spell on yourself",
+        func: function(){
+            player.hp += 15
+            if(player.hp > player.maxHP){
+                player.hp = player.maxHP
+            }
+
+            return "You healed 15 HP"
+        }
+    },
+
+    {
+        name: "Meteor",
+        desc: "Call a meteor to strike your opponent",
+
+        pretext: "You call a meteor down to strike your opponent!",
+        func: function(enemy){
+            let dmg = 50 + player.spAtk
+
+            enemy.takeDamage(dmg)
+            return "It crashes into the ground, dealing "+dmg+" damage!"
+        }
+    },
+
+    {
+        baseDmg: 10,
+
+        name: "Perfect Strike",
+        desc: "Deal 10 dmg. On kill, permanently increase this move's damage",
+
+        pretext: "You strike your opponent with finesse",
+        func: function(enemy){
+            let dmg = baseDmg + player.atk
+
+            enemy.takeDamage(dmg)
+            if(enemy.hp < 0){
+                this.baseDmg += 10
+                return "You deal "+dmg+" damage. You feel your skills growing"
+            }
+
+            return "You deal "+dmg+" damage, but your technique could have been better"
+        }
+    },
+
+    {
+        hasCharge: true,
+
+        name: "Nuke"
+    }
+]
