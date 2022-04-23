@@ -37,6 +37,11 @@ general rules for a move:
 -desc: vague description of what the move does
 -pretext: introduction to using the move. When in doubt, you can just put "Mareo used [move name]!"
 -func: do the thing, and return a DESCRIPTIVE response, including damage numbers if possible.
+    -if you want multiple text boxes, return the next text box, but before returning call this for each subsequent text box (in reverse order):
+        eventQueue.push(()=>{printDescriptionText("put text here")})
+    (see "big red button" for an example)
+    -if you push extra text boxes, do it after dealing damage to the player/enemy. player.die() and enemy.die() both immediately clear the event queue
+    of any text boxes you may have pushed.
 -playerCondition (optional): if the move should only be offered under certain circumstances (such as a min or max level), use this function.
 -if you need to track internal state at all (such as if a move has finite uses), you can add any necessary properties to use in func.
 
@@ -152,7 +157,7 @@ let moves = window.movePool = [
 
         pretext: "You strike your opponent with finesse",
         func: function(enemy){
-            let dmg = baseDmg + player.atk
+            let dmg = this.baseDmg + player.atk
 
             enemy.takeDamage(dmg)
             if(enemy.hp < 0){
@@ -173,8 +178,8 @@ let moves = window.movePool = [
         pretext: "You press the button. You can hear sirens in the distance.",
         func: function(enemy){
             if(!this.hasCharge){
-                eventQueue.enqueue("...")
-                return "Well that was disappointing"
+                eventQueue.push(()=>{printDescriptionText("Well that was disappointing")})
+                return "..."
             }
             let dmg = 250 + player.spAtk
 
@@ -206,6 +211,8 @@ let moves = window.movePool = [
                     destroy(nuke)
                 }
             })
+
+            return "A blinding light fills your vision, but you think you dealt around "+dmg+" damage."
         }
     }
 ]
