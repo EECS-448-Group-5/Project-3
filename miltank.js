@@ -3,7 +3,7 @@ import { player } from "./player.js";
 
 export let miltank = Object.create(enemyProto);
 miltank.setStats(300, 300, 25, 25, 25, 25);
-miltank.setRandomName("Miltank!:)")
+miltank.setRandomName("Miltank!:)","Miltank!:)","Miltank!:)")
 miltank.setFlavors("Miltank awaits patiently...", "Miltank awaits your next move...", "Miltank moos...");
 
 let turn = 1;
