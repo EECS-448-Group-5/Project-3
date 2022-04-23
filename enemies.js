@@ -3,6 +3,7 @@ import { businessMan } from "./businessMan.js";
 import { johnson } from "./Johnson.mjs";
 import { wizard } from "./wizard.js"
 import { sunMouse } from "./sunMouse.js"
+import { miltank } from "./miltank.js"
 
 
 let enemies = {
@@ -10,7 +11,8 @@ let enemies = {
     businessMan: businessMan,
     johnson: johnson,
     wizard: wizard,
-    sunMouse : sunMouse
+    sunMouse : sunMouse,
+    miltank : miltank
 
 }
 export function getEnemy(name){

@@ -22,6 +22,7 @@
     loadSprite("johnson", "sprites/david_johnson.jpg");
     loadSprite("wizard", "sprites/WizardPixel.png");
     loadSprite("sunMouse", "sprites/SunMousePixel.png");
+    loadSprite("miltank", "sprites/MiltankPixel.png");
 
 scene("battle", (name)=>{
 
