@@ -95,15 +95,16 @@ export let enemyProto = { //prototype for enemy objects
     //damage functions
     takeDamage: function(amt){
         this.hp -= amt;
-        window.setEnemyHealth(this.hp/this.maxHP);
+        window.setEnemyHealth(this.hp, this.maxHP);
         if(this.hp <= 0) {
             this.die();
         }
     },
     die: function(){
-        window.eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
-        window.eventQueue.enqueue(()=>{levelUp()});
-        window.eventQueue.dequeue()();
+        eventQueue.clear()
+        eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
+        eventQueue.enqueue(()=>{levelUp()});
+        //eventQueue.dequeue()();
     }
 };
 //Defining Barbarian Type

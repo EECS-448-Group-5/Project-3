@@ -2,10 +2,9 @@
     // import kaboom lib //test push
     import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
     import * as util from "./util.js";
-    //import * as enemies from "./EnemyAI.js";
-    import * as barbarian from "./barbarian.js";
     import * as Player from "./player.js";
     import { getEnemy } from "./enemies.js";
+    import { showLevelUpScreen } from "./levelUp.js"
     
     // initialize kaboom context
     //kaboom();//kaboom({width: 1920, height: 1080});
@@ -21,6 +20,8 @@
     loadSprite("businessMan","sprites/businessMan.png");
     loadSprite("johnson", "sprites/david_johnson.jpg");
     loadSprite("wizard", "sprites/WizardPixel.png");
+    loadSprite("sunMouse", "sprites/SunMousePixel.png");
+    loadSprite("miltank", "sprites/MiltankPixel.png");
 
 scene("battle", (name)=>{
 
@@ -126,6 +127,12 @@ scene("battle", (name)=>{
     ])
     util.scaleToProp(playerHPFacade, .25, -1)
 
+    const playerHPText = add([
+        text("???/???", {size: .225*width()*.12}),
+        util.propPos(.45, .4),
+        origin("center"),
+    ])
+
     
 
 
@@ -164,6 +171,13 @@ scene("battle", (name)=>{
     ])
     util.scaleToProp(enemyHPFacade, .25, -1)
 
+    const enemyHPText = add([
+        text("???/???", {size: .225*width()*.12}),
+        util.propPos(.55, .1),
+        origin("center"),
+        z(100)
+    ])
+
 
 
 
@@ -172,9 +186,9 @@ scene("battle", (name)=>{
     window.drawMoveSelection = function(moves, func=playerMove){
         moveTxts.forEach( txt=>{destroy(txt)} )
 
-        moveTxts.push(drawMove(.15, .8, moves[0], func)) 
+        moveTxts.push(drawMove(.12, .8, moves[0], func)) 
         moveTxts.push(drawMove(.3, .8, moves[1], func));
-        moveTxts.push(drawMove(.15, .9, moves[2], func));
+        moveTxts.push(drawMove(.12, .9, moves[2], func));
         moveTxts.push(drawMove(.3, .9, moves[3], func));
     }
 
@@ -182,7 +196,8 @@ scene("battle", (name)=>{
     function drawMove(x, y, move, func){
         let moveText = add([
             text(move.name, {
-                size: height()*.06,
+                size: Math.min(height()*.06, width() * .14 / move.name.length * 1.6),
+                width: width() * .14
             }),
             origin("center"),
             util.propPos(x, y),
@@ -232,7 +247,7 @@ scene("battle", (name)=>{
             printDescriptionText(move.pretext);
         });
         eventQueue.enqueue(()=>{
-            printDescriptionText(move.func());
+            printDescriptionText(move.func(enemy));
         });
 
         enemy.enemyMove(player);
@@ -246,221 +261,41 @@ scene("battle", (name)=>{
     }
 
     //function to set the player's healthbar as a percent of full hp.
-    window.setPlayerHealth = function(percent){
-        util.scaleToProp(playerHealth, .225 * percent, -2);
+    window.setPlayerHealth = function(hp, maxHP){
+        util.scaleToProp(playerHealth, .225 * hp/maxHP, -2);
+        playerHPText.text = hp + "/" + maxHP
     }
 
     //function to set the enemy's healthbar as a percent of full hp.
-    window.setEnemyHealth = function(percent){
-        util.scaleToProp(enemyHealth, .225 * percent, -2);
+    window.setEnemyHealth = function(hp, maxHP){
+        util.scaleToProp(enemyHealth, .225 * hp/maxHP, -2);
+        enemyHPText.text = hp + "/" + maxHP
     }
-
 
     //this is the worst possible way of implementing this sort of sequence, but it works
     let levelling = false
+
+    let oldStats = {
+        maxHP: player.maxHP,
+        atk: player.atk,
+        def: player.def,
+        spAtk: player.spAtk,
+        spDef: player.spDef
+    }
     window.levelUp = function(){
-        player.lvl++
-        let moves = [...player.moves].reverse()//movePool.getRandomOptions(player)
-
-        levelling = true
-        defaultText = "Choose a new move to learn!"
-
-        
-        drawMoveSelection(moves, selectMove)//selectMove is run when the player chooses which move to learn
-
-    }
-
-    //sets up the UI for the player to select which move to replace
-    function selectMove(newMove){
-        console.log("Selected", newMove.name)
-        defaultText = "Which move would you like to replace with '"+newMove.name+"'?"
-        drawMoveSelection(player.moves, (move)=>{replaceMove(move, newMove)})//replaceMove will be called when the player chooses a move to replace
-    }
-
-    //modifies the player moveset and sets up the UI for improving player stats
-    function replaceMove(move, newMove){
-        console.log("Replacing", move.name, "with", newMove.name)
-        player.moves[player.moves.indexOf(move)] = newMove
-        showStatsScreen()
-    }
-
-    //object to track which stats the player wants to upgrade, capping it at two stats.
-    let statTracker = window.tracker = {
-        //properties of chosenStats are of the form [[statToImprove]]: improveAmount, e.g. maxHP: 10
-        //chosenStats should only have properties of stats that are selected to be improved (ie properties should be deleted if the player deselects them)
-        chosenStats: {},
-
-        //name is the name of a property of player/preview, e.g. maxHP or spAtk
-        //amt is the amount the stat should be increased by
-        toggleStat: function(name, amt, preview){
-            //if the stat is already selected, deselect it
-            if(this.chosenStats[name]){
-                //delete the property, update the preview text, and change the text color to white
-                delete this.chosenStats[name]
-                preview[name].text = name+": "+player[name]
-                preview[name].color = {r: 255, g: 255, b: 255}
-            }
-            //otherwise, only select the stat if there are not already two stats selected
-            else if(Object.keys(this.chosenStats).length < 2){
-                //set the property of chosenStats, update the text, and make the text green
-                this.chosenStats[name] = amt
-                preview[name].text = name+": "+player[name]+" + "+amt
-                preview[name].color = {r: 0, g: 255, b: 0}
-            }
-        }
-    }
-    function showStatsScreen(){
         //delete the old UI
         destroy(textBox)
         moveTxts.forEach( destroy )
 
+        //revert player stats
+        Object.keys(oldStats).forEach(name=>{player[name] = oldStats[name]})
+
         //move player and enemy behind the stat box
         player.gameObj.z = enemy.gameObj.z = 0
 
-        //create new UI background
-        let statsBox = add([
-            sprite("Textbox"),
-            util.propPos(.5, .55),
-            origin("center"),
-            scale(1)
-        ])
-        util.scaleToProp(statsBox, .9, .8)
-
-        add([
-            text("Choose two stats to upgrade"),
-            util.propPos(.5, .05),
-            origin("center"),
-            scale(1)
-        ])
-
-        //draw stat buttons and number previews
-        let statPreview = drawStatPreview();
-        drawStatButtons(statPreview);
-
-        //confirm button
-        drawConfirmButton()
-
-    }
-
-    //treat the returned object like a dictionary, e.g. preview["maxHP"] rather than preview.maxHP
-    function drawStatPreview(){
-        return {
-            maxHP: add([
-                text("maxHP: "+player.maxHP, {}),
-                color(255, 255, 255),
-                util.propPos(.7, .25),
-                origin("center"),
-                scale(1)
-            ]),
-
-            atk: add([
-                text("atk: "+player.atk, {}),
-                color(255, 255, 255),
-                util.propPos(.7, .39),
-                origin("center"),
-                scale(1)
-            ]),
-
-            def: add([
-                text("def: "+player.def, {}),
-                color(255, 255, 255),
-                util.propPos(.7, .53),
-                origin("center"),
-                scale(1)
-            ]),
-
-            spAtk: add([
-                text("spAtk: "+player.spAtk, {}),
-                color(255, 255, 255),
-                util.propPos(.7, .67),
-                origin("center"),
-                scale(1)
-            ]),
-
-            spDef: add([
-                text("spDef: "+player.spDef, {}),
-                color(255, 255, 255),
-                util.propPos(.7, .81),
-                origin("center"),
-                scale(1)
-            ])
-        }
-    }
-
-    //draw buttons to select and deselect stats to upgrade
-    function drawStatButtons(previews){
-        add([
-                text("MaxHP", {}),
-                color(255, 255, 255),
-                util.propPos(.3, .25),
-                origin("center"),
-                scale(1),
-                area({cursor: "pointer"})
-        ]).onClick(()=>{
-            statTracker.toggleStat("maxHP", 10, previews)
-        })
-
-        add([
-                text("Atk", {}),
-                color(255, 255, 255),
-                util.propPos(.3, .39),
-                origin("center"),
-                scale(1),
-                area({cursor: "pointer"})
-        ]).onClick(()=>{
-            statTracker.toggleStat("atk", 5, previews)
-        })
-
-        add([
-                text("Def", {}),
-                color(255, 255, 255),
-                util.propPos(.3, .53),
-                origin("center"),
-                scale(1),
-                area({cursor: "pointer"})
-        ]).onClick(()=>{
-            statTracker.toggleStat("def", 5, previews)
-        })
-
-        add([
-                text("SpAtk", {}),
-                color(255, 255, 255),
-                util.propPos(.3, .67),
-                origin("center"),
-                scale(1),
-                area({cursor: "pointer"})
-        ]).onClick(()=>{
-            statTracker.toggleStat("spAtk", 5, previews)
-        })
-
-        add([
-                text("SpDef", {}),
-                color(255, 255, 255),
-                util.propPos(.3, .81),
-                origin("center"),
-                scale(1),
-                area({cursor: "pointer"})
-        ]).onClick(()=>{
-            statTracker.toggleStat("spDef", 5, previews)
-        })
-    }
-
-    //the button will only upgrade player stats if they have selected two stats to improve.
-    function drawConfirmButton(){
-        add([
-            text("Confirm", {}),
-            util.propPos(.8, .9),
-            origin("center"),
-            scale(1),
-            area({cursor: "pointer"})
-        ]).onClick(()=>{
-            if(Object.keys(statTracker.chosenStats).length < 2) return
-            for(let statName in statTracker.chosenStats){
-                player[statName] += statTracker.chosenStats[statName]
-            }
-
-            go("overWorld", 0)
-        })
+        levelling = true
+        player.lvl++
+        showLevelUpScreen();
     }
 
 
@@ -473,8 +308,10 @@ scene("battle", (name)=>{
         if(!eventQueue.isEmpty){
             eventQueue.dequeue()();//why does this look so cursed?
         }
-
     })
+
+    setPlayerHealth(player.hp, player.maxHP)
+    setEnemyHealth(enemy.hp, enemy.maxHP)
 
     drawMoveSelection(player.moves);
 });
