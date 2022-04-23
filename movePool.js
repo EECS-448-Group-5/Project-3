@@ -45,6 +45,25 @@ general guidelines for the move pool:
 */
 let moves = window.movePool = [
     {
+        name: "Debug",
+        desc: "Delete this for the final version",
+
+        pretext: "Select a move:",
+
+        func: function(enemy){
+            let info = ""
+
+            for(let i=0; i<moves.length; i++){
+                info += i+" = "+moves[i].name+", "
+            }
+
+            let idx = prompt(info)
+
+            return moves[idx].func(enemy)
+        }
+    },
+
+    {
         name: "Punch",
         desc: "A light, physical attack",
 
@@ -148,6 +167,45 @@ let moves = window.movePool = [
     {
         hasCharge: true,
 
-        name: "Nuke"
+        name: "Big red button",
+        desc: "deal 250 damage. Has one use, ever.",
+
+        pretext: "You press the button. You can hear sirens in the distance.",
+        func: function(enemy){
+            if(!this.hasCharge){
+                eventQueue.enqueue("...")
+                return "Well that was disappointing"
+            }
+            let dmg = 250 + player.spAtk
+
+            this.hasCharge = false
+            this.pretext = "You press the button, but nothing happens."
+
+            //make the screen flash white
+            let nuke = add([
+                rect(width(), height()),
+                pos(0,0),
+                color(255, 255, 255),
+                opacity(0),
+                {isFading: false}
+            ])
+            
+            let delNuke = onUpdate(()=>{
+                if(nuke.isFading){
+                    nuke.opacity -= .5 * 1/60
+                }else{
+                    nuke.opacity += 2 * 1/60
+                }
+
+                if(nuke.opacity >= 1){
+                    nuke.isFading = true
+                    nuke.opacity = .999
+                    enemy.takeDamage(dmg)
+                }else if(nuke.opacity <= 0){
+                    delNuke()
+                    destroy(nuke)
+                }
+            })
+        }
     }
 ]
