@@ -19,7 +19,7 @@ export let player = window.player = {
         }else{
             this.hp--;//always take at least 1 damage
         }
-        window.setPlayerHealth(this.hp / this.maxHP);//update healthbar
+        setPlayerHealth(this.hp, this.maxHP);//update healthbar
         if(this.hp <= 0) this.die(); //die if necessary
     },
 
