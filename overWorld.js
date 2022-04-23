@@ -12,17 +12,16 @@ kaboom({background:[60,60,60]});
 
 loadSprite("wall", "sprites/wall.jpg");
 loadSprite("player1", "sprites/player1.png");
-loadSprite("player1left", "sprites/player1left.png");
 loadSprite("enemy1", "sprites/enemy1.png");
 loadSprite("door", "sprites/door.png");
 loadSprite("WizardPixel", "sprites/WizardPixel.png");
 loadSprite("businessMan", "sprites/businessMan.png");
 loadSprite("BarbarianPixel", "sprites/BarbarianPixel.png");
 loadSprite("johnson", "sprites/david_johnson.jpg");
-loadSound("overWorldMusic", "sounds/overWorldMusic.mp3")
-
-
-
+loadSprite("dungeondoor", "sprites/dungeondoor.png");
+loadSprite("stairs", "sprites/stairs.png");
+loadSprite("stairsRight", "sprites/stairsRight.png");
+loadSprite("floor", "sprites/floor.png");
 
 
 
@@ -34,22 +33,13 @@ scene("overWorld",(levelIndex) =>{
 })
 
 
-/*
-//load music
-let overWorldMusic = play("overWorldMusic", {
-	loop: true,
-})
-
-overWorldMusic.play();
-volume(0.5);
-*/
-
-
 //player movement speed
 const SPEED = 300;
 
 const levels = [
     [
+        "=============================",
+        "=============================",
         "=============================",
         "=                           =",
         "=                           =",
@@ -62,60 +52,30 @@ const levels = [
         "=                           =",
         "=                           =",
         "=       @                   =",
+        "======================sss====",
+        "======================sss====",
+        "=    r                      =",
+        "=    r       ===            =",
+        "=    r       =g=            =",
+        "==   =========g==============",
+        "=                           =",
+        "=            #              =",
+        "=                           =",
+        "=========================   =",
+        "=                   !   r   =",
+        "=                       r   =",
+        "=                       r   =",
+        "=======sss===================",
+        "=======sss===================",
         "=                           =",
         "=                           =",
-        "=                           =",
-        "=                #          =",
-        "=                           =",
-        "=                           =",
-        "=                           =",
-        "=                           =",
-        "=      !                    =",
-        "=                           =",
-        "=                           =",
-        "=                           =",
-        "=                           =",
-        "=                           =",
-        "=                           =",
-        "=                           =",
-        "=          $                =",
+        "=            $              =",
+        "=============================",
+        "=============================",
+        "=============================",
         "=============================",
     ],
-//level one, MARIO vs Barbarian 
-/*
-[
-    "=======|========",
-    "=====     ======",
-    "=      !       =",
-    "=              =",
-    "=              =",
-    "=              =",
-    "= $            =",
-    "================",
-],
-//level two, MARIO vs Wizard
-[
-    "================",
-    "=              =",
-    "=      @       =",
-    "=              |",
-    "=              =",
-    "=              =",
-    "=====  $  ======",
-    "=======|========",
-
-],
-[
-    "================",
-    "=              =",
-    "=              =",
-    "|$            #=",
-    "=              =",
-    "=              =",
-    "=              =",
-    "================",
-],
-*/
+    
 ]
 
 
@@ -129,7 +89,30 @@ addLevel(levels[levelIndex],{
     area(),
     solid(),
     scale(0.400),
-
+],
+" ": () => [
+    sprite("floor"),
+    scale(0.200),
+    z(-1),
+],
+"s": () => [
+    sprite("stairs"),
+    area(),
+    //solid(),
+    scale(0.20),
+],
+"r": () => [
+    sprite("stairsRight"),
+    area(),
+    //solid(),
+    scale(0.20),
+],
+"d": () => [
+    sprite("dungeondoor"),
+    area(),
+    solid(),
+    "dungeondoor",
+    scale(0.23),
 ],
 "|": () => [
     sprite("door"),
@@ -137,7 +120,6 @@ addLevel(levels[levelIndex],{
     solid(),
     "door",
     scale(0.16),
-
 ],
 "@": () => [
     sprite("johnson"),
@@ -145,7 +127,6 @@ addLevel(levels[levelIndex],{
     solid(),
     "johnson",
     scale(0.4),    
- 
 ],
 
 "!": () => [
@@ -153,7 +134,7 @@ addLevel(levels[levelIndex],{
     area(),
     solid(),
     "BarbarianPixel",
-    scale(0.4),   
+    scale(0.6),   
 ],
  
 "$": () => [
@@ -162,7 +143,7 @@ addLevel(levels[levelIndex],{
     solid(),
     pos(0,0),
     "player1",
-    scale(0.0800),
+    scale(0.090),
 ],
 "#": () => [
     sprite("businessMan"),
@@ -208,8 +189,8 @@ player.onCollide("businessMan", (businessMan) => {
 })
 
 //player runs into door go to next level
-player.onCollide("door", (door) => {
-    destroy(door)
+player.onCollide("dungeondoor", (dungeondoor) => {
+    destroy(dungeondoor)
     //debug.log("Next level...");
     if (levelIndex + 1 < levels.length) {
         go("overWorld", levelIndex + 1)
