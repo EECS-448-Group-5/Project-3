@@ -95,7 +95,7 @@ export let enemyProto = { //prototype for enemy objects
     //damage functions
     takeDamage: function(amt){
         this.hp -= amt;
-        window.setEnemyHealth(this.hp/this.maxHP);
+        window.setEnemyHealth(this.hp, this.maxHP);
         if(this.hp <= 0) {
             this.die();
         }

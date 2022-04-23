@@ -181,7 +181,7 @@ let moves = window.movePool = [
                 eventQueue.push(()=>{printDescriptionText("Well that was disappointing")})
                 return "..."
             }
-            let dmg = 250 + player.spAtk
+            let dmg = 279 + player.spAtk
 
             this.hasCharge = false
             this.pretext = "You press the button, but nothing happens."

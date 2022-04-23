@@ -126,6 +126,12 @@ scene("battle", (name)=>{
     ])
     util.scaleToProp(playerHPFacade, .25, -1)
 
+    const playerHPText = add([
+        text("???/???", {size: .225*width()*.12}),
+        util.propPos(.45, .4),
+        origin("center"),
+    ])
+
     
 
 
@@ -163,6 +169,13 @@ scene("battle", (name)=>{
         scale(1)
     ])
     util.scaleToProp(enemyHPFacade, .25, -1)
+
+    const enemyHPText = add([
+        text("???/???", {size: .225*width()*.12}),
+        util.propPos(.55, .1),
+        origin("center"),
+        z(100)
+    ])
 
 
 
@@ -247,13 +260,15 @@ scene("battle", (name)=>{
     }
 
     //function to set the player's healthbar as a percent of full hp.
-    window.setPlayerHealth = function(percent){
-        util.scaleToProp(playerHealth, .225 * percent, -2);
+    window.setPlayerHealth = function(hp, maxHP){
+        util.scaleToProp(playerHealth, .225 * hp/maxHP, -2);
+        playerHPText.text = hp + "/" + maxHP
     }
 
     //function to set the enemy's healthbar as a percent of full hp.
-    window.setEnemyHealth = function(percent){
-        util.scaleToProp(enemyHealth, .225 * percent, -2);
+    window.setEnemyHealth = function(hp, maxHP){
+        util.scaleToProp(enemyHealth, .225 * hp/maxHP, -2);
+        enemyHPText.text = hp + "/" + maxHP
     }
 
 
@@ -262,13 +277,6 @@ scene("battle", (name)=>{
     window.levelUp = function(){
         player.lvl++
         showLevelUpScreen();
-        //let moves = [...player.moves].reverse()//movePool.getRandomOptions(player)
-
-        //levelling = true
-        //defaultText = "Choose a new move to learn!"
-
-        
-        //drawMoveSelection(moves, selectMove)//selectMove is run when the player chooses which move to learn
 
     }
 
@@ -656,6 +664,9 @@ scene("battle", (name)=>{
         }
 
     })
+
+    setPlayerHealth(player.hp, player.maxHP)
+    setEnemyHealth(enemy.hp, enemy.maxHP)
 
     drawMoveSelection(player.moves);
 });
