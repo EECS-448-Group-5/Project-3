@@ -172,9 +172,9 @@ scene("battle", (name)=>{
     window.drawMoveSelection = function(moves, func=playerMove){
         moveTxts.forEach( txt=>{destroy(txt)} )
 
-        moveTxts.push(drawMove(.15, .8, moves[0], func)) 
+        moveTxts.push(drawMove(.12, .8, moves[0], func)) 
         moveTxts.push(drawMove(.3, .8, moves[1], func));
-        moveTxts.push(drawMove(.15, .9, moves[2], func));
+        moveTxts.push(drawMove(.12, .9, moves[2], func));
         moveTxts.push(drawMove(.3, .9, moves[3], func));
     }
 
@@ -182,7 +182,8 @@ scene("battle", (name)=>{
     function drawMove(x, y, move, func){
         let moveText = add([
             text(move.name, {
-                size: height()*.06,
+                size: Math.min(height()*.06, width() * .14 / move.name.length * 1.6),
+                width: width() * .14
             }),
             origin("center"),
             util.propPos(x, y),
@@ -232,7 +233,7 @@ scene("battle", (name)=>{
             printDescriptionText(move.pretext);
         });
         eventQueue.enqueue(()=>{
-            printDescriptionText(move.func());
+            printDescriptionText(move.func(enemy));
         });
 
         enemy.enemyMove(player);

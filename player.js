@@ -1,3 +1,5 @@
+import { getStartingMoves } from "./movePool.js";
+
 export let player = window.player = {
     lvl: 1,
     hp: 100,
@@ -7,48 +9,9 @@ export let player = window.player = {
     spAtk: 10,//unused
     spDef: 10,//unused
     statuses: [],//unused
-    //each move object has a few 
-    moves: [
-        {
-            name: "Punch",//standard damaging move
-            desc: "punch him",
-            pretext: "You punch him",
-            func: ()=>{
-                console.log("punch1"); 
-                enemy.takeDamage(35);
-                return "ow"}
-        },
-        {
-            name: "Block",//permanently increase defense stat
-            desc: "Increase defense stat",
-            pretext: "You raise your guard",
-            func: function(){
-                player.def += 5;
-                return "defense stat increased!"
-            }
-        },
-        {
-            name: "Body Slam",//deal damage equal to your defense stat
-            desc: "deal damage equal to your defense",
-            pretext: "You charge at the enemy",
-            func: function(){
-                enemy.takeDamage(player.def + 5);
-                return "you slam into him with all your might!"
-            }
-        },
-        {
-            name: "Heal",//recover hp
-            desc: "restore your HP",
-            pretext: "you take a moment to recharge",
-            func: function(){
-                player.hp += 30;
-                if(player.hp > player.maxHP) player.hp = player.maxHP;
 
-                setPlayerHealth(player.hp / player.maxHP);
-                return "you healed some of your HP!";
-            }
-        }
-    ],
+    moves: getStartingMoves(),
+
     takeDamage: function(amt){//calculate and lose hp according to incoming damage amount
         shake(1)
         if(amt > this.def){
