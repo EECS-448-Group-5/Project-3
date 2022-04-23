@@ -25,7 +25,7 @@ export let player = window.player = {
 
     die: function(){
         eventQueue.clear()
-        eventQueue.push(()=>{go("overWorld", 0)});
-        eventQueue.push(()=>printDescriptionText("You Died!!!"));
+        eventQueue.enqueue(()=>printDescriptionText("You Died!!!"));
+        eventQueue.enqueue(()=>{go("overWorld", 0)});
     }
 };

@@ -101,9 +101,10 @@ export let enemyProto = { //prototype for enemy objects
         }
     },
     die: function(){
-        window.eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
-        window.eventQueue.enqueue(()=>{levelUp()});
-        window.eventQueue.dequeue()();
+        eventQueue.clear()
+        eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
+        eventQueue.enqueue(()=>{levelUp()});
+        //eventQueue.dequeue()();
     }
 };
 //Defining Barbarian Type
