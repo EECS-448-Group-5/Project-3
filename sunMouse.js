@@ -21,7 +21,7 @@ let moves = [
         pretext: "the mouse restores lost health by fusing together its wounds",
         func: ()=>{
             console.log("fusion heal"); 
-            sunMouse.hp = maxHP;
+            sunMouse.hp = sunMouse.maxHP;
             return("the mouse makes the sound a mouse would normally make but a louder")
         }
     },
