@@ -38,6 +38,7 @@ scene("overWorld",(levelIndex) =>{
 //player movement speed
 const SPEED = 300;
 
+//creates an array of levels with the special chars that loads our sprites into the level, the array is indexed after the battles
 const levels = [
     [
         "=============================",
@@ -425,7 +426,6 @@ player.onCollide("BarbarianPixel", (BarbarianPixel) => {
         go("overWorld", levelIndex + 1)
     } */
 })
-
 //if player runs into johnson go to battle scene 
 player.onCollide("johnson", (johnson) => {
     destroy(johnson)
@@ -433,30 +433,21 @@ player.onCollide("johnson", (johnson) => {
     console.log("go to battle scene with stinky wizard");
     go("battle", "johnson");
 })
-
+//if player runs into business man go to battle scene 
 player.onCollide("businessMan", (businessMan) => {
     destroy(businessMan)
     enemyDead = true;
     console.log("go to battle scene");
     go("battle", "businessMan");
 })
-
+//if player runs into sun mouse go to battle scene 
 player.onCollide("sunMouse", (sunMouse) => {
     destroy(sunMouse)
     enemyDead = true;
     console.log("go to battle scene");
     go("battle", "sunMouse");
 })
-
-//player runs into door go to next level
-player.onCollide("dungeondoor", (dungeondoor) => {
-    destroy(dungeondoor)
-    //debug.log("Next level...");
-    if (levelIndex + 1 < levels.length) {
-        go("overWorld", levelIndex + 1)
-    } 
-})
-
+//if player runs into miltank go to battle scene 
 player.onCollide("miltank", (miltank) => {
     destroy(miltank)
     enemyDead = true;
@@ -464,22 +455,6 @@ player.onCollide("miltank", (miltank) => {
     wait
     go("battle", "miltank");
 })
-
-/*
-player.onCollide("door", (door) => {
-if (enemyDead) {
-/*
-if (levelIndex + 1 < levels.length) {
-  go("overWorld", levelIndex + 1)
-} 	
-destroy(door)
-}
-})*/
-/*
-const enemyMove = 300
-action('WizardPixel',(s) => {
-s.move(s.dir*enemyMove,0)
-})*/
 
 //movement of player
 const dirs = {
@@ -493,15 +468,8 @@ const dirs = {
 for (const dir in dirs) {
 onKeyDown(dir, () => {
     player.move(dirs[dir].scale(SPEED))
-        /*if(dir == "left"){
-            player.sprite("player1left")
-        }
-        if(dir == "right"){
-        player.sprite('player1')
-        }*/
     })
 }
-
 })
 
 
