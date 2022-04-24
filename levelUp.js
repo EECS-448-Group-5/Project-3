@@ -64,6 +64,7 @@ let moveTracker = window.tracker = {
     }
 }
 
+let hoverEvent = null
 export function showLevelUpScreen(){
     //reset objects
     statTracker.chosenStats = {}
@@ -91,7 +92,50 @@ export function showLevelUpScreen(){
     let moves = getRandomOptions(player);
     moveTracker.movesToSelect = drawMovesToSelect(moves);
     drawMoveConfirmButton(moves);
+    let oldDesc = add([
+        text("", {size: height()*.06, width: width() * .4}),
+        util.propPos(.27, .25),
+        origin("top")
+    ])
+    let newDesc = add([
+        text("", {size: height()*.06, width: width() * .4}),
+        util.propPos(.73, .25),
+        origin("top")
+    ])
 
+    hoverEvent = onUpdate(()=>{
+        let hoveredMove = null
+        for(let i=0; i<4; i++){
+            if(moveTracker.movesToReplace[i].isHovering()) {
+                hoveredMove = player.moves[i];
+                break
+            }
+        }
+
+        if(hoveredMove != null){
+            moveTracker.movesToSelect.forEach(txt=>{txt.hidden = true})
+            oldDesc.text = hoveredMove.desc
+        }else{
+            moveTracker.movesToSelect.forEach(txt=>{txt.hidden = false})
+            oldDesc.text = ""
+        }
+
+        hoveredMove = null
+        for(let i=0; i<4; i++){
+            if(moveTracker.movesToSelect[i].isHovering()) {
+                hoveredMove = moves[i];
+                break
+            }
+        }
+
+        if(hoveredMove != null){
+            moveTracker.movesToReplace.forEach(txt=>{txt.hidden = true})
+            newDesc.text = hoveredMove.desc
+        }else{
+            moveTracker.movesToReplace.forEach(txt=>{txt.hidden = false})
+            newDesc.text = ""
+        }
+    })
 }
 
 function drawMovesToReplace(){
@@ -325,6 +369,7 @@ function drawMoveConfirmButton(moves){
         let moveIndex = moveTracker.chosenMoveIndices.select;
         player.moves[moveTracker.chosenMoveIndices.replace] = moves[moveIndex];
         levelUpStats();
+        hoverEvent();
     })
 }
 

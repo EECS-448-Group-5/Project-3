@@ -128,8 +128,8 @@ let moves = window.movePool = [
         pretext: "You flip a shiny quarter high into the air",
     
         func: function(enemy){
-            let x = Math.floor(Math.random()*2)
-            if(x=0){
+            let x = Math.random()
+            if(x>=0.5){
             enemy.takeDamage(55)
             return "Heads! The forces of luck dealt 55 damage to your enemy."
             }else{
