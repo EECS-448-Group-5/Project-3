@@ -359,6 +359,7 @@ function drawMoveConfirmButton(moves){
         scale(1),
         area({cursor: "pointer"})
     ]).onClick(()=>{
+        
         if(moveTracker.chosenMoveIndices.replace == 4) {
             levelUpStats();
             return;
@@ -368,14 +369,16 @@ function drawMoveConfirmButton(moves){
         }
         let moveIndex = moveTracker.chosenMoveIndices.select;
         player.moves[moveTracker.chosenMoveIndices.replace] = moves[moveIndex];
+        
         levelUpStats();
-        hoverEvent();
+        
     })
 }
 
 function levelUpStats() {
     moveTracker.movesToReplace.forEach(destroy);
     moveTracker.movesToSelect.forEach(destroy);
+    hoverEvent();
 
     //draw stat buttons and number previews
     let statPreview = drawStatPreview();
