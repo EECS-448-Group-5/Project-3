@@ -2,8 +2,8 @@ import { player } from "./player.js"
 import { enemyProto } from "./EnemyAI.js"
 
 export let wizard = Object.create(enemyProto)
-wizard.maxHP = 100
-wizard.hp  = 100
+wizard.maxHP = 200
+wizard.hp  = 200
 wizard.def = 10
 wizard.spAtk = 30
 wizard.atk = 30
