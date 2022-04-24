@@ -4,6 +4,7 @@ import { getEnemy } from "./enemies";
 export function runTests(){
     runTest("Player takes damage reduced by defense", testPlayerTakeDamage);
     runTest("Player deals damage back with counter", testPlayerCounter)
+    runTest("Wizard heals", testWizardHeal)
 }
 
 function runTest(desc, test){
@@ -12,7 +13,9 @@ function runTest(desc, test){
 
 function testPlayerCounter(){
     let playerCopy = {...player};
-    window.enemy = getEnemy("barbarian")
+    let enemy = getEnemy("barbarian")
+
+    window.enemy = {...enemy}
     playerCopy.hp = 100
     playerCopy.def = 10
     playerCopy.counter = 1
@@ -41,6 +44,22 @@ function testPlayerTakeDamage(){
     playerCopy.takeDamage(8, "magic");
 
     if(playerCopy.hp != 92) return false
+
+    return true
+}
+
+function testWizardHeal(){
+    let wizCopy = {...getEnemy("wizard")}
+
+    wizCopy.hp = 50
+    wizCopy.heal(20)
+
+    if(wizCopy.hp != 70) return false
+
+    wizCopy.hp = wizCopy.maxHP - 2
+    wizCopy.heal(10)
+
+    if(wizCopy.hp != wizCopy.maxHP) return false
 
     return true
 }
