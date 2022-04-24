@@ -40,6 +40,6 @@ export let player = window.player = {
     die: function(){
         eventQueue.clear()
         eventQueue.enqueue(()=>printDescriptionText("You Died!!!"));
-        eventQueue.enqueue(()=>{go("overWorld", 0)});
+        eventQueue.enqueue(()=>{location.reload()});
     }
 };

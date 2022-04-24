@@ -27,6 +27,8 @@ miltank.setSpecialMoves(specialMoves);
 
 miltank.enemyMove = function(player, move){
     this.changeFlavor();
+    turn++;
+    let temp = miltank.moves[Math.floor(Math.random()*miltank.moves.length)]
     eventQueue.enqueue(()=>{
         printDescriptionText(temp.pretext);
     });

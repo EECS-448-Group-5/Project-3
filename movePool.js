@@ -132,6 +132,7 @@ let moves = window.movePool = [
             if(player.hp > player.maxHP){
                 player.hp = player.maxHP
             }
+            setPlayerHealth(player.hp, player.maxHP)
 
             return "You healed 15 HP"
         }
