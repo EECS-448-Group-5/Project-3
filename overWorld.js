@@ -236,7 +236,7 @@ const levels = [
         "============     ============",
         "============  @  ============",
         "============     ============",
-        "============     ============",
+        "============                =",
         "============                =",
         "======================sss====",
         "=                  $        =",
@@ -454,6 +454,14 @@ player.onCollide("miltank", (miltank) => {
     console.log("go to battle scene");
     wait
     go("battle", "miltank");
+})
+
+//if player runs into miltank go to battle scene 
+player.onCollide("wizard", (wizard) => {
+    destroy(wizard)
+    enemyDead = true;
+    console.log("go to battle scene");
+    go("battle", "wizard");
 })
 
 //movement of player

@@ -144,13 +144,13 @@ let moves = window.movePool = [
 
         pretext: "You cast a heal spell on yourself",
         func: function(){
-            player.hp += 15
+            player.hp += 20
             if(player.hp > player.maxHP){
                 player.hp = player.maxHP
             }
             setPlayerHealth(player.hp, player.maxHP)
 
-            return "You healed 15 HP"
+            return "You healed 20 HP"
         }
     },
 
