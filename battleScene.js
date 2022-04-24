@@ -9,7 +9,7 @@
     // initialize kaboom context
     //kaboom();//kaboom({width: 1920, height: 1080});
 
-    loadSprite("background", "sprites/background.jpg");
+    loadSprite("background", "sprites/PixelBG.png");
     loadSprite("BattlePlatform", "sprites/pixelplatform1.png");
     loadSprite("EmptyHealthbar", "sprites/PixelEmptyHB.png");
     loadSprite("HealthBackground", "sprites/HealthBackground.png");
@@ -40,7 +40,8 @@ scene("battle", (name)=>{
     //creating game objects
     const background = add([
         sprite("background"),
-        pos(0,0), 
+        scale(0.75),
+        pos(3,0), 
     ])
 
     player.gameObj = add([
