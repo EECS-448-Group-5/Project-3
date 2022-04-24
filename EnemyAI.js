@@ -30,7 +30,7 @@
 //tells the enemy what to do on each move, general ideas:
 //change flavor tracker
 //logic that dictates what types of moves are chosen
-
+let levelIndex = 0;
 export let enemyProto = { //prototype for enemy objects
     //statuses
     statuses: [],
@@ -104,6 +104,10 @@ export let enemyProto = { //prototype for enemy objects
         eventQueue.clear()
         eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
         eventQueue.enqueue(()=>{levelUp()});
+        eventQueue.enqueue(()=>{{
+            go("overWorld", levelIndex + 1)
+        } 
+    });
         //eventQueue.dequeue()();
     }
 };
