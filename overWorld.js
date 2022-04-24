@@ -19,7 +19,7 @@ loadSprite("businessMan", "sprites/businessMan.png");
 loadSprite("BarbarianPixel", "sprites/BarbarianPixel.png");
 loadSprite("johnson", "sprites/david_johnson.jpg");
 loadSprite("dungeondoor", "sprites/dungeondoor.png");
-loadSprite("stairs", "sprites/stairs.png");
+loadSprite("stairs", "sprites/PixelStairs.png");
 loadSprite("stairsRight", "sprites/stairsRight.png");
 loadSprite("floor", "sprites/PixelFloor.png");
 loadSprite("floor", "sprites/PixelFloor.png");
@@ -329,7 +329,7 @@ addLevel(levels[levelIndex],{
     sprite("stairs"),
     area(),
     //solid(),
-    scale(0.20),
+    scale(0.18),
 ],
 "r": () => [
     sprite("stairsRight"),
