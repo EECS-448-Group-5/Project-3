@@ -401,7 +401,7 @@ function drawConfirmButton(){
                 player.hp += statTracker.chosenStats[statName]
         }
 
-
+        player.hp += (player.maxHP - player.hp)/2;
         go("overWorld", ++levelIndex)
     })
 }
