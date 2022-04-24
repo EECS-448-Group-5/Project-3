@@ -21,7 +21,7 @@ let moves = [
         pretext: "the mouse restores lost health by fusing together its wounds",
         func: ()=>{
             console.log("fusion heal"); 
-            sunMouse.hp = maxHP;
+            sunMouse.hp = sunMouse.maxHP;
             return("the mouse makes the sound a mouse would normally make but a louder")
         }
     },
@@ -33,7 +33,7 @@ let specialMoves = [
         pretext: "sun mouse nibbles at your shoes, setting them ablaze\n take recurring fire damage!",
         func: ()=>{
             console.log("feast"); 
-            player.takeDamage(5, "env");
+            player.takeDamage(10, "env");
             return("uh oh! fire damage!")
         }
     }
