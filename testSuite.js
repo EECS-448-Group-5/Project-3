@@ -105,3 +105,18 @@ function testNuke(){
 
     return true
 }
+
+function testMeteor(){
+    let enemy = {...getEnemy("barbarian")}
+    playerCopy.spAtk = 10
+
+    movePool[7].func(enemy)
+
+    if(enemy.hp != 140) return false
+
+    movePool[7].func(enemy)
+
+    if(enemy.hp != 80) return false
+
+    return true
+}
