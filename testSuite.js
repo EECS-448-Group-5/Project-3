@@ -6,7 +6,7 @@ import { getRandomOptions, getRandomMove } from "./movePool";
 
 
 export function runTests(){
-    runTest("Player takes damage reduced by defense", testPlayerTakeDamage,"player heals",testPlayerHeal);
+    runTest("Player takes damage reduced by defense", testPlayerTakeDamage);
     runTest("Player takes damage reduced by defense", testPlayerTakeDamage);
     runTest("Player has a default moveset upon creation", testDefaultMoveset);
     runTest("Enemy constructor initializes stats correctly", testEnemyStats);
@@ -21,6 +21,8 @@ export function runTests(){
     runTest("Nuke only works once", testNuke)
     runTest("Random move does not give part of player moveset", testRandMove)
     runTest("getMoveOptions() gives 4 valid moves", testMoveOptions)
+    runTest("Meteor does correct amount based on special attack upgrade",testMeteor);
+    runTest("player heals for correcrt amount",testPlayerHeal);
 }
 
 function runTest(desc, test){
