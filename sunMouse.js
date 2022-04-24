@@ -2,7 +2,7 @@ import { enemyProto } from "./EnemyAI.js";
 import { player } from "./player.js";
 
 export let sunMouse = Object.create(enemyProto);
-sunMouse.setStats(50, 50, 5, 5, 40, 20);
+sunMouse.setStats(150, 150, 5, 5, 40, 20);
 sunMouse.setRandomName("Richard the Sun Mouse", "Jeffrey the Sun Mouse", "Patrick the Sun Mouse");
 sunMouse.setFlavors("The mouse is harnessing the power of the sun", "Instead of eating cheese this mouse eats pure solar energy", "How a mouse obtained this power we'll never know");
 
@@ -12,7 +12,7 @@ let moves = [
         pretext: "The mouse swings a blade made out of sun!\n take 40 dmg",
         func: ()=>{
             console.log("solar blade"); 
-            player.takeDamage(40);
+            player.takeDamage(50);
             return("the mouse scurries in anticipation")
         }
     },
