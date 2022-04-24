@@ -64,6 +64,7 @@ let moveTracker = window.tracker = {
     }
 }
 
+let hoverEvent = null
 export function showLevelUpScreen(){
     //reset objects
     statTracker.chosenStats = {}
@@ -92,6 +93,19 @@ export function showLevelUpScreen(){
     moveTracker.movesToSelect = drawMovesToSelect(moves);
     drawMoveConfirmButton(moves);
 
+    hoverEvent = onUpdate(()=>{
+        let hoveredMove = null
+        for(let i=0; i<4; i++){
+            if(moveTracker.movesToReplace[i].isHovering()) {
+                hoveredMove = moveTracker.movesToReplace[i];
+                break
+            }
+        }
+
+        if(hoveredMove != null){
+            moveTracker.movesToSelect.forEach(txt=>txt.hidden = true)
+        }
+    })
 }
 
 function drawMovesToReplace(){
