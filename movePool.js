@@ -177,14 +177,25 @@ let moves = window.movePool = [
         desc: "Deal 20 dmg, make the enemy take 50% more damage from the next 2 physical moves",
 
         pretext: "You bash the enemy with your ...pencil?",
-        func: function(){
-            let dmg = 15 + player.atk
+        func: function(enemy){
+            let dmg = 20 + player.atk
 
             enemy.takeDamage(dmg, "physical");
 
             enemy.statuses.vulnerable = 2;
+            return "The enemy looks vulnerable!"
+        }
+    },
 
+    {
+        name: "Counter",
+        desc: "If enemy attacks with a physical move, reduce damage by half and deal the full damage back.",
 
+        pretext: "You prepare to parry their next attack",
+
+        func: function(enemy){
+            player.counter = 1;
+            return "You are braced for impact!"
         }
     },
 

@@ -48,13 +48,13 @@ let moves = [
                     //to be clear, the game prints liar first.
                     eventQueue.push(()=>{ 
                         printDescriptionText("Johnson gives you a 0/100 on the quiz, dealing 50 damage to your GPA!")
-                        player.takeDamage(50)
+                        player.takeDamage(50, "magic")
                     })
                     return "Liar!"
                 }
             }else{
                 eventQueue.push(()=>{
-                    player.takeDamage(20)
+                    player.takeDamage(20, "magic")
                     printDescriptionText("His look of disappointment deals 20 damage to your ego")
                 })
                 return("Dr Johnson is disappointed in you.")
@@ -73,7 +73,7 @@ let moves = [
                 dmg += dmgRoll
 
                 setTimeout(()=>{
-                    player.takeDamage(dmgRoll)
+                    player.takeDamage(dmgRoll, "physical")
                 }, 200*i)
             }
 

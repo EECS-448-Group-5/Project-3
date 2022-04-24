@@ -1,3 +1,4 @@
+import { enemyProto } from "./EnemyAI.js";
 import { getStartingMoves } from "./movePool.js";
 
 export let player = window.player = {
@@ -12,7 +13,12 @@ export let player = window.player = {
 
     moves: getStartingMoves(),
 
-    takeDamage: function(amt){//calculate and lose hp according to incoming damage amount
+    takeDamage: function(amt, type){//calculate and lose hp according to incoming damage amount
+        if(this.counter > 0 && !type || type=="physical"){
+            this.counter = 0;
+            enemy.takeDamage(amt)
+            amt = Math.floor(amt / 2);
+        }
         shake(1)
         if(amt > this.def){
             this.hp -= (amt - this.def)

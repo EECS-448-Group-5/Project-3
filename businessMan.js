@@ -11,7 +11,7 @@ let moves = [
         pretext: "business man slaps you with his briefcase",
         func: ()=>{
             console.log("briefcase slap"); 
-            player.takeDamage(30);
+            player.takeDamage(30, "physical");
             return("business man is waiting to for the next attack.")
         }
     },
@@ -20,7 +20,7 @@ let moves = [
         pretext: "business man submitted you to HR for a complaint",
         func: ()=>{
             console.log("hrcomplaint"); 
-            player.takeDamage(25);
+            player.takeDamage(25, "economic");
             return("business man is waiting to fight reluctantly.")
         }
     },

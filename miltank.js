@@ -14,7 +14,7 @@ let moves = [
         pretext: "Miltank uses rollout! It's super-effective!",
         func: ()=>{
             console.log("rollout");
-            player.takeDamage(turn*12);
+            player.takeDamage(turn*12, "physical");
             return("Miltank gazes lovingly:)")
         }
     }

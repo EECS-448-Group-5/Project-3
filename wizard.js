@@ -21,7 +21,7 @@ wizard.moves = [
         pretext: "The Wizard strikes you with lightning",
         func: (enemy)=>{
             console.log("zap"); 
-            player.takeDamage(30);
+            player.takeDamage(30, "magic");
             //barbarian.takeDamage(15);
             return("It was quite shocking, dealing 30 damage")
         }
@@ -32,7 +32,7 @@ wizard.moves = [
         func: (enemy)=>{
             console.log("slash"); 
             let pre = player.hp
-            player.takeDamage(25);
+            player.takeDamage(25, "magic");
 
             let dmgDealt = pre - player.hp
             enemy.heal(Math.floor(dmgDealt * .75))

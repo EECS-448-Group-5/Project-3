@@ -65,6 +65,12 @@ let moveTracker = window.tracker = {
 }
 
 export function showLevelUpScreen(){
+    //reset objects
+    statTracker.chosenStats = {}
+    moveTracker.chosenMoveIndices = {
+        replace: null,
+        select: null,
+    }
     //create new UI background
     let levelUpBox = add([
         sprite("Textbox"),

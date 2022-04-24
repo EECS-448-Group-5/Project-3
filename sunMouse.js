@@ -33,7 +33,7 @@ let specialMoves = [
         pretext: "sun mouse nibbles at your shoes, setting them ablaze\n take recurring fire damage!",
         func: ()=>{
             console.log("feast"); 
-            player.takeDamage(5);
+            player.takeDamage(5, "env");
             return("uh oh! fire damage!")
         }
     }
