@@ -135,6 +135,13 @@ johnson.init = function(){
         z(10)
     ])
 
+    overWorldMusic.pause()
+    let music = play("bossMusic", {
+        loop: true,
+    })
+
+    music.play()
+
     baseY = this.gameObj.pos.y
     baseX = this.gameObj.pos.x
     this.cancel = this.gameObj.onUpdate( ()=>{

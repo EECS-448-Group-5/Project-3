@@ -6,11 +6,12 @@
             import "./overWorld.js";
             import "./battleScene.js";
             loadSound("overWorldMusic", "sounds/overWorldMusic.mp3")
+            loadSound("bossMusic", "sounds/JohnsonFight.mp3")
 
             window.levelIndex = 0;
             //kaboom();
             //load music
-            let overWorldMusic = play("overWorldMusic", {
+            window.overWorldMusic = play("overWorldMusic", {
                 loop: true,
             })
 
