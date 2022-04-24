@@ -121,7 +121,23 @@ let moves = window.movePool = [
             return "You slam into him, dealing "+dmg+" damage!"
         }
     },
+    {
+        name: "Coin Flip",
+        desc: "Heads is good, tails not so much",
 
+        pretext: "You flip a shiny quarter high into the air",
+    
+        func: function(enemy){
+            let x = Math.floor(Math.random()*2)
+            if(x=0){
+            enemy.takeDamage(55)
+            return "Heads! The forces of luck dealt 55 damage to your enemy."
+            }else{
+                player.takeDamage(10)
+                return "Uh oh, tails. Recieved 10 damage from the forces of luck"
+            }
+        }
+    },
     {
         name: "Heal",
         desc: "Recover some HP",
