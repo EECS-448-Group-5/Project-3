@@ -25,7 +25,7 @@ export function getRandomMove(){
 
 export function getStartingMoves(){
     return [
-        moves[0],
+        moves[6],
         moves[1],
         moves[4],
         moves[2]
