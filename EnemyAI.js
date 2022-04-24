@@ -105,7 +105,14 @@ export let enemyProto = { //prototype for enemy objects
     },
     die: function(){
         eventQueue.clear()
-        eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
+        eventQueue.enqueue(()=>{
+            printDescriptionText(this.name + " was defeated!")
+            player.hp += Math.floor((player.maxHP - player.hp)/2);
+            window.setPlayerHealth(player.hp, player.maxHP)
+        });
+        eventQueue.enqueue(()=>{
+            printDescriptionText("Congratulations! You've restored lost health")
+        });
         eventQueue.enqueue(()=>{levelUp()});
         //eventQueue.dequeue()();
     }

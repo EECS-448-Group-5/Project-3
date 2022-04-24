@@ -404,7 +404,6 @@ function drawConfirmButton(){
                 player.hp += statTracker.chosenStats[statName]
         }
 
-        player.hp += Math.floor((player.maxHP - player.hp)/2);
         go("overWorld", ++levelIndex)
     })
 }
