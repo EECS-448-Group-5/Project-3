@@ -95,6 +95,7 @@ export let enemyProto = { //prototype for enemy objects
     takeDamage: function(amt, type){
         if(this.statuses.vulnerable > 0 && type == "physical"){
             amt *= 1.5
+            this.statuses.vulnerable -= 1
         }
         this.hp -= Math.floor(amt);
         window.setEnemyHealth(this.hp, this.maxHP);
