@@ -1,7 +1,7 @@
 import { enemyProto } from "./EnemyAI.js";
 
 export let businessMan = Object.create(enemyProto);
-businessMan.setStats(100, 100, 10, 10, 10, 10);
+businessMan.setStats(115, 115, 10, 10, 10, 10);
 businessMan.setRandomName("Seth the business man", "Kyle the business man", "Chris the business man");
 businessMan.setFlavors("business man is frusterated with his work life balance!", "business man is waiting patiently for you to move!", "business man is awaiting his next paycheck!");
 
@@ -11,7 +11,7 @@ let moves = [
         pretext: "business man slaps you with his briefcase",
         func: ()=>{
             console.log("briefcase slap"); 
-            player.takeDamage(30, "physical");
+            player.takeDamage(35, "physical");
             return("business man is waiting to for the next attack.")
         }
     },
@@ -20,7 +20,7 @@ let moves = [
         pretext: "business man submitted you to HR for a complaint",
         func: ()=>{
             console.log("hrcomplaint"); 
-            player.takeDamage(25, "emotional");
+            player.takeDamage(30, "emotional");
             return("business man is waiting to fight reluctantly.")
         }
     },
@@ -38,7 +38,7 @@ let specialMoves = [
                 return("You couldn't hear him because you were listening to music instead of working!")
             }
             else{
-                player.takeDamage(50, "economic");
+                player.takeDamage(55, "economic");
                 return("You are now out of a job!")
             }
         }
