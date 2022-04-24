@@ -1,6 +1,8 @@
 import { enemyProto } from "./EnemyAI.js";
 import { getEnemy } from "./enemies";
+import { player } from "./player";
 import { propPos } from "./util";
+import { getRandomOptions, getRandomMove } from "./movePool";
 
 
 export function runTests(){
@@ -11,9 +13,12 @@ export function runTests(){
     runTest("Assigning a move to an enemy using .setMoves() gives the enemy a non-empty move array", testEnemyMoves);
     runTest("Enemy can be assigned a random name", testEnemyName);
     runTest("enemy.changeFlavor() properly cycles through enemy's description text", testChangeFlavor);
+    runTest("Player takes damage reduced by defense", testPlayerTakeDamage)
+    runTest("player heals",testPlayerHeal);
     runTest("Player deals damage back with counter", testPlayerCounter)
     runTest("Wizard heals", testWizardHeal)
     runTest("propPos gives correct proportions", testPropPos)
+    runTest("Nuke only works once", testNuke)
 }
 
 function runTest(desc, test){
@@ -140,4 +145,20 @@ function testPropPos(){
     let p1 = propPos(.5, .5)
 
     return (p1.x == width()/2 && p1.y == height()/2)
+}
+
+function testNuke(){
+    let enemy = {...getEnemy("barbarian")}
+    player.atk = 10
+    player.spAtk = 15
+
+    movePool[11].func(enemy)
+
+    if(enemy.hp != -94) return false
+
+    movePool[11].func(enemy)
+
+    if(enemy.hp != -94) return false
+
+    return true
 }
