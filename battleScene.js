@@ -245,6 +245,8 @@ scene("battle", (name)=>{
     function playerMove(move){
         if(!isMoveSelection()) return
 
+        player.counter = 0
+
         eventQueue.enqueue(()=>{
             printDescriptionText(move.pretext);
         });

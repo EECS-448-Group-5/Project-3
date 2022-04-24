@@ -14,16 +14,24 @@ export let player = window.player = {
     moves: getStartingMoves(),
 
     takeDamage: function(amt, type){//calculate and lose hp according to incoming damage amount
-        if(this.counter > 0 && !type || type=="physical"){
-            this.counter = 0;
-            enemy.takeDamage(amt)
-            amt = Math.floor(amt / 2);
-        }
-        shake(1)
-        if(amt > this.def){
-            this.hp -= (amt - this.def)
+        if(type && type!="physical"){
+            shake(1)
+            if(amt > this.spDef){
+                this.hp -= (amt - this.spDef)
+            }else{
+                this.hp--;//always take at least 1 damage
+            }
         }else{
-            this.hp--;//always take at least 1 damage
+            if(this.counter > 0){
+                enemy.takeDamage(amt)
+                amt = Math.floor(amt / 2);
+            }
+            shake(1)
+            if(amt > this.def){
+                this.hp -= (amt - this.def)
+            }else{
+                this.hp--;//always take at least 1 damage
+            }
         }
         setPlayerHealth(this.hp, this.maxHP);//update healthbar
         if(this.hp <= 0) this.die(); //die if necessary
