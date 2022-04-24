@@ -30,7 +30,6 @@
 //tells the enemy what to do on each move, general ideas:
 //change flavor tracker
 //logic that dictates what types of moves are chosen
-let levelIndex = 0;
 export let enemyProto = { //prototype for enemy objects
     //statuses
     statuses: [],
@@ -93,8 +92,11 @@ export let enemyProto = { //prototype for enemy objects
     },
 
     //damage functions
-    takeDamage: function(amt){
-        this.hp -= amt;
+    takeDamage: function(amt, type){
+        if(this.statuses.vulnerable > 0 && type == "physical"){
+            amt *= 1.5
+        }
+        this.hp -= Math.floor(amt);
         window.setEnemyHealth(this.hp, this.maxHP);
         if(this.hp <= 0) {
             this.die();
@@ -104,10 +106,6 @@ export let enemyProto = { //prototype for enemy objects
         eventQueue.clear()
         eventQueue.enqueue(()=>{printDescriptionText(this.name + " was defeated!")});
         eventQueue.enqueue(()=>{levelUp()});
-        eventQueue.enqueue(()=>{{
-            go("overWorld", levelIndex + 1)
-        } 
-    });
         //eventQueue.dequeue()();
     }
 };

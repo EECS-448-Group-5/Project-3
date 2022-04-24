@@ -10,6 +10,7 @@ export function getRandomOptions(player){
             options.push(op)
         }
     }
+    return options
 }
 
 export function getRandomMove(){
@@ -76,7 +77,7 @@ let moves = window.movePool = [
         func: function(enemy){
             let dmg = 25 + player.atk
 
-            enemy.takeDamage(dmg)
+            enemy.takeDamage(dmg, "physical")
             return "You deal "+dmg+" damage to his face!"
         },
 
@@ -116,7 +117,7 @@ let moves = window.movePool = [
         func: function(enemy){
             let dmg = Math.floor(player.def + player.atk/2)
 
-            enemy.takeDamage(dmg)
+            enemy.takeDamage(dmg, "physical")
             return "You slam into him, dealing "+dmg+" damage!"
         }
     },
@@ -153,19 +154,37 @@ let moves = window.movePool = [
         baseDmg: 10,
 
         name: "Perfect Strike",
-        desc: "Deal 10 dmg. On kill, permanently increase this move's damage",
+        desc: "Deal 15 dmg. On kill, permanently increase this move's damage",
 
         pretext: "You strike your opponent with finesse",
         func: function(enemy){
             let dmg = this.baseDmg + player.atk
 
-            enemy.takeDamage(dmg)
+            enemy.takeDamage(dmg, "physical")
             if(enemy.hp < 0){
                 this.baseDmg += 10
-                return "You deal "+dmg+" damage. You feel your skills growing"
+                this.desc = "Deal "+baseDmg+" dmg. On kill, permanently increase this move's damage"
+                return "You deal "+dmg+" damage. You feel your skills growing";
+                
             }
 
             return "You deal "+dmg+" damage, but your technique could have been better"
+        }
+    },
+
+    {
+        name: "Bash",
+        desc: "Deal 20 dmg, make the enemy take 50% more damage from the next 2 physical moves",
+
+        pretext: "You bash the enemy with your ...pencil?",
+        func: function(){
+            let dmg = 15 + player.atk
+
+            enemy.takeDamage(dmg, "physical");
+
+            enemy.statuses.vulnerable = 2;
+
+
         }
     },
 

@@ -1,3 +1,4 @@
+import { getRandomOptions } from "./movePool.js"
 import { player } from "./player.js"
 import * as util from "./util.js"
 //showMovesScreen() draws the box, stat output stuff to the right
@@ -81,7 +82,7 @@ export function showLevelUpScreen(){
     ])
 
     moveTracker.movesToReplace = drawMovesToReplace();
-    let moves = [...player.moves].reverse()//movePool.getRandomOptions(player) 
+    let moves = getRandomOptions(player);
     moveTracker.movesToSelect = drawMovesToSelect(moves);
     drawMoveConfirmButton(moves);
 
@@ -349,6 +350,7 @@ function drawConfirmButton(){
                 player.hp += statTracker.chosenStats[statName]
         }
 
-        go("overWorld", 0)
+
+        go("overWorld", ++levelIndex)
     })
 }
