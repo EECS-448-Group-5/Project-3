@@ -11,6 +11,8 @@ export function runTests(){
     runTest("Wizard heals", testWizardHeal)
     runTest("propPos gives correct proportions", testPropPos)
     runTest("Nuke only works once", testNuke)
+    runTest("Random move does not give part of player moveset", testRandMove)
+    runTest("getMoveOptions() gives 4 valid moves", testMoveOptions)
 }
 
 function runTest(desc, test){
@@ -102,6 +104,26 @@ function testNuke(){
     movePool[11].func(enemy)
 
     if(enemy.hp != -94) return false
+
+    return true
+}
+
+function testRandMove(){
+    for(let i=0; i<100; i++){
+        move = getRandomMove()
+        if(player.moves.includes(move)) return false
+    }
+    return true
+}
+
+function testMoveOptions(){
+    for(let i=0; i<100; i++){
+        mvs = getRandomOptions()
+        if(mvs.length != 4) return false
+        for(let mv of mvs){
+            if(player.moves.includes(move)) return false
+        }
+    }
 
     return true
 }
