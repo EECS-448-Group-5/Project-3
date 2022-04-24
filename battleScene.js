@@ -11,7 +11,7 @@
 
     loadSprite("background", "sprites/background.jpg");
     loadSprite("BattlePlatform", "sprites/pixelplatform1.png");
-    loadSprite("EmptyHealthbar", "sprites/EmptyHealthbar.png");
+    loadSprite("EmptyHealthbar", "sprites/PixelEmptyHB.png");
     loadSprite("HealthBackground", "sprites/HealthBackground.png");
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
     loadSprite("player1", "sprites/PixelPlayer.png");
