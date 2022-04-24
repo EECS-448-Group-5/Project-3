@@ -15,7 +15,7 @@
     loadSprite("HealthBackground", "sprites/PixelHBG.png");
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
     loadSprite("player1", "sprites/PixelPlayer.png");
-    loadSprite("Textbox", "sprites/Textbox.png");
+    loadSprite("Textbox", "sprites/PixelTBG.png");
     loadSprite("barbarian", "sprites/barbarianpixel.png");
     loadSprite("businessMan","sprites/businessMan.png");
     loadSprite("johnson", "sprites/david_johnson.jpg");
