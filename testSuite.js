@@ -1,10 +1,12 @@
 import { getEnemy } from "./enemies";
+import { propPos } from "./util";
 
 
 export function runTests(){
     runTest("Player takes damage reduced by defense", testPlayerTakeDamage);
     runTest("Player deals damage back with counter", testPlayerCounter)
     runTest("Wizard heals", testWizardHeal)
+    runTest("propPos gives correct proportions", testPropPos)
 }
 
 function runTest(desc, test){
@@ -62,4 +64,10 @@ function testWizardHeal(){
     if(wizCopy.hp != wizCopy.maxHP) return false
 
     return true
+}
+
+function testPropPos(){
+    let p1 = propPos(.5, .5)
+
+    return (p1.x == width()/2 && p1.y == height()/2)
 }
