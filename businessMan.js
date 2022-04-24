@@ -20,7 +20,7 @@ let moves = [
         pretext: "business man submitted you to HR for a complaint",
         func: ()=>{
             console.log("hrcomplaint"); 
-            player.takeDamage(25, "economic");
+            player.takeDamage(25, "emotional");
             return("business man is waiting to fight reluctantly.")
         }
     },
@@ -35,10 +35,10 @@ let specialMoves = [
             let temp = Math.random()
             if(temp > 0.5)
             {
-                return("You dodged his attack because you were listening to music instead of working!")
+                return("You couldn't hear him because you were listening to music instead of working!")
             }
             else{
-                player.takeDamage(50);
+                player.takeDamage(50, "economic");
                 return("You are now out of a job!")
             }
         }
