@@ -3,7 +3,7 @@ import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
         
 //import * as util from "./util.js";
 //import "./battleScene.js";
-
+import {runTests} from "./testSuite.js"
 
 
 
@@ -26,7 +26,7 @@ loadSprite("floor", "sprites/PixelFloor.png");
 loadSprite("sunMouse","sprites/SunMousePixel.png");
 loadSprite("miltank","sprites/MiltankPixel.png");
 loadSprite("demonJohnson","sprites/demonJohnson.png");
-
+loadSprite("test","sprites/test.jpg");
 
 
 //we will need to export all these scenes into the main game loop html
@@ -74,7 +74,7 @@ const levels = [
         "=======sss===================",
         "=                           =",
         "=                           =",
-        "=            $              =",
+        "=            $            L =",
         "=============================",
         "=============================",
         "=============================",
@@ -406,6 +406,13 @@ addLevel(levels[levelIndex],{
     "wizard",
     scale(0.35),  
 ],
+"L": () => [
+    sprite("test"),
+    area(),
+    solid(),
+    "test",
+    scale(0.35),  
+],
 })
 
 
@@ -464,6 +471,9 @@ player.onCollide("wizard", (wizard) => {
     enemyDead = true;
     console.log("go to battle scene");
     go("battle", "wizard");
+})
+player.onCollide("test", () => {
+    runTests();
 })
 
 //movement of player

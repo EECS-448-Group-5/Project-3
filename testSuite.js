@@ -1,8 +1,8 @@
 import { enemyProto } from "./EnemyAI.js";
-import { getEnemy } from "./enemies";
-import { player } from "./player";
-import { propPos } from "./util";
-import { getRandomOptions, getRandomMove } from "./movePool";
+import { getEnemy } from "./enemies.js";
+import { player } from "./player.js";
+import { propPos } from "./util.js";
+import { getRandomOptions, getRandomMove } from "./movePool.js";
 
 
 export function runTests(){
