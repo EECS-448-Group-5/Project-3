@@ -16,7 +16,7 @@ wizard.setName = function(){
 }
 wizard.name = wizard.setName()
 
-wizard.setFlavor("The Wizard chuckles!", "The Wizard smirks at you!", "The wizard begins to float off the ground!")
+wizard.setFlavors("The Wizard chuckles!", "The Wizard smirks at you!", "The wizard begins to float off the ground!")
 wizard.moves = [
     {
         name: "Zap",
