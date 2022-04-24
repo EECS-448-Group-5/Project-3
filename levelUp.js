@@ -81,7 +81,7 @@ export function showLevelUpScreen(){
     util.scaleToProp(levelUpBox, .95, .85)
 
     let titleText = add([
-        text("Choose a move to learn and a move to replace"),
+        text("Choose a move to learn and a move to replace", {size: height()*.06}),
         util.propPos(.5, .05),
         origin("center"),
         scale(1)
@@ -97,7 +97,7 @@ export function showLevelUpScreen(){
 function drawMovesToReplace(){
     let moves = [
         add([
-            text(player.moves[0].name, {}),
+            text(player.moves[0].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .25),
             origin("center"),
@@ -106,7 +106,7 @@ function drawMovesToReplace(){
         ]),
 
         add([
-            text(player.moves[1].name, {}),
+            text(player.moves[1].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .39),
             origin("center"),
@@ -115,7 +115,7 @@ function drawMovesToReplace(){
         ]),
 
         add([
-            text(player.moves[2].name, {}),
+            text(player.moves[2].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .53),
             origin("center"),
@@ -124,7 +124,7 @@ function drawMovesToReplace(){
         ]),
 
         add([
-            text(player.moves[3].name, {}),
+            text(player.moves[3].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .67),
             origin("center"),
@@ -133,7 +133,7 @@ function drawMovesToReplace(){
         ]),
 
         add([
-            text("I don't want to \nreplace a move!", {}),
+            text("I don't want to \nreplace a move!", {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .81),
             origin("center"),
@@ -156,7 +156,7 @@ function drawMovesToReplace(){
 function drawMovesToSelect(moves){
     let array = [
         add([
-            text(moves[0].name, {}),
+            text(moves[0].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .25),
             origin("center"),
@@ -165,7 +165,7 @@ function drawMovesToSelect(moves){
         ]),
 
         add([
-            text(moves[1].name, {}),
+            text(moves[1].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .39),
             origin("center"),
@@ -174,7 +174,7 @@ function drawMovesToSelect(moves){
         ]),
 
         add([
-            text(moves[2].name, {}),
+            text(moves[2].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .53),
             origin("center"),
@@ -183,7 +183,7 @@ function drawMovesToSelect(moves){
         ]),
 
         add([
-            text(moves[3].name, {}),
+            text(moves[3].name, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .67),
             origin("center"),
@@ -207,7 +207,7 @@ function drawMovesToSelect(moves){
 function drawStatPreview(){
     return {
         maxHP: add([
-            text("maxHP: "+player.maxHP, {}),
+            text("maxHP: "+player.maxHP, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .25),
             origin("center"),
@@ -215,7 +215,7 @@ function drawStatPreview(){
         ]),
 
         atk: add([
-            text("atk: "+player.atk, {}),
+            text("atk: "+player.atk, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .39),
             origin("center"),
@@ -223,7 +223,7 @@ function drawStatPreview(){
         ]),
 
         def: add([
-            text("def: "+player.def, {}),
+            text("def: "+player.def, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .53),
             origin("center"),
@@ -231,7 +231,7 @@ function drawStatPreview(){
         ]),
 
         spAtk: add([
-            text("spAtk: "+player.spAtk, {}),
+            text("spAtk: "+player.spAtk, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .67),
             origin("center"),
@@ -239,7 +239,7 @@ function drawStatPreview(){
         ]),
 
         spDef: add([
-            text("spDef: "+player.spDef, {}),
+            text("spDef: "+player.spDef, {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.7, .81),
             origin("center"),
@@ -251,7 +251,7 @@ function drawStatPreview(){
 //draw buttons to select and deselect stats to upgrade
 function drawStatButtons(previews){
     add([
-            text("MaxHP", {}),
+            text("MaxHP", {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .25),
             origin("center"),
@@ -262,7 +262,7 @@ function drawStatButtons(previews){
     })
 
     add([
-            text("Atk", {}),
+            text("Atk", {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .39),
             origin("center"),
@@ -273,7 +273,7 @@ function drawStatButtons(previews){
     })
 
     add([
-            text("Def", {}),
+            text("Def", {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .53),
             origin("center"),
@@ -284,7 +284,7 @@ function drawStatButtons(previews){
     })
 
     add([
-            text("SpAtk", {}),
+            text("SpAtk", {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .67),
             origin("center"),
@@ -295,7 +295,7 @@ function drawStatButtons(previews){
     })
 
     add([
-            text("SpDef", {}),
+            text("SpDef", {size: height()*.05}),
             color(255, 255, 255),
             util.propPos(.3, .81),
             origin("center"),
@@ -309,7 +309,7 @@ function drawStatButtons(previews){
 //the button will only upgrade player stats if they have selected two stats to improve.
 function drawMoveConfirmButton(moves){
     add([
-        text("Confirm", {}),
+        text("Confirm", {size: height()*.05}),
         util.propPos(.8, .9),
         origin("center"),
         scale(1),
@@ -343,7 +343,7 @@ function levelUpStats() {
 //the button will only upgrade player stats if they have selected two stats to improve.
 function drawConfirmButton(){
     add([
-        text("Confirm", {}),
+        text("Confirm", {size: height()*.05}),
         util.propPos(.8, .9),
         origin("center"),
         scale(1),

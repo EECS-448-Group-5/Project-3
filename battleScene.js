@@ -288,6 +288,10 @@ scene("battle", (name)=>{
     }
     window.levelUp = function(){
         //delete the old UI
+        destroy(enemyHPBG)
+        destroy(enemyHPFacade)
+        destroy(enemyHealth)
+        destroy(enemyHPText)
         destroy(textBox)
         moveTxts.forEach( destroy )
 
