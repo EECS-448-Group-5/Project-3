@@ -25,6 +25,8 @@ loadSprite("floor", "sprites/PixelFloor.png");
 loadSprite("floor", "sprites/PixelFloor.png");
 loadSprite("sunMouse","sprites/SunMousePixel.png");
 loadSprite("miltank","sprites/MiltankPixel.png");
+loadSprite("demonJohnson","sprites/demonJohnson.png");
+
 
 
 //we will need to export all these scenes into the main game loop html
@@ -47,7 +49,7 @@ const levels = [
         "============  @  ============",
         "============     ============",
         "============     ============",
-        "============                =",
+        "============        $        =",
         "======================sss====",
         "=                  w        =",
         "=                           =",
@@ -71,7 +73,7 @@ const levels = [
         "=======sss===================",
         "=======sss===================",
         "=                           =",
-        "=            $              =",
+        "=                           =",
         "=                           =",
         "=============================",
         "=============================",
@@ -352,11 +354,11 @@ addLevel(levels[levelIndex],{
     scale(0.16),
 ],
 "@": () => [
-    sprite("johnson"),
+    sprite("demonJohnson"),
     area(),
     solid(),
     "johnson",
-    scale(0.8),    
+    scale(0.3),    
 ],
 
 "t": () => [
