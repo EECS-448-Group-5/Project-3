@@ -19,7 +19,7 @@ function testPlayerCounter(){
 
     playerCopy.takeDamage(50, "physical");
 
-    return playerCopy.hp == 75 && enemy.hp == 150 && playerCopy.counter == 1
+    return playerCopy.hp == 85 && enemy.hp == 150 && playerCopy.counter == 1
 }
 function testPlayerTakeDamage(){
     let playerCopy = {...player};
