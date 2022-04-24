@@ -12,7 +12,7 @@
     loadSprite("background", "sprites/PixelBG.png");
     loadSprite("BattlePlatform", "sprites/pixelplatform1.png");
     loadSprite("EmptyHealthbar", "sprites/PixelEmptyHB.png");
-    loadSprite("HealthBackground", "sprites/HealthBackground.png");
+    loadSprite("HealthBackground", "sprites/PixelHBG.png");
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
     loadSprite("player1", "sprites/PixelPlayer.png");
     loadSprite("Textbox", "sprites/Textbox.png");
@@ -40,13 +40,14 @@ scene("battle", (name)=>{
     //creating game objects
     const background = add([
         sprite("background"),
-        scale(0.75),
-        pos(3,0), 
+        util.propPos(1.5, 1),
+        scale(1.41),
+        pos(0.5,4), 
     ])
 
     player.gameObj = add([
         sprite("player1"),
-        util.propPos(.2, .45),
+        util.propPos(.23, .47),
         origin("center"),
         scale(3),
         z(10)
