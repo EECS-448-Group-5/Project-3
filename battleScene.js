@@ -14,7 +14,7 @@
     loadSprite("EmptyHealthbar", "sprites/EmptyHealthbar.png");
     loadSprite("HealthBackground", "sprites/HealthBackground.png");
     loadSprite("HealthBarSection", "sprites/HealthBarSection.png");
-    loadSprite("player1", "sprites/player1.png");
+    loadSprite("player1", "sprites/PixelPlayer.png");
     loadSprite("Textbox", "sprites/Textbox.png");
     loadSprite("barbarian", "sprites/barbarianpixel.png");
     loadSprite("businessMan","sprites/businessMan.png");
@@ -47,7 +47,7 @@ scene("battle", (name)=>{
         sprite("player1"),
         util.propPos(.2, .45),
         origin("center"),
-        scale(1),
+        scale(3),
         z(10)
     ])
     util.scaleToProp(player.gameObj, -1, .4);

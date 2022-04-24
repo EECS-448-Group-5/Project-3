@@ -10,8 +10,8 @@ import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 
 kaboom({background:[60,60,60]});
 
-loadSprite("wall", "sprites/wall.jpg");
-loadSprite("player1", "sprites/player1.png");
+loadSprite("wall", "sprites/PixelWall.png");
+loadSprite("player1", "sprites/PixelPlayer.png");
 loadSprite("enemy1", "sprites/enemy1.png");
 loadSprite("door", "sprites/door.png");
 loadSprite("WizardPixel", "sprites/WizardPixel.png");
@@ -21,8 +21,8 @@ loadSprite("johnson", "sprites/david_johnson.jpg");
 loadSprite("dungeondoor", "sprites/dungeondoor.png");
 loadSprite("stairs", "sprites/stairs.png");
 loadSprite("stairsRight", "sprites/stairsRight.png");
-loadSprite("floor", "sprites/floor.png");
-loadSprite("floor", "sprites/floor.png");
+loadSprite("floor", "sprites/PixelFloor.png");
+loadSprite("floor", "sprites/PixelFloor.png");
 loadSprite("sunMouse","sprites/SunMousePixel.png");
 loadSprite("miltank","sprites/MiltankPixel.png");
 
@@ -371,10 +371,10 @@ addLevel(levels[levelIndex],{
     sprite("player1"),
     area(),
     solid(),
-    pos(0,0),
+    pos(0,2),
     "player1",
-    scale(0.090),
-    z(1),
+    scale(0.28),
+    z(3),
 ],
 "#": () => [
     sprite("businessMan"),
