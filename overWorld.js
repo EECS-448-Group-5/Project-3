@@ -373,7 +373,7 @@ addLevel(levels[levelIndex],{
     solid(),
     pos(5,2),
     "player1",
-    scale(0.28),
+    scale(0.24),
     z(2),
 ],
 "#": () => [
