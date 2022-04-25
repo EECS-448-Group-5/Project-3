@@ -1,11 +1,17 @@
+import { getRandomOptions, getRandomMove } from "./movePool.js";
 import { enemyProto } from "./EnemyAI.js";
 import { getEnemy } from "./enemies.js";
-import { player } from "./player.js";
+import * as Player from "./player.js";
 import { propPos } from "./util.js";
-import { getRandomOptions, getRandomMove } from "./movePool.js";
+
 
 
 export function runTests(){
+    let origPlayer = Player.player
+    let origEnemy = enemy
+    window.player = {...player}
+    window.enemy = Object.assign(enemy)
+
     runTest("Player takes damage reduced by defense", testPlayerTakeDamage);
     runTest("Player takes damage reduced by defense", testPlayerTakeDamage);
     runTest("Player has a default moveset upon creation", testDefaultMoveset);
@@ -23,6 +29,9 @@ export function runTests(){
     runTest("getMoveOptions() gives 4 valid moves", testMoveOptions)
     runTest("Meteor does correct amount based on special attack upgrade",testMeteor);
     runTest("player heals for correcrt amount",testPlayerHeal);
+
+    window.enemy = origEnemy
+    window.player = origPlayer
 }
 
 function runTest(desc, test){
@@ -31,16 +40,16 @@ function runTest(desc, test){
 
 function testPlayerCounter(){
     let playerCopy = {...player};
-    let enemy = getEnemy("barbarian")
-
-    window.enemy = {...enemy}
+    
     playerCopy.hp = 100
     playerCopy.def = 10
     playerCopy.counter = 1
 
     playerCopy.takeDamage(50, "physical");
 
-    return playerCopy.hp == 85 && enemy.hp == 150 && playerCopy.counter == 1
+    let copy = window.enemy
+
+    return playerCopy.hp == 85 && copy.hp == 150 && playerCopy.counter == 1
 }
 function testPlayerTakeDamage(){
     let playerCopy = {...player};
@@ -72,11 +81,11 @@ function testDefaultMoveset(){
     return true
 }
 
-export let enemy = Object.create(enemyProto);
+let testEnemy = Object.create(enemyProto);
 
 function testEnemyStats(){
-    enemy.setStats(1,2,3,4,5,6);
-    if(enemy.maxHP == 1 && enemy.hp == 2 && enemy.atk == 3 && enemy.def == 4 && enemy.spAtk == 5 && enemy.spDef == 6) return true
+    testEnemy.setStats(1,2,3,4,5,6);
+    if(testEnemy.maxHP == 1 && testEnemy.hp == 2 && testEnemy.atk == 3 && testEnemy.def == 4 && testEnemy.spAtk == 5 && testEnemy.spDef == 6) return true
     return false
 }
 
@@ -86,32 +95,31 @@ function testEnemyMoves(){
             name: "move",
             pretext: "enemy uses move",
             func: ()=>{
-                console.log("move");
                 player.takeDamage(10);
                 return("enemy movoed")
             }
         }
     ]
-    enemy.setMoves(move);
-    if(enemy.moves[0 == null]) return false
+    testEnemy.setMoves(move);
+    if(testEnemy.moves[0] == null) return false
     return true
 }
 
 function testEnemyName(){
-    enemy.setRandomName("John, Bill, James")
-    if(enemy.name == "John" || enemy.name == "Bill" || enemy.name == "James") return true
+    testEnemy.setRandomName("John", "Bill", "James")
+    if(testEnemy.name == "John" || testEnemy.name == "Bill" || testEnemy.name == "James") return true
     else return false
 }
 
 function testChangeFlavor(){
-    enemy.setFlavors("A", "B", "C");
-    let str = enemy.getFlavor();
+    testEnemy.setFlavors("A", "B", "C");
+    let str = testEnemy.getFlavor();
 
-    enemy.changeFlavor() //cycle through flavors three times, should return to original flavor text
-    enemy.changeFlavor()
-    enemy.changeFlavor()
+    testEnemy.changeFlavor() //cycle through flavors three times, should return to original flavor text
+    testEnemy.changeFlavor()
+    testEnemy.changeFlavor()
 
-    if (str = enemy.getFlavor()) return true
+    if (str == testEnemy.getFlavor()) return true
     return false
 }
 
@@ -148,36 +156,38 @@ function testWizardHeal(){
 function testPropPos(){
     let p1 = propPos(.5, .5)
 
-    return (p1.x == width()/2 && p1.y == height()/2)
+    return (p1.pos.x == width()/2 && p1.pos.y == height()/2)
 }
 
 function testNuke(){
-    let enemy = {...getEnemy("barbarian")}
+    testEnemy.hp = 300
+
     player.atk = 10
     player.spAtk = 15
 
-    movePool[11].func(enemy)
+    let res = movePool[11].func(testEnemy)
 
-    if(enemy.hp != -94) return false
+    if(res != "A blinding light fills your vision, but you think you dealt around 294 damage.") return false
 
-    movePool[11].func(enemy)
+    res = movePool[11].func(testEnemy)
 
-    if(enemy.hp != -94) return false
+    if(res != "...") return false
 
+    
     return true
 }
 
 function testMeteor(){
-    let enemy = {...getEnemy("barbarian")}
-    playerCopy.spAtk = 10
+    testEnemy.hp = 200
+    player.spAtk = 10
 
-    movePool[7].func(enemy)
+    movePool[7].func(testEnemy)
 
-    if(enemy.hp != 140) return false
+    if(testEnemy.hp != 140) return false
 
-    movePool[7].func(enemy)
+    movePool[7].func(testEnemy)
 
-    if(enemy.hp != 80) return false
+    if(testEnemy.hp != 80) return false
 
     return true
 }
@@ -192,7 +202,7 @@ function testRandMove(){
 
 function testMoveOptions(){
     for(let i=0; i<100; i++){
-        mvs = getRandomOptions()
+        let mvs = getRandomOptions()
         if(mvs.length != 4) return false
         for(let mv of mvs){
             if(player.moves.includes(move)) return false

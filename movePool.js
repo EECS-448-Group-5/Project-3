@@ -66,7 +66,9 @@ let moves = window.movePool = [
             let idx = prompt(info)
 
             return moves[idx].func(enemy)
-        }
+        },
+
+        playerCondition: function(player){ return false }
     },
 
     {

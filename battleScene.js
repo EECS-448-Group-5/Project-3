@@ -5,6 +5,8 @@
     import * as Player from "./player.js";
     import { getEnemy } from "./enemies.js";
     import { showLevelUpScreen } from "./levelUp.js"
+//import { runTests } from "./testSuite.js";
+    import {runTests} from "./testSuite.js"
     
     // initialize kaboom context
     //kaboom();//kaboom({width: 1920, height: 1080});
@@ -31,6 +33,12 @@ scene("battle", (name)=>{
 
     let player = Player.player
 
+    let testing = false
+    if(name == "test"){
+        console.log("I was here")
+        name = "barbarian"
+        testing = true
+    }
     //use the barbarian enemy for this scene
     let enemy = window.enemy = getEnemy(name);
 
@@ -118,8 +126,6 @@ scene("battle", (name)=>{
         scale(1)
     ])
     util.scaleToProp(playerHealth, .22, .225*width()/height()*.15)
-
-    window.hp = playerHealth
 
     const playerHPFacade = add([
         sprite("EmptyHealthbar"),
@@ -322,4 +328,11 @@ scene("battle", (name)=>{
     setEnemyHealth(enemy.hp, enemy.maxHP)
 
     drawMoveSelection(player.moves);
+
+    if(testing) {
+        runTests()
+        go("overWorld", 0)
+    }
+
+    
 });

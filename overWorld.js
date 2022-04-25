@@ -3,7 +3,7 @@ import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
         
 //import * as util from "./util.js";
 //import "./battleScene.js";
-import {runTests} from "./testSuite.js"
+//import {runTests} from "./testSuite.js"
 
 
 
@@ -473,7 +473,7 @@ player.onCollide("wizard", (wizard) => {
     go("battle", "wizard");
 })
 player.onCollide("test", () => {
-    runTests();
+    go("battle", "test")
 })
 
 //movement of player
