@@ -23,6 +23,7 @@ let moves = [
 
             player.moves[idx] = replacement
 
+            //update UI
             drawMoveSelection(player.moves)
             return "He randomly swapped out one of your moves!"
         }
@@ -72,6 +73,7 @@ let moves = [
                 let dmgRoll = Math.floor(Math.random() * 5)+18
                 dmg += dmgRoll
 
+                //deal each round of damage 200ms apart
                 setTimeout(()=>{
                     player.takeDamage(dmgRoll, "physical")
                 }, 200*i)
@@ -85,6 +87,7 @@ let moves = [
 let clock = null
 let time = 0
 johnson.enemyMove = function(){
+    //if it's 8:50 or later, class is over
     if(time >= 50){
         eventQueue.enqueue(()=>{
             printDescriptionText("class is over.");
@@ -95,6 +98,7 @@ johnson.enemyMove = function(){
             player.takeDamage(0)
         });
     }
+    //otherwise, select and execute a random move
     let temp = moves[Math.floor(Math.random()*moves.length)]
         eventQueue.enqueue(()=>{
             printDescriptionText(temp.pretext);
@@ -103,6 +107,7 @@ johnson.enemyMove = function(){
             printDescriptionText(temp.func());
         });
         window.eventQueue.enqueue(()=>{
+            //update clock text
             time += 5
             if(time < 10){
                 clock.text = "8:0"+time+" AM"
@@ -118,12 +123,14 @@ let baseX = 0
 let cycleTimer = 0
 
 johnson.init = function(){
+    //add clock text
     clock = add([
         text("8:00 AM"),
         pos(0, 0),
         z(10)
     ])
 
+    //subtitle
     add([
         text("Destroyer of Hello Worlds", {
             size: height()*.03,
@@ -135,15 +142,17 @@ johnson.init = function(){
         z(10)
     ])
 
+    //switch music
     overWorldMusic.pause()
     let music = play("bossMusic", {
         loop: true,
     })
-
     music.play()
 
+    //center location for the oscillation
     baseY = this.gameObj.pos.y
     baseX = this.gameObj.pos.x
+    //keep the event canceller handy for when class is over
     this.cancel = this.gameObj.onUpdate( ()=>{
         cycleTimer += .02
         johnson.gameObj.pos.y = baseY + height() * .1 * Math.sin(cycleTimer)

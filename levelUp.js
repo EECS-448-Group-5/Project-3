@@ -31,6 +31,7 @@ let statTracker = window.tracker = {
     }
 }
 
+//similar in structure to statTracker, but it uses integer indices and arrays rather than property names and objects
 let moveTracker = window.tracker = {
     
     chosenMoveIndices: {
@@ -65,6 +66,7 @@ let moveTracker = window.tracker = {
 }
 
 let hoverEvent = null
+//Create level up UI, begin move selection process
 export function showLevelUpScreen(){
     //reset objects
     statTracker.chosenStats = {}
@@ -92,6 +94,8 @@ export function showLevelUpScreen(){
     let moves = getRandomOptions(player);
     moveTracker.movesToSelect = drawMovesToSelect(moves);
     drawMoveConfirmButton(moves);
+
+    //text boxes to display descriptions of moves
     let oldDesc = add([
         text("", {size: height()*.06, width: width() * .4}),
         util.propPos(.27, .25),
@@ -103,6 +107,7 @@ export function showLevelUpScreen(){
         origin("top")
     ])
 
+    //when hovering over a move, display the corresponding description on the other side of the UI
     hoverEvent = onUpdate(()=>{
         let hoveredMove = null
         for(let i=0; i<4; i++){
@@ -138,6 +143,7 @@ export function showLevelUpScreen(){
     })
 }
 
+//draws a list of moves on the right side of the screen that call toggleMove when clicked
 function drawMovesToReplace(){
     let moves = [
         add([
@@ -197,6 +203,7 @@ function drawMovesToReplace(){
 
 }
 
+//draws a list of moves on the left side of the screen that call toggleMove when clicked
 function drawMovesToSelect(moves){
     let array = [
         add([
@@ -376,6 +383,7 @@ function drawMoveConfirmButton(moves){
 }
 
 function levelUpStats() {
+    //remove move selection UI
     moveTracker.movesToReplace.forEach(destroy);
     moveTracker.movesToSelect.forEach(destroy);
     hoverEvent();

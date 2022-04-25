@@ -1,5 +1,6 @@
 import { player } from "./player.js"
 
+//get 4 random moves to offer the player
 export function getRandomOptions(player){
     let options = []
     while(options.length < 4){
@@ -13,6 +14,7 @@ export function getRandomOptions(player){
     return options
 }
 
+//returns a random move not already in the player's moveset
 export function getRandomMove(){
     let mv = player.moves[0]
 
@@ -23,6 +25,7 @@ export function getRandomMove(){
     return mv
 }
 
+//player's starting moveset
 export function getStartingMoves(){
     return [
         moves[6],
