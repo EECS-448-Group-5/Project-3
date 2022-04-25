@@ -9,7 +9,7 @@ import { propPos } from "./util.js";
 export function runTests(){
     let origPlayer = Player.player
     let origEnemy = enemy
-    window.player = {...player}
+    window.player = Object.assign(player)
     window.enemy = Object.assign(enemy)
 
     runTest("Player takes damage reduced by defense", testPlayerTakeDamage);

@@ -73,8 +73,8 @@ const levels = [
         "=======sss===================",
         "=======sss===================",
         "=                           =",
-        "=                           =",
-        "=            $            L =",
+        "=                  L        =",
+        "=            $              =",
         "=============================",
         "=============================",
         "=============================",
@@ -407,11 +407,12 @@ addLevel(levels[levelIndex],{
     scale(0.35),  
 ],
 "L": () => [
-    sprite("test"),
+    text("Click to Run tests"),
+    pos(40, 48),
     area(),
-    solid(),
     "test",
-    scale(0.35),  
+    scale(.8), 
+    origin("center") 
 ],
 })
 
@@ -472,7 +473,7 @@ player.onCollide("wizard", (wizard) => {
     console.log("go to battle scene");
     go("battle", "wizard");
 })
-player.onCollide("test", () => {
+onClick("test", () => {
     go("battle", "test")
 })
 
